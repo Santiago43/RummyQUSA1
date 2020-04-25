@@ -20,11 +20,17 @@ public class Banca {
      * 
      */
     private LinkedList fichas;
-
+    /**
+     * 
+     * @return 
+     */
     public LinkedList getFichas() {
         return fichas;
     }
-
+    /**
+     * 
+     * @param fichas 
+     */
     public void setFichas(LinkedList fichas) {
         this.fichas = fichas;
     }
