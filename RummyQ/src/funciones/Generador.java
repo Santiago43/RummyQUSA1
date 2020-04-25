@@ -11,6 +11,10 @@ import modelo.Ficha;
  * @version 0.0.1
  */
 public class Generador {
+    /**
+     * 
+     * @return 
+     */
     public static LinkedList crearFichas(){
         LinkedList<Ficha> fichas= new LinkedList();
         cicloNumeros:
@@ -39,6 +43,10 @@ public class Generador {
         fichas.add(comodin2);
         return fichas;
     }
+    /**
+     * 
+     * @return 
+     */
     public static int generarNumeroSala() {
         return new Random((int)(Math.random()*(9000)+1000)).nextInt();
     }

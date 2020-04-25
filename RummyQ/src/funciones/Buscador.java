@@ -12,6 +12,12 @@ import org.java_websocket.WebSocket;
  * @version 0.0.1
  */
 public class Buscador {
+    /**
+     * 
+     * @param ws
+     * @param lista
+     * @return 
+     */
     public static Usuario buscarUsuario(WebSocket ws,LinkedList<Usuario> lista){
         for (int i = 0; i < lista.size(); i++) {
             if(lista.get(i).getWebSocket().equals(ws)){
@@ -20,7 +26,12 @@ public class Buscador {
         }
         return null;
     }
-    
+    /**
+     * 
+     * @param codigo
+     * @param salas
+     * @return 
+     */
     public static Sala buscarSala(int codigo, LinkedList<Sala> salas){
         for (int i = 0; i < salas.size(); i++) {
             if(salas.get(i).getCodigo()==codigo){
