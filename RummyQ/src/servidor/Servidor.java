@@ -65,7 +65,7 @@ public class Servidor extends WebSocketServer{
                 }   break;
             case "crear sala":
                 int numeroSala = Generador.generarNumeroSala();
-                sala = new Sala(numeroSala);
+                sala = new Sala(numeroSala,"Sala: "+numeroSala);
                 this.salas.add(sala);
                 usuario = Buscador.buscarUsuario(ws, usuarios);
                 if(usuario==null){
@@ -103,6 +103,7 @@ public class Servidor extends WebSocketServer{
                 usuario = Buscador.buscarUsuario(ws, usuarios);
                 sala = usuario.getSala();
                 sala.start();
+                System.out.println("El juego ha iniciado en "+sala.getName());
                 break;
             default:
                 break;
