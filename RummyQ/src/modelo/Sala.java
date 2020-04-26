@@ -1,6 +1,9 @@
 package modelo;
 
+import funciones.Generador;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Clase Sala
@@ -13,8 +16,10 @@ public class Sala extends Thread{
     /**
      * Default constructor
      * @param codigo
+     * @param name
      */
-    public Sala(int codigo) {
+    public Sala(int codigo,String name) {
+        super(name);
         this.tablero = new Tablero();
         this.codigo=codigo;
         this.usuarios= new LinkedList();
@@ -23,7 +28,7 @@ public class Sala extends Thread{
     /**
      * 
      */
-    private Tablero tablero;
+    private final Tablero tablero;
 
     /**
      * 
@@ -44,10 +49,6 @@ public class Sala extends Thread{
         return tablero;
     }
 
-    public void setTablero(Tablero tablero) {
-        this.tablero = tablero;
-    }
-
     public LinkedList getUsuarios() {
         return usuarios;
     }
@@ -59,4 +60,44 @@ public class Sala extends Thread{
     public int getCodigo() {
         return codigo;
     }   
+
+    @Override
+    public void run() {
+        super.run(); 
+        LinkedList <Ficha> fichas = Generador.revolverFichas();
+        for (int i = 0; i < this.usuarios.size(); i++) {
+            LinkedList <Ficha> mano = this.usuarios.get(i).getMano();
+            for (int j = 0; j < 7; j++) {
+                mano.add(fichas.removeFirst());
+                mano.add(fichas.removeLast());
+            }
+        }
+        Banca banca = new Banca();
+        banca.setFichas(fichas);
+        this.tablero.setBanca(banca);  
+        juego:
+        while(true){
+            turno:
+            for (Usuario usuario : this.usuarios) {
+                usuario.setEnTurno(true); 
+                synchronized(this.tablero){
+                    try {
+                        this.tablero.wait();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Sala.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                usuario.setEnTurno(false);
+                if(usuario.getMano().isEmpty()){
+                    this.anunciarGanador(usuario);
+                }
+            }
+        }
+    }
+    public void anunciarGanador(Usuario usuarioGanador){
+        for (Usuario usuario : this.usuarios) {
+            String objeto= "{\"tipo\":\"ganador\",\"ganador\":\""+usuarioGanador.getNombre()+"\"}";
+            usuario.getWebSocket().send(objeto);
+        }
+    }
 }

@@ -11,6 +11,7 @@ import modelo.Ficha;
  * @version 0.0.1
  */
 public class Generador {
+    private static LinkedList<Ficha> fichas;
     /**
      * 
      * @return 
@@ -20,10 +21,10 @@ public class Generador {
         cicloNumeros:
         for (int i = 0; i < 13; i++) {
             /*
-            0-negro
-            1-rojo
-            2-azul
-            3-amarillo
+                0-negro
+                1-rojo
+                2-azul
+                3-amarillo
             */
             cicloColores:
             for (int j = 0; j < 4; j++) {
@@ -49,5 +50,24 @@ public class Generador {
      */
     public static int generarNumeroSala() {
         return new Random((int)(Math.random()*(9000)+1000)).nextInt();
+    }
+    
+    public static LinkedList <Ficha> solicitarFichas(){
+        if(fichas==null){
+            fichas = crearFichas();
+        }
+        return fichas;
+    }
+    public static LinkedList <Ficha> revolverFichas(){
+        LinkedList <Ficha> nuevaLista = new LinkedList();
+        LinkedList<Ficha> fichasRevueltas = new LinkedList();
+        
+        fichas.forEach((ficha) -> {
+            nuevaLista.add(ficha);
+        });
+        while(nuevaLista.size()>0){
+            fichasRevueltas.add(nuevaLista.remove((int) ((Math.random()) * nuevaLista.size())));
+        }
+        return fichasRevueltas;
     }
 }

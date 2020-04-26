@@ -15,6 +15,7 @@ public class Usuario {
      * Default constructor
      */
     public Usuario() {
+        this.desbloqueado = false;
     }
 
     /**
@@ -41,11 +42,20 @@ public class Usuario {
      * 
      */
     private LinkedList <Ficha> mano;
+    
+    /**
+     * 
+     */
+    private boolean desbloqueado;
+    
+    /**
+     * 
+     */
+    private boolean enTurno;
     /**
      * 
      * @return 
      */
-
     public String getNombre() {
         return nombre;
     }
@@ -86,6 +96,20 @@ public class Usuario {
         this.sala = sala;
     }
 
+    public boolean isDesbloqueado() {
+        return desbloqueado;
+    }
 
+    public void setDesbloqueado(boolean desbloqueado) {
+        this.desbloqueado = desbloqueado;
+    }
 
+    public boolean isEnTurno() {
+        return enTurno;
+    }
+
+    public void setEnTurno(boolean enTurno) {
+        this.enTurno = enTurno;
+    }
+    
 }
