@@ -1,0 +1,10 @@
+.col-lg-1{
+	background-color: #6b686b;
+	text-align: center;
+	opacity: 90%;
+	color : black;
+	padding : 10px;
+	height : 63px;
+	overflow : auto;
+	border-radius: 10px;
+}
