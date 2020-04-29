@@ -1,4 +1,5 @@
-Cuando se conecta un nuevo usuario:
+
+/*Cuando se conecta un nuevo usuario:*/
 
 - Servidor retorna {tipo: "hash", hash: numero}
 - Cliente contesta {tipo: "nuevo",usuario: nombre}
@@ -32,5 +33,64 @@ Cuando el jugador va iniciar partida:
 -Jugador inicia con {tipo: "iniciar partida"} //el servidor inicia el hilo sala
 
 
- 
+Cuando el jugador coloca nueva ficha:
 
+-Jugador envía 
+{
+tipo: "jugada - colocar ficha", 
+ficha: 
+{
+	numero: numero,
+	color: numero
+},
+coordenada: {
+		x: numero,
+		y: numero
+	}	
+}
+
+
+Cuando el jugador mueve una ficha:
+
+- Jugador envía
+
+{
+	tipo: "jugada - mover ficha",
+	ficha: 
+	{
+		numero: numero,
+		color: numero
+	},
+	coordenada_anterior: 
+	{
+		x: numero,
+		y: numero
+	},
+	coordenada_nueva: 
+	{
+		x: numero,
+		y: numero
+	}
+}
+
+Cuando el jugador termina el turno:
+
+- Jugador envía 
+
+{
+	tipo: "fin de turno"
+}
+
+- Servidor responde si la jugada es válida o no
+
+Si es válida
+
+{
+	tipo: "jugadas válidas"
+}
+
+Si no
+
+{
+	tipo: "jugadas inválidas"
+}

@@ -1,7 +1,5 @@
 package modelo;
 
-import java.util.*;
-
 /**
  * Clase tablero
  * @author Valeria Bermúdez - Santiago Gutiérrez -Santiago Pérez
@@ -19,18 +17,18 @@ public class Tablero {
     /**
      * 
      */
-    private LinkedList listas;
+    private Ficha[][] listas;
 
     /**
      * 
      */
     private Banca banca;
 
-    public LinkedList getListas() {
+    public Ficha[][] getListas() {
         return listas;
     }
 
-    public void setListas(LinkedList listas) {
+    public void setListas(Ficha[][] listas) {
         this.listas = listas;
     }
 
@@ -41,6 +39,17 @@ public class Tablero {
     public void setBanca(Banca banca) {
         this.banca = banca;
     }
-
-    
+    /**
+    * Columnas es el primer componente
+    * Filas es el segundo componente
+    */
+    public void aumentarFilas(){
+        Ficha[][] listasNuevas = new Ficha [this.listas.length][this.listas[0].length+1];
+        for (int i = 0; i < this.listas.length; i++) {
+            for (int j = 0; j < this.listas[0].length; j++) {
+                listasNuevas[i][j] = this.listas[i][j];
+            }
+        }   
+        this.listas = listasNuevas;
+    }
 }
