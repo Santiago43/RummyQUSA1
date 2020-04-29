@@ -4,6 +4,7 @@ import funciones.Generador;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.java_websocket.WebSocket;
 
 /**
  * Clase Sala
@@ -99,5 +100,17 @@ public class Sala extends Thread{
             String objeto= "{\"tipo\":\"ganador\",\"ganador\":\""+usuarioGanador.getNombre()+"\"}";
             usuario.getWebSocket().send(objeto);
         }
+    }
+    
+        /**
+     * 
+     * @param ws
+     * @param mensaje 
+     */
+    public void enviarATodosEnSala(WebSocket ws,String mensaje){
+        for(int i =0;i<usuarios.size();i++) {
+    		WebSocket c = (WebSocket)usuarios.get(i).getWebSocket();
+            if (c != ws) c.send(mensaje);
+    	}
     }
 }

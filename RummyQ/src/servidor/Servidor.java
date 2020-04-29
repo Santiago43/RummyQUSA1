@@ -85,7 +85,7 @@ public class Servidor extends WebSocketServer{
                 usuario.setSala(sala);
                 sala.getUsuarios().add(usuario);
                 objeto = "{\"tipo\":\"nuevo jugador\"}";
-                this.enviarATodosEnSala(ws, sala, objeto);
+                sala.enviarATodosEnSala(usuario.getWebSocket(), objeto);
                 objeto = "{\"tipo\":\"participantes\",\"participantes\":\""+sala.getUsuarios().size()+"\"}";
                 ws.send(objeto); 
                 break;
@@ -94,8 +94,8 @@ public class Servidor extends WebSocketServer{
                 sala = Buscador.buscarSala(usuario.getSala().getCodigo(), salas);
                 sala.getUsuarios().remove(usuario);
                 usuario.setSala(null);
-                objeto = "{\"tipo\":\"jugador salió\"}";
-                this.enviarATodosEnSala(ws, sala, objeto); 
+                objeto = "{\"tipo\":\"jugador salió\"}"; 
+                sala.enviarATodosEnSala(usuario.getWebSocket(), objeto);
                 objeto = "{\"tipo\":\"confirmación salida\",\"mensaje\":\"Usted salió\"}";
                 ws.send(objeto); 
                 break;
@@ -104,6 +104,8 @@ public class Servidor extends WebSocketServer{
                 sala = usuario.getSala();
                 sala.start();
                 System.out.println("El juego ha iniciado en "+sala.getName());
+                break;
+            case "":
                 break;
             default:
                 break;
@@ -118,17 +120,5 @@ public class Servidor extends WebSocketServer{
     public void onError(WebSocket ws, Exception excptn) {
         System.out.println("");
     }
-    /**
-     * 
-     * @param ws
-     * @param sala
-     * @param mensaje 
-     */
-    public void enviarATodosEnSala(WebSocket ws,Sala sala,String mensaje){
-        LinkedList <Usuario> usuarios = sala.getUsuarios();
-        for(int i =0;i<usuarios.size();i++) {
-    		WebSocket c = (WebSocket)usuarios.get(i).getWebSocket();
-            if (c != ws) c.send(mensaje);
-    	}
-    }
+
 }
