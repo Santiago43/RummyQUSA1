@@ -23,6 +23,30 @@ public class Ficha {
      * 
      */
     private int color;
+    
+    /**
+     * 
+     */
+    private int x;
+    
+    /**
+     * 
+     */
+    private int y;
+    
+    /**
+     * 
+     */
+    private int xAnterior;
+    /**
+     * 
+     */
+    private int yAnterior;
+    
+    /**
+     * 
+     * @return 
+     */
 
     public int getNumero() {
         return numero;
@@ -40,5 +64,39 @@ public class Ficha {
         this.color = color;
     }
 
-    
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getxAnterior() {
+        return xAnterior;
+    }
+
+    public void setxAnterior(int xAnterior) {
+        this.xAnterior = xAnterior;
+    }
+
+    public int getyAnterior() {
+        return yAnterior;
+    }
+
+    public void setyAnterior(int yAnterior) {
+        this.yAnterior = yAnterior;
+    }
+
+    public String toJson() {
+        return "{" + "\"numero\":\"" + numero + "\", \"color\":\"" + color + "\", \"x\":\"" + x + "\", \"y\":\"" + y + "\", \"xAnterior\":\"" + xAnterior + "\", \"yAnterior\":\"" + yAnterior + "\"}";
+    }    
 }

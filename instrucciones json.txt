@@ -31,24 +31,51 @@ Cuando está en espera de partida:
 Cuando el jugador va iniciar partida: 
 
 -Jugador inicia con {tipo: "iniciar partida"} //el servidor inicia el hilo sala
+-Servidor revuelve y entrega fichas a cada jugador 
+
+{
+	tipo: "nueva mano",
+	mano:[
+			{
+				numero:" numero  ", 
+				color:" color  ",
+				x:"  x  ", 
+				y:"  y ",
+				xAnterior:"  xAnterior  ",
+				yAnterior:"  yAnterior 
+			}
+			{
+				...
+			},
+			{
+
+			}
+		]
+}
 
 
 Cuando el jugador coloca nueva ficha:
 
--Jugador envía 
+-Jugador envía
 {
 tipo: "jugada - colocar ficha", 
 ficha: 
 {
 	numero: numero,
-	color: numero
-},
-coordenada: {
-		x: numero,
-		y: numero
-	}	
+	color: numero,
+	x: numero,
+	y: numero,
+	xAnterior:-1,
+	yAnterior:-1
 }
+-Si el jugador está en turno, el servidor envía el dato de la ficha a todos los usuarios en la sala
 
+-Si el jugador no está en turno, el servidor le retorna:
+
+{
+	tipo: "Error",
+	mensaje: "tú no estás en turno"
+}
 
 Cuando el jugador mueve una ficha:
 
@@ -59,17 +86,11 @@ Cuando el jugador mueve una ficha:
 	ficha: 
 	{
 		numero: numero,
-		color: numero
-	},
-	coordenada_anterior: 
-	{
+		color: numero,
 		x: numero,
-		y: numero
-	},
-	coordenada_nueva: 
-	{
-		x: numero,
-		y: numero
+		y: numero,
+		xAnterior: numero,
+		yAnterior: numero
 	}
 }
 
