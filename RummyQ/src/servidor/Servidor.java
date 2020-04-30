@@ -105,7 +105,15 @@ public class Servidor extends WebSocketServer{
                 sala.start();
                 System.out.println("El juego ha iniciado en "+sala.getName());
                 break;
-            case "":
+            case "jugada - colocar ficha":
+                usuario = Buscador.buscarUsuario(ws, usuarios);
+                sala = usuario.getSala();
+                sala.colocarFicha(usuario,obj);
+                break;
+            case "jugada - mover ficha":
+                usuario = Buscador.buscarUsuario(ws, usuarios);
+                sala = usuario.getSala();
+                sala.moverFicha(usuario,obj);
                 break;
             default:
                 break;

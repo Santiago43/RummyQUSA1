@@ -13,7 +13,7 @@ import modelo.Ficha;
  */
 public class Generador {
 
-    private static LinkedList<Ficha> fichas;
+//    private static LinkedList<Ficha> fichas;
 
     /**
      *
@@ -37,6 +37,10 @@ public class Generador {
                     Ficha ficha = new Ficha();
                     ficha.setNumero(i + 1);
                     ficha.setColor(j);
+                    ficha.setX(0);
+                    ficha.setY(0);
+                    ficha.setxAnterior(0);
+                    ficha.setyAnterior(0); 
                     fichas.add(ficha);
                 }
             }
@@ -44,9 +48,18 @@ public class Generador {
         Ficha comodin1 = new Ficha();
         Ficha comodin2 = new Ficha();
         comodin1.setColor(0);
-        comodin2.setColor(1);
         comodin1.setNumero(0);
+        comodin1.setX(0);
+        comodin1.setY(0);
+        comodin1.setxAnterior(0);
+        comodin1.setyAnterior(0);
+        
+        comodin2.setColor(1);
         comodin2.setNumero(0);
+        comodin2.setX(0);
+        comodin2.setY(0);
+        comodin2.setxAnterior(0);
+        comodin2.setyAnterior(0);
         fichas.add(comodin1);
         fichas.add(comodin2);
         return fichas;
@@ -61,13 +74,11 @@ public class Generador {
     }
 
     public static LinkedList<Ficha> solicitarFichas() {
-        if (fichas == null) {
-            fichas = crearFichas();
-        }
-        return fichas;
+
+        return crearFichas();
     }
 
-    public static LinkedList<Ficha> revolverFichas() {
+    public static LinkedList<Ficha> revolverFichas(LinkedList <Ficha> fichas) {
         LinkedList<Ficha> nuevaLista = new LinkedList();
         LinkedList<Ficha> fichasRevueltas = new LinkedList();
 
