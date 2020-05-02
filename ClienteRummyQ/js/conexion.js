@@ -46,8 +46,8 @@ websocket.onmessage=function(event){
 		else if(obj.tipo==="nueva mano"){
 			cambiarAlTablero(obj.mano,obj.jugadores)
 		}
-		else if(obj.tipo===""){
-			
+		else if(obj.tipo==="ganador"){
+			terminarJuego(obj.ganador);
 		}
 	}
 }
@@ -177,3 +177,17 @@ function moverFicha(){
 function colocarFicha(){
 	
 }
+
+
+/**
+ * Función que permite terminar la partida. El jugador es retornado a la 
+ * Vista por la que entro
+ * @param {*} ganador que es el nombre de quien ganó la partida
+ */
+
+ function terminarJuego(ganador){
+	alert("El juego terminó. El ganador es: "+ganador);
+	//Luego se devuelve a la vista anterior 
+	$("#DivInicio").show();
+	$("#gridTablero").empty();
+ }

@@ -113,6 +113,7 @@ public class Sala extends Thread {
                 usuario.setEnTurno(false);
                 if (usuario.getMano().isEmpty()) {
                     this.anunciarGanador(usuario);
+                    System.out.println("Terminando juego en la sala "+this.codigo);
                     break juego;
                 }
             }
