@@ -4,20 +4,20 @@
 - Servidor retorna {tipo: "hash", hash: numero}
 
 Cuando vaya a crear una sala:
-- Cliente env√≠a {tipo: "crear sala",usuario: nombre}
-- Servidor retorna {tipo: "codigo sala", codigo: "c√≥digo","mensaje": "Bienvenido nombre"}
+- Cliente envÌa {tipo: "crear sala",usuario: nombre}
+- Servidor retorna {tipo: "codigo sala", codigo: "cÛdigo","mensaje": "Bienvenido nombre"}
 
 
 Cuando vaya a conectarse a una sala:
-- Cliente envia {tipo "conectarse a sala", codigo: "c√≥digo",usuario: nombre}
-- Servidor retorna {tipo: "conexi√≥n sala", mensaje: "conectado // error: esa sala no existe", participantes: numero}
-- Servidor env√≠a a todos los que est√©n en la sala {tipo: "nuevo jugador",participantes: numero}
+- Cliente envia {tipo "conectarse a sala", codigo: "cÛdigo",usuario: nombre}
+- Servidor retorna {tipo: "conexiÛn sala", mensaje: "conectado // error: esa sala no existe", participantes: numero}
+- Servidor envÌa a todos los que estÈn en la sala {tipo: "nuevo jugador",participantes: numero}
 
 
 Cuando vaya a desconectarse de una sala antes de jugar:
 
-- Cliente env√≠a {tipo: "desconectarse de sala"}
-- Servidor env√≠a a todos los que est√©n en la sala {tipo: "jugador sali√≥", participantes: numero}
+- Cliente envÌa {tipo: "desconectarse de sala"}
+- Servidor envÌa a todos los que estÈn en la sala {tipo: "jugador saliÛ", participantes: numero}
 
 
 
@@ -45,12 +45,16 @@ Cuando el jugador va iniciar partida:
 			...
 			}
 		]
+	jugadores: [
+			{nombre: nombreJugador},
+			{nombre: nombreJugador2}
+	]
 }
 
 
 Cuando el jugador coloca nueva ficha:
 
--Jugador env√≠a
+-Jugador envÌa
 {
 tipo: "jugada - colocar ficha", 
 ficha: 
@@ -62,18 +66,18 @@ ficha:
 	xAnterior:-1,
 	yAnterior:-1
 }
--Si el jugador est√° en turno, el servidor env√≠a el dato de la ficha a todos los usuarios en la sala
+-Si el jugador est· en turno, el servidor envÌa el dato de la ficha a todos los usuarios en la sala
 
--Si el jugador no est√° en turno, el servidor le retorna:
+-Si el jugador no est· en turno, el servidor le retorna:
 
 {
 	tipo: "Error",
-	mensaje: "t√∫ no est√°s en turno"
+	mensaje: "t˙ no est·s en turno"
 }
 
 Cuando el jugador mueve una ficha:
 
-- Jugador env√≠a
+- Jugador envÌa
 
 {
 	tipo: "jugada - mover ficha",
@@ -90,22 +94,22 @@ Cuando el jugador mueve una ficha:
 
 Cuando el jugador termina el turno:
 
-- Jugador env√≠a 
+- Jugador envÌa 
 
 {
 	tipo: "fin de turno"
 }
 
-- Servidor responde si la jugada es v√°lida o no
+- Servidor responde si la jugada es v·lida o no
 
-Si es v√°lida
+Si es v·lida
 
 {
-	tipo: "jugadas v√°lidas"
+	tipo: "jugadas v·lidas"
 }
 
 Si no
 
 {
-	tipo: "jugadas inv√°lidas"
+	tipo: "jugadas inv·lidas"
 }
