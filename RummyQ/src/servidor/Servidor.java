@@ -120,6 +120,7 @@ public class Servidor extends WebSocketServer {
                     sala = usuario.getSala();
                     sala.getTablero().notify();
                 }
+                break;
             default:
                 break;
         }
