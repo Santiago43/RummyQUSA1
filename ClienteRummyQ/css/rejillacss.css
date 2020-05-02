@@ -10,20 +10,14 @@ body{
   cursor: pointer;
 }
 
-.hold {
-  border: solid 5px #ccc;
-}
-
 .empty {
   display: inline-block;
   height: 70px  ;
   width: 43px  ;
   border: solid 1px  black;
   background: white;
-  margin: 1px;
 }
 
-.hovered {
-  background: #f4f4f4;
-  border-style: dashed;
+.ficha.row{
+  margin: 0px !important;
 }

@@ -146,13 +146,22 @@
 }
 
 #tablero{
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%,-50%);
+  position: relative;
+  justify-content: center;
 }
 
 .dropped {
-    position: static !important;
+  position: static !important;
 }
- 
+
+.casillaJugador{
+  width: 100%;
+  height: 25%;
+  background-color: black;
+  color: white;
+  opacity: 65%;
+}
+
+.casillaJugador img{
+  border-radius: 50%;
+}
