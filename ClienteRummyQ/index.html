@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title> Rummy Q </title>
+	<link rel="shortcut icon" href="img/Rummy.png">
 	<link rel="stylesheet" type="text/css" href="css/mycss.css">
 	<link rel="stylesheet" type="text/css" href="css/semantic.min.css">
 </head>
@@ -15,14 +16,47 @@
 		<img src="img/fondo.jpg" id="BackgroundPrincipal">
 		<div id="DivInicio">
 			<h1 id="h1Titulo">Rummy - Q</h1>
-		</div>
+			<label> Ingresa tu nombre </label>
+			<input type="username" placeholder="Enter your name" id="nombre">
+			<button id="BtnCrearSala">Crear sala</button>
+			<button id="BtnUnirseASala">Unirse a sala</button>
+		</div>  
+		<!-- Crear sala -->
 		<div id="DivCrearSala">
-			
+			<!-- Foto redonda sobre login -->
+			<img src="img/Rummy.png" class="logo" alt="Logo Rummy-Q">
+			<h1> Rummy - Q </h1>
+			<!-- Input codigo de sala -->
+			<label for="username">Código</label>
+			<input type="text" id="InputCodigo" readonly="readonly">
+			<label for="username">Participantes: 2</label>
+			<!-- Boton -->
+			<input type="submit" value="Start game" id="StartGame">
+			<a href="#" id="aCrearToInicio">Volver a pagina de inicio</a>
 		</div>
+		<!-- Unirse a sala -->
 		<div id="DivUnirseASala">
-			
+			<!-- Foto redonda sobre login -->
+			<img src="img/Rummy.png" class="logo" alt="Logo Rummy-Q">
+			<h1> Rummy - Q </h1>
+			<!-- Input codigo de sala -->
+			<label for="username">Código</label>
+			<input type="text" id="InputCodigo">
+			<!-- Div botón unirse -->
+			<div id="DivBotonUnirse">
+				<!-- Boton -->
+				<input type="submit" value="Start game" id="Unirse">
+			</div>
+			<!-- Div información posterior al unirse -->
+			<div id="DivInformacionSala">
+				<label for="username">Participantes: 2</label>
+				<img src="img/iconoReloj.png" class="icono" alt="Reloj">
+				<label> Esperando que inicie la partida </label>
+			</div>
+			<a href="#" id="aUnirseToInicio">Volver a pagina de inicio</a>
 		</div>
 	</div>
 </body>
 <script src="js/script.js"></script>
+<script type="text/javascript" src="js/prueba.js"></script>
 </html>
