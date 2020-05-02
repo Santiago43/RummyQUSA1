@@ -7,9 +7,11 @@
 	<link rel="shortcut icon" href="img/Rummy.png">
 	<link rel="stylesheet" type="text/css" href="css/mycss.css">
 	<link rel="stylesheet" type="text/css" href="css/semantic.min.css">
+	<link rel="stylesheet" href="css/rejillacss.css">
+
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="js/semantic.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <body>
 	<div id="DivGeneral">
 		<!-- Fondo -->
@@ -56,15 +58,19 @@
 			<a href="#" id="aUnirseToInicio">Volver a pagina de inicio</a>
 		</div>
 		<div id="gridTablero" class="ui grid">
-			<div id="tablero" class="thirteen wide column container">
-				<div class="fill" draggable="true"> <img src="img/fichas/0-0.png" height="70px" width="43px" ></div>
+			<div class="four wide column">
+				<div class="casillaJugador"><img src="img/1.png">Val</div>
+				<div class="casillaJugador"><img src="img/2.png"> Santi</div>
+				<div class="casillaJugador"><img src="img/3.png"> Sebastian</div>
+				<div class="casillaJugador"><img src="img/4.png">Santi2</div>
 			</div>
-			<div class="two wide column">
+			<div id="tablero" class="twelve wide column">
+			</div>
 
-			</div>
 		</div>
 	</div>
 </body>
+<script src="js/semantic.min.js"> </script>
 <script src="js/script.js"></script>
 <script type="text/javascript" src="js/prueba.js"></script>
 <script type="text/javascript" src="js/conexion.js"></script>

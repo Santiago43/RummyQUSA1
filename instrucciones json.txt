@@ -36,7 +36,7 @@ Cuando el jugador va iniciar partida:
 				y:  y ,
 				xAnterior:  xAnterior  ,
 				yAnterior:  yAnterior 
-			}
+			},
 			{
 				...
 			},
@@ -45,6 +45,10 @@ Cuando el jugador va iniciar partida:
 			...
 			}
 		]
+	jugadores: [
+			{nombre: nombreJugador},
+			{nombre: nombreJugador2}
+	]
 }
 
 
