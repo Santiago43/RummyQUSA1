@@ -2,7 +2,7 @@ var posicion="";
 var nuev="";
 $(document).ready(
 	function(){
-		crearRejilla(6,19);
+		crearRejilla(7,19);
 		$("#DivInicio").hide();
 		$("#DivCrearSala").hide();
 		$("#DivUnirseASala").hide();
@@ -45,8 +45,11 @@ function crearRejilla(filas,columnas){
 		}
 		texto+='</div>';
 	}
+	texto+='<div id="manoJugador"></div>';
 	$("#tablero").append(texto);
 }
+
+
 
 //function consultar(posicion){
 //	if(posicion!=null){

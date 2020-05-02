@@ -165,3 +165,10 @@
 .casillaJugador img{
   border-radius: 50%;
 }
+
+#manoJugador{
+  width:97%; 
+  height:140px;
+  background-color:#4e342e;
+  opacity: 95%;
+}
