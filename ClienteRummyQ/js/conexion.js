@@ -112,7 +112,7 @@ function crearSala(){
  * Función que permite conectarse a una sala
  */
 function conectarASala(codigo,usuario){
-	var object= {tipo: "conectarse a sala", codigo: "código",usuario: nombre};
+	var object= {tipo: "conectarse a sala", codigo: codigo,usuario: usuario};
 	enviarMensaje(object);
 }
 
