@@ -84,7 +84,15 @@ public class Sala extends Thread {
                     manoNueva += ",";
                 }
             }
-            manoNueva += "]}";
+            manoNueva += "]"
+                    + ",\"jugadores\":[";
+            for (int j = 0; j < this.usuarios.size(); j++) {
+                manoNueva+= "{\"nombre\": \""+this.usuarios.get(i).getNombre()+"\"}";
+                if (j!=this.usuarios.size()-1) {
+                    manoNueva+=",";
+                }
+            }
+            manoNueva+= "]}";
             this.usuarios.get(i).getWebSocket().send(manoNueva);
         }
         Banca banca = new Banca();
@@ -209,7 +217,7 @@ public class Sala extends Thread {
                 int i=0;
                 while(this.tablero.getListas()[i][y]!=null){
                     obj.put("x",i+1);
-                    obj.put("", usuarios)
+                    //obj.put("", usuarios)
                 }
                 
             } else if (x > 13) {
