@@ -17,3 +17,10 @@
 .ficha.row{
   margin: 0px !important;
 }
+
+#manoJugador{
+  width:95%; 
+  height:140px;
+  background-color:#4e342e;
+  opacity: 95%;
+}
