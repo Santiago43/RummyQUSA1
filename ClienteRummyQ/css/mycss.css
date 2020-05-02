@@ -18,8 +18,25 @@
   overflow: hidden;
 }
 
-#DivCrearSala, #DivUnirseASala, #DivInformacionSala{
+#DivCrearSala, #DivUnirseASala, #DivInformacionSala, #gridTablero{
   display: none;
+}
+
+#DivInicio{
+  display: flex;
+  justify-content: center;
+}
+
+#DivInicio h1{
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  color: #ffffff;
+  border-bottom: 8px solid #fff; 
 }
 
 #DivCrearSala, #DivUnirseASala{
@@ -68,7 +85,7 @@
   color: white;
 }
 
-#DivCrearSala label, #DivUnirseASala label {
+#DivCrearSala label, #DivUnirseASala label, #DivInicio label {
   margin-top: 12%;
   padding: 0;
   font-weight: bold;
@@ -77,12 +94,16 @@
   color: white;
 }
 
+#DivInicio label{
+  display: flex !important;
+}
+
 #DivCrearSala input , #DivUnirseASala input{
   width: 100%;
   margin-bottom: 20px;
 }
 
-#DivCrearSala input[type="text"], #DivUnirseASala input[type="text"] {
+#DivCrearSala input[type="text"], #DivUnirseASala input[type="text"], #DivInicio input[type="text"] {
   border: none;
   margin-bottom: 10%;
   border-bottom: 1px solid #fff;
@@ -93,7 +114,7 @@
   font-size: 16px;
 }
 
-#DivCrearSala input[type="submit"], #DivUnirseASala input[type="submit"] {
+#DivCrearSala input[type="submit"], #DivUnirseASala input[type="submit"], #DivInicio input[type="submit"] {
   margin-top: 20%;
   border: none;
   outline: none;
@@ -104,7 +125,7 @@
   border-radius: 20px;
 }
 
-#DivCrearSala input[type="submit"]:hover, #DivUnirseASala input[type="submit"]:hover {
+#DivCrearSala input[type="submit"]:hover, #DivUnirseASala input[type="submit"]:hover, #DivInicio input[type="submit"]:hover {
   cursor: pointer;
   background: #4e342e;
   color: #ffffff;
@@ -127,19 +148,6 @@
 #DivCrearSala a:hover , #DivUnirseASala a:hover{
   color: #fff;
 }
-
-#DivInicio h1{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  text-align: center;
-  margin: 0;
-  padding: 0;
-  color: #fff;
-  border-bottom: 8px solid #fff; 
-}
-
 
 #gridTablero{
   text-align: center;
