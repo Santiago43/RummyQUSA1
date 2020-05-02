@@ -18,28 +18,17 @@
   overflow: hidden;
 }
 
-#DivCrearSala, #DivUnirseASala, #DivInformacionSala, #gridTablero{
-  display: none;
-}
-
 #DivInicio{
-  display: flex;
-  justify-content: center;
+  background-color: transparent !important;
+  width: 1000px !important;
 }
 
-#DivInicio h1{
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  text-align: center;
-  margin: 0;
-  padding: 0;
-  color: #ffffff;
-  border-bottom: 8px solid #fff; 
+#DivContenidoInicio{
+  background: transparent !important;
+  padding: 100px 30px !important;
 }
 
-#DivCrearSala, #DivUnirseASala{
+#DivCrearSala, #DivUnirseASala, #DivInicio, #DivContenidoInicio{
   width: 320px;
   height: 460px;
   background: rgba(0,0,0,0.4);
@@ -77,12 +66,17 @@
   line-height : 25px;
 }
 
-#DivCrearSala h1 , #DivUnirseASala h1{
+#DivCrearSala h1 , #DivUnirseASala h1, #DivInicio h1{
   margin: 0;
   padding: 0 0 20px;
   text-align: center;
   font-size: 30px;
   color: white;
+}
+
+#DivInicio h1{
+  margin-top: -90px !important;
+  font-size: 80px !important;
 }
 
 #DivCrearSala label, #DivUnirseASala label, #DivInicio label {
@@ -95,12 +89,16 @@
 }
 
 #DivInicio label{
-  display: flex !important;
+  margin-top: 14% !important;
 }
 
-#DivCrearSala input , #DivUnirseASala input{
+#DivCrearSala input , #DivUnirseASala input, #DivInicio input{
   width: 100%;
   margin-bottom: 20px;
+}
+
+#nombre::placeholder{
+   color: gainsboro; 
 }
 
 #DivCrearSala input[type="text"], #DivUnirseASala input[type="text"], #DivInicio input[type="text"] {
@@ -114,6 +112,12 @@
   font-size: 16px;
 }
 
+#DivInicio input[type="text"] {
+  background: rgba(0,0,0,0.4) !important;
+  border-radius: 10px;
+  margin-top: 10%;
+}
+
 #DivCrearSala input[type="submit"], #DivUnirseASala input[type="submit"], #DivInicio input[type="submit"] {
   margin-top: 20%;
   border: none;
@@ -123,6 +127,10 @@
   color: #ffffff;
   font-size: 18px;
   border-radius: 20px;
+}
+
+#DivInicio input[type="submit"] {
+  margin-top: 6% !important;
 }
 
 #DivCrearSala input[type="submit"]:hover, #DivUnirseASala input[type="submit"]:hover, #DivInicio input[type="submit"]:hover {

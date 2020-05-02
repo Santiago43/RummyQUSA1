@@ -3,11 +3,11 @@ var nuev="";
 $(document).ready(
 	function(){
 		crearRejilla(6,19);
-		$("#DivInicio").hide();
+		$("#DivInicio").show();
 		$("#DivCrearSala").hide();
 		$("#DivUnirseASala").hide();
 		$("#DivInformacionSala").hide();
-		$("#gridTablero").show();
+		$("#gridTablero").hide();
 	}
 	);
 
