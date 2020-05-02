@@ -2,6 +2,7 @@ var wait = ms => new Promise((r, j) => setTimeout(r, ms));
 var wsUri = "ws://25.133.184.139:30001";
 var websocket = new WebSocket(wsUri);
 var mano= new Array();
+var jugadores = new Array();
 
 /**
 * Cuando se abre la conexión
@@ -43,7 +44,7 @@ websocket.onmessage=function(event){
 			añadirParticipante(obj.participantes);
 		}
 		else if(obj.tipo==="nueva mano"){
-			cambiarAlTablero(obj.mano)
+			cambiarAlTablero(obj.mano,obj.jugadores)
 		}
 		else if(obj.tipo===""){
 			
@@ -145,10 +146,13 @@ function iniciarPartida(){
  * Función que permite cambiar al tablero
  * @param {*} nuevaMano que es el arreglo con la mano del jugador 
  */
-function cambiarAlTablero(nuevaMano){
+function cambiarAlTablero(nuevaMano,nuevosJugadores){
 	for (let i = 0; i < nuevaMano.length; i++) {
 		mano.push(nuevaMano[i]);
 	}	
+	for (let i = 0; i < nuevosJugadores.length; i++) {
+		jugadores.push(nuevosJugadores[i]); 		
+	}
 	//Luego irán las instrucciones necesarias para hacer el cambio de la página al tablero
 }
 
