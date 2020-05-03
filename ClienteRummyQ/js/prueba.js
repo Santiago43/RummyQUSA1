@@ -1,22 +1,3 @@
-$("#Unirse").click(function(){
-	$("#DivBotonUnirse").toggle();
-	$("#DivInformacionSala").toggle();
-})
-
-$("#aUnirseToInicio").click(function(){
-	$("#DivBotonUnirse").toggle();
-	$("#DivInformacionSala").toggle();
-})
-
-$("#BtnCrearSala").click(function(){
-	$("#DivCrearSala").show();
-	setCookie("nombre", $("#nombre").val(), 1);
-})
-
-$("#BtnUnirseASala").click(function(){
-	$("#DivUnirseASala").show();
-})
-
 function setCookie(cname, cvalue, exdays) {
   var d = new Date();
   d.setTime(d.getTime() + (exdays*24*60*60*1000));

@@ -33,7 +33,9 @@
 			<!-- Input codigo de sala -->
 			<label for="username">Código</label>
 			<input type="text" id="InputCodigo" readonly="readonly">
-			<label for="username">Participantes: 2</label>
+			<label for="username">Participantes: </label>
+			<label id="noParticipantes">
+			</label>
 			<!-- Boton -->
 			<input type="submit" value="Start game" id="StartGame">
 			<a href="#" id="aCrearToInicio">Volver a pagina de inicio</a>
@@ -54,6 +56,7 @@
 			<!-- Div información posterior al unirse -->
 			<div id="DivInformacionSala">
 				<label for="username">Participantes: 2</label>
+				<input id="ParticipantesInvitados"type="" name="">
 				<img src="img/iconoReloj.png" class="icono" alt="Reloj">
 				<label> Esperando que inicie la partida </label>
 			</div>
@@ -67,7 +70,7 @@
 				<div class="casillaJugador"><img src="img/4.png">Santi2</div>
 			</div>
 			<div id="tablero" class="twelve wide column">
-				
+				<div class="fill" draggable="true"> <img src="img/fichas/0-0.png" height="70px" width="43px" ></div>
 			</div>
 
 		</div>
@@ -77,5 +80,7 @@
 <script src="js/script.js"></script>
 <script type="text/javascript" src="js/prueba.js"></script>
 <script type="text/javascript" src="js/conexion.js"></script>
+<script type="text/javascript" src="js/Eventos.js"></script>
+
 
 </html>

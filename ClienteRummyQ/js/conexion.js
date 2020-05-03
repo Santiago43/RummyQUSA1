@@ -27,7 +27,7 @@ websocket.onmessage=function(event){
 		}
 		else if (obj.tipo==="codigo sala"){
 			//Se recibe el código de la sala y un mensaje 
-			cambiarASalaDeEspera(obj.codigo,obj.mensaje,1);
+			cambiarASalaDeEsperaCreador(obj.codigo,obj.mensaje,1);
 		}
 		else if(obj.tipo==="conexion sala"){
 			if(obj.mensaje==="conectado"){
@@ -106,23 +106,25 @@ function crearSala(){
 	/**
 	 * Luego se debe colocar el cambio al tablero de este usuario, lo cual 
 	 * se da en una noficiación del servidor
-	*/
-}
+	 */
+	}
 /**
  * Función que permite conectarse a una sala
  */
-function conectarASala(codigo,usuario){
-	var object= {tipo: "conectarse a sala", codigo: codigo,usuario: usuario};
-	enviarMensaje(object);
-}
+ function conectarASala(codigo,usuario){
+ 	var object= {tipo: "conectarse a sala", codigo: codigo,usuario: usuario};
+ 	enviarMensaje(object);
+ }
 
 /**
  * Función que agrega participantes a la sala
  * @param {number} participantes que es el número nuevo de participantes
  */
-function añadirParticipante(participantes){
+ function añadirParticipante(participantes){
+ 	$("#noParticipantes").append(participantes);
+ 	$("#ParticipantesInvitados").append(participantes);
 
-}
+ }
 
 /**
  * Función que permite conectarse a la sala de espera. 
@@ -131,9 +133,23 @@ function añadirParticipante(participantes){
  * @param {String} mensaje que es un mensaje del servidor
  * @param {number} participantes que son los participantes activos en ese momento
  */
-function cambiarASalaDeEspera(codigo,mensaje,participantes){
-	
-}
+ function cambiarASalaDeEsperaCreador(codigo,mensaje,participantes){
+ 	$("#DivCrearSala").show();
+ 	$("#DivInicio").hide();
+ 	$("#InputCodigo").attr("value",codigo);
+ 	console.log(mensaje);
+ 	$("#noParticipantes").append(participantes);
+ }
+
+
+ function cambiarASalaDeEspera(codigo,mensaje,participantes){
+ 	$("#DivUnirseASala").show();
+ 	$("#DivInicio").hide();
+ 	$("#InputCodigo").attr("value",codigo);
+ 	console.log(mensaje);
+ 	$("#ParticipantesInvitados").append(participantes);
+ }
+
 /**
 * Función que permite iniciar la partida
 */
@@ -146,13 +162,25 @@ function iniciarPartida(){
  * Función que permite cambiar al tablero
  * @param {*} nuevaMano que es el arreglo con la mano del jugador 
  */
-function cambiarAlTablero(nuevaMano,nuevosJugadores){
-	for (let i = 0; i < nuevaMano.length; i++) {
-		mano.push(nuevaMano[i]);
-	}	
-	for (let i = 0; i < nuevosJugadores.length; i++) {
-		jugadores.push(nuevosJugadores[i]); 		
-	}
+ function cambiarAlTablero(nuevaMano,nuevosJugadores){
+ 	$("#DivInicio").hide();
+ 	$("#DivCrearSala").hide();
+ 	$("#DivUnirseASala").hide();
+ 	$("#DivInformacionSala").hide();
+ 	crearRejilla(7,19);
+ 	$("#gridTablero").show();		
+
+ 	var texto="";
+ 	var fichas="";
+ 	for (let i = 0; i < nuevaMano.length; i++) {
+ 		mano.push(nuevaMano[i]);
+ 		fichas='<div class="fill" draggable="true"> <img src="img/fichas/0-0.png" height="70px" width="43px" ></div>';
+ 		$("#"+i+"").append(fichas);
+ 	}	
+ 	for (let i = 0; i < nuevosJugadores.length; i++) {
+ 		jugadores.push(nuevosJugadores[i]); 	
+ 		texto+='<div class="casillaJugador"><img src="img/'+i+'.png">'+jugadores[i]+'</div>'	
+ 	}
 	//Luego irán las instrucciones necesarias para hacer el cambio de la página al tablero
 }
 
@@ -186,8 +214,8 @@ function colocarFicha(){
  */
 
  function terminarJuego(ganador){
-	alert("El juego terminó. El ganador es: "+ganador);
+ 	alert("El juego terminó. El ganador es: "+ganador);
 	//Luego se devuelve a la vista anterior 
 	$("#DivInicio").show();
 	$("#gridTablero").empty();
- }
+}
