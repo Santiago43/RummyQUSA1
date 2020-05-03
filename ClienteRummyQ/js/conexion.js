@@ -32,7 +32,7 @@ websocket.onmessage=function(event){
 		else if(obj.tipo==="conexion sala"){
 			if(obj.mensaje==="conectado"){
 				//Se recibe el código de la sala, un mensaje y los participantes que están
-				cambiarASalaDeEspera(obj.codigo,obj.mensaje,participantes);
+				cambiarASalaDeEspera(obj.codigo,obj.mensaje,obj.participantes);
 			}
 			else{
 				//Indica que la conexión a la sala fue errónea
