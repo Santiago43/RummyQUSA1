@@ -121,6 +121,8 @@ function crearSala(){
  * @param {number} participantes que es el número nuevo de participantes
  */
  function añadirParticipante(participantes){
+	$("#noParticipantes").empty();
+ 	$("#ParticipantesInvitados").empty();
  	$("#noParticipantes").append(participantes);
  	$("#ParticipantesInvitados").append(participantes);
 
