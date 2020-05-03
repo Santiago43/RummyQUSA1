@@ -9,4 +9,6 @@ $("#StartGame").click(function(){
 
 $("#BtnUnirseASala").click(function(){
 	setCookie("nombre",$("#nombre").val(),1);
+	$("#DivUnirseASala").show();
+	$("#DivInicio").hide();
 });
