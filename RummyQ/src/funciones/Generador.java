@@ -85,7 +85,7 @@ public class Generador {
         fichas.forEach((ficha) -> {
             nuevaLista.add(ficha);
         });
-        while (nuevaLista.size() > 0) {
+        while (!nuevaLista.isEmpty()) {
             fichasRevueltas.add(nuevaLista.remove((int) ((Math.random()) * nuevaLista.size())));
         }
         return fichasRevueltas;

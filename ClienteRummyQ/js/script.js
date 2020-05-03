@@ -2,39 +2,14 @@ var posicion="";
 var nuev="";
 $(document).ready(
 	function(){
-		$("#DivInicio").hide();
 		crearRejilla(7,19);
+		$("#DivInicio").show();
 		$("#DivCrearSala").hide();
 		$("#DivUnirseASala").hide();
 		$("#DivInformacionSala").hide();
-		$("#gridTablero").show();
+		$("#gridTablero").hide();
 	}
 	);
-
-$( function() {
-	$( ".fill" ).draggable({
-		stop: function(event,ui){
-			console.log("stop");
-		},
-		start:function(event,ui){
-			console.log("start");
-		},
-		revert:function(posicion){
-			console.log(nuev);
-			return nuev;
-		},
-	});
-	$( ".empty.column" ).droppable({
-		drop: function(event,ui){
-			//console.log('estoyen'+event.target.id);
-			//posicion=event.target.id;
-			ui.draggable.addClass("dropped");
-			console.log("drop");
-			$(this).append(ui.draggable);
-		}
-	});
-
-} );
 
 
 function crearRejilla(filas,columnas){
@@ -48,9 +23,6 @@ function crearRejilla(filas,columnas){
 	}
 	texto+='<div id="manoJugador"> '+crearEspaciosMano(16)+'</div>';
 	$("#tablero").append(texto);
-	fichas='<div class="fill" draggable="true"> <img src="img/fichas/2-1.png" height="70px" width="43px" ></div>';
-	var j=1;
-	$("#"+j+"").append(fichas);
 }
 
 function crearEspaciosMano(columnas){

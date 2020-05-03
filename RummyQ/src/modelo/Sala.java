@@ -99,7 +99,7 @@ public class Sala extends Thread {
             manoNueva += "]"
                     + ",\"jugadores\":[";
             for (int j = 0; j < this.usuarios.size(); j++) {
-                manoNueva += "{\"nombre\": \"" + this.usuarios.get(i).getNombre() + "\"}";
+                manoNueva += "{\"nombre\": \"" + this.usuarios.get(j).getNombre() + "\"}";
                 if (j != this.usuarios.size() - 1) {
                     manoNueva += ",";
                 }
@@ -179,6 +179,7 @@ public class Sala extends Thread {
         for (int i = 0; i < usuarios.size(); i++) {
             WebSocket c = (WebSocket) usuarios.get(i).getWebSocket();
             if (c != ws) {
+                System.out.println("Enviando a "+usuarios.get(i).getNombre());
                 c.send(mensaje);
             }
         }
