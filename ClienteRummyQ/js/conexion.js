@@ -143,9 +143,9 @@ function crearSala(){
 
 
  function cambiarASalaDeEspera(codigo,mensaje,participantes){
- 	$("#DivUnirseASala").show();
- 	$("#DivInicio").hide();
- 	$("#InputCodigo").attr("value",codigo);
+ 	$("#DivInformacionSala").show();
+ 	$("#DivBotonUnirse").hide();
+ 	$("#InputCodigo2").attr("value",codigo);
  	console.log(mensaje);
  	$("#ParticipantesInvitados").append(participantes);
  }
