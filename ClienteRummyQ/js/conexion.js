@@ -1,5 +1,5 @@
 var wait = ms => new Promise((r, j) => setTimeout(r, ms));
-var wsUri = "ws://25.133.184.139:30001";
+var wsUri = "ws://localhost:30001";
 var websocket = new WebSocket(wsUri);
 var mano= new Array();
 var jugadores = new Array();

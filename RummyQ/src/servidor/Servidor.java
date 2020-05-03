@@ -35,6 +35,7 @@ public class Servidor extends WebSocketServer {
         Usuario usuario = new Usuario();
         usuario.setHash(ws.getRemoteSocketAddress().hashCode());
         usuario.setWebSocket(ws);
+        this.usuarios.add(usuario);
         String objeto = "{\"tipo\":\"hash\",\"hash\":\"" + usuario.getHash() + "\"}";
         ws.send(objeto);
     }
