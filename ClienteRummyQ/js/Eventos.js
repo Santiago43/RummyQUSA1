@@ -12,3 +12,9 @@ $("#BtnUnirseASala").click(function(){
 	$("#DivUnirseASala").show();
 	$("#DivInicio").hide();
 });
+
+$("#Unirse").click(function(){
+	var nombre = getCookie("nombre");
+	var codigo = $("#InputCodigo").val();
+	conectarASala(codigo,nombre);
+})
