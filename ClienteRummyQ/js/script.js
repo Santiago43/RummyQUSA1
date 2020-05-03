@@ -47,9 +47,6 @@ function crearRejilla(filas,columnas){
 	}
 	texto+='<div id="manoJugador"> '+crearEspaciosMano(16)+'</div>';
 	$("#tablero").append(texto);
-	fichas='<div class="fill" draggable="true"> <img src="img/fichas/2-1.png" height="70px" width="43px" ></div>';
-	var j=1;
-	$("#"+j+"").append(fichas);
 }
 
 function crearEspaciosMano(columnas){
