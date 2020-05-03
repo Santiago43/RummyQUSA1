@@ -182,7 +182,7 @@ function iniciarPartida(){
  	}	
  	for (let i = 0; i < nuevosJugadores.length; i++) {
  		jugadores.push(nuevosJugadores[i]); 	
-		 texto+='<div class="casillaJugador"><img src="img/'+(i+1)+'.png">'+jugadores[i].nombre+'</div>';	
+		 texto+='<div class="casillaJugador"><img src="img/'+(i+1)+'.png">'+nuevosJugadores[i].nombre+'</div>';	
 		
 	 }
 	 $("#jugadores").append(texto);
