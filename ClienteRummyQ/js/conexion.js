@@ -1,5 +1,5 @@
 var wait = ms => new Promise((r, j) => setTimeout(r, ms));
-var wsUri = "ws://25.133.184.139:30001";
+var wsUri = "ws://localhost:30001";
 var websocket = new WebSocket(wsUri);
 var mano= new Array();
 var jugadores = new Array();
@@ -32,7 +32,7 @@ websocket.onmessage=function(event){
 		else if(obj.tipo==="conexion sala"){
 			if(obj.mensaje==="conectado"){
 				//Se recibe el código de la sala, un mensaje y los participantes que están
-				cambiarASalaDeEspera(obj.codigo,obj.mensaje,participantes);
+				cambiarASalaDeEspera(obj.codigo,obj.mensaje,obj.participantes);
 			}
 			else{
 				//Indica que la conexión a la sala fue errónea
@@ -41,6 +41,7 @@ websocket.onmessage=function(event){
 		}
 		else if(obj.tipo==="nuevo jugador"){
 			//Se conectó un nuevo jugador
+			console.log("nuevo conectado");
 			añadirParticipante(obj.participantes);
 		}
 		else if(obj.tipo==="nueva mano"){
@@ -121,8 +122,10 @@ function crearSala(){
  * @param {number} participantes que es el número nuevo de participantes
  */
  function añadirParticipante(participantes){
- 	$("#noParticipantes").append(participantes);
- 	$("#ParticipantesInvitados").append(participantes);
+	$("#noParticipantes").empty();
+ 	$("#ParticipantesInvitados").empty();
+ 	$("#noParticipantes").append("Participantes: "+participantes);
+ 	$("#ParticipantesInvitados").append("Participantes: "+participantes);
 
  }
 
@@ -143,9 +146,9 @@ function crearSala(){
 
 
  function cambiarASalaDeEspera(codigo,mensaje,participantes){
- 	$("#DivUnirseASala").show();
- 	$("#DivInicio").hide();
- 	$("#InputCodigo").attr("value",codigo);
+ 	$("#DivInformacionSala").show();
+ 	$("#DivBotonUnirse").hide();
+ 	$("#InputCodigo2").attr("value",codigo);
  	console.log(mensaje);
  	$("#ParticipantesInvitados").append(participantes);
  }
@@ -167,20 +170,54 @@ function iniciarPartida(){
  	$("#DivCrearSala").hide();
  	$("#DivUnirseASala").hide();
  	$("#DivInformacionSala").hide();
- 	crearRejilla(7,19);
  	$("#gridTablero").show();		
 
  	var texto="";
  	var fichas="";
  	for (let i = 0; i < nuevaMano.length; i++) {
  		mano.push(nuevaMano[i]);
+<<<<<<< HEAD
  		fichas='<div class="fill" draggable="true"> <img src="img/fichas/'+mano[i].color+'-'+mano[i].numero +'.png height="70px" width="43px" ></div>';
  		$("#"+i+"").append(fichas);
+=======
+ 		fichas='<div class="fill" draggable="true"> <img src="img/fichas/'+mano[i].color+'-'+mano[i].numero+'.png" height="70px" width="43px" ></div>';
+ 		$("#"+i).append(fichas);
+>>>>>>> master
  	}	
  	for (let i = 0; i < nuevosJugadores.length; i++) {
  		jugadores.push(nuevosJugadores[i]); 	
- 		texto+='<div class="casillaJugador"><img src="img/'+i+'.png">'+jugadores[i]+'</div>'	
- 	}
+		texto='<div class="casillaJugador"><img src="img/'+(i+1)+'.png">'+nuevosJugadores[i].nombre+'</div>';	
+		$("#jugadores").append(texto);
+	 }
+	 $( function() {
+		$( ".fill" ).draggable({
+			stop: function(event,ui){
+				console.log("stop");
+			},
+			start:function(event,ui){
+				console.log("start");
+			},
+			revert:function(posicion){
+				console.log(nuev);
+				return nuev;
+			}
+		});
+		$( ".empty.column" ).droppable({
+			drop: function(event,ui){
+				//console.log('estoyen'+event.target.id);
+				//posicion=event.target.id;
+				ui.draggable.addClass("dropped");
+				console.log("drop");
+				$(this).append(ui.draggable);
+			}
+		});
+		$(".empty.espacioMano").droppable({
+			drop: function(event,ui){
+				
+			}
+		})
+	
+	} );
 	//Luego irán las instrucciones necesarias para hacer el cambio de la página al tablero
 }
 

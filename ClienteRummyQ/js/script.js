@@ -4,37 +4,13 @@ $(document).ready(
 	function(){
 		$("#DivInicio").show();
 		crearRejilla(7,19);
+		$("#DivInicio").show();
 		$("#DivCrearSala").hide();
 		$("#DivUnirseASala").hide();
 		$("#DivInformacionSala").hide();
 		$("#gridTablero").hide();
 	}
 	);
-
-$( function() {
-	$( ".fill" ).draggable({
-		stop: function(event,ui){
-			console.log("stop");
-		},
-		start:function(event,ui){
-			console.log("start");
-		},
-		revert:function(posicion){
-			console.log(nuev);
-			return nuev;
-		},
-	});
-	$( ".empty.column" ).droppable({
-		drop: function(event,ui){
-			//console.log('estoyen'+event.target.id);
-			//posicion=event.target.id;
-			ui.draggable.addClass("dropped");
-			console.log("drop");
-			$(this).append(ui.draggable);
-		}
-	});
-
-} );
 
 
 function crearRejilla(filas,columnas){

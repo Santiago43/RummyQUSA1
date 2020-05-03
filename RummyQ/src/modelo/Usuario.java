@@ -16,6 +16,7 @@ public class Usuario {
      */
     public Usuario() {
         this.desbloqueado = false;
+        this.mano = new LinkedList();
     }
 
     /**
