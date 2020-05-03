@@ -3,7 +3,6 @@ var nuev="";
 $(document).ready(
 	function(){
 		$("#DivInicio").show();
-		crearRejilla(7,19);
 		$("#DivCrearSala").hide();
 		$("#DivUnirseASala").hide();
 		$("#DivInformacionSala").hide();
