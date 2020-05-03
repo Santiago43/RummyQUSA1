@@ -2,6 +2,7 @@ var posicion="";
 var nuev="";
 $(document).ready(
 	function(){
+		crearRejilla(7,19);
 		$("#DivInicio").show();
 		$("#DivCrearSala").hide();
 		$("#DivUnirseASala").hide();
@@ -34,7 +35,7 @@ $( function() {
 	});
 	$(".empty.espacioMano").droppable({
 		drop: function(event,ui){
-
+			
 		}
 	})
 

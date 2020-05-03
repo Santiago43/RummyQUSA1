@@ -170,7 +170,6 @@ function iniciarPartida(){
  	$("#DivCrearSala").hide();
  	$("#DivUnirseASala").hide();
  	$("#DivInformacionSala").hide();
- 	crearRejilla(7,19);
  	$("#gridTablero").show();		
 
  	var texto="";
