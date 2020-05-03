@@ -84,7 +84,7 @@ public class Servidor extends WebSocketServer {
                 usuario.setSala(sala);
                 sala.getUsuarios().add(usuario);
                 objeto = "{\"tipo\":\"nuevo jugador\"}";
-                sala.enviarATodosEnSala(usuario.getWebSocket(), objeto);
+                sala.enviarATodosEnSalaExceptoA(usuario.getWebSocket(), objeto);
                 objeto = "{\"tipo\":\"participantes\",\"participantes\":\"" + sala.getUsuarios().size() + "\"}";
                 ws.send(objeto);
                 break;
@@ -94,7 +94,7 @@ public class Servidor extends WebSocketServer {
                 sala.getUsuarios().remove(usuario);
                 usuario.setSala(null);
                 objeto = "{\"tipo\":\"jugador salió\",\"participantes\":\"" + sala.getUsuarios().size() + "\"}";
-                sala.enviarATodosEnSala(usuario.getWebSocket(), objeto);
+                sala.enviarATodosEnSalaExceptoA(usuario.getWebSocket(), objeto);
                 objeto = "{\"tipo\":\"confirmación salida\",\"mensaje\":\"Usted salió\"}";
                 ws.send(objeto);
                 break;
@@ -114,12 +114,14 @@ public class Servidor extends WebSocketServer {
                 sala = usuario.getSala();
                 sala.moverFicha(usuario, obj);
                 break;
+            case "jugada - robar ficha":
+                usuario = Buscador.buscarUsuario(ws, usuarios);
+                sala = usuario.getSala();
+                sala.robarFicha(usuario,obj);
+                break;
             case "terminar turno":
                 usuario = Buscador.buscarUsuario(ws, usuarios);
-                if (usuario.isEnTurno()) {
-                    sala = usuario.getSala();
-                    sala.getTablero().notify();
-                }
+                usuario.getSala().terminarTurno(usuario);
                 break;
             default:
                 break;

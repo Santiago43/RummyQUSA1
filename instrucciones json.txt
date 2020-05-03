@@ -92,7 +92,7 @@ Cuando el jugador mueve una ficha:
 	}
 }
 
-Cuando el jugador termina el turno:
+Cuando el jugador termina el turno (si realiza jugadas):
 
 - Jugador envía 
 
@@ -112,4 +112,49 @@ Si no
 
 {
 	tipo: "jugadas inválidas"
+}
+
+
+Cuando el jugador roba ficha:
+
+-Jugador envía
+{
+	tipo: "robar ficha"
+}
+
+-Servidor contesta
+Si hay fichas en la banca
+{
+	tipo: "ficha robada",
+	ficha:
+	{
+		numero: numero,
+		color: numero,
+		x: numero,
+		y: numero,
+		xAnterior: numero,
+		yAnterior: numero
+	}
+}
+
+Si no hay fichas en la banca
+
+{
+	tipo: "ficha no robada",
+}
+termina el turno.
+
+
+Cuando se cambia de turno el servidor manda mensajes a todos:
+
+{
+	tipo: "mensaje del servidor",
+	mensaje: "el mensaje"
+}
+
+Cuando indica inicio de turno, se lo envía al jugador:
+
+{
+	tipo: "cambio turno",
+	valor: boolean
 }

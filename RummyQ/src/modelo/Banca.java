@@ -19,7 +19,7 @@ public class Banca {
     /**
      * 
      */
-    private LinkedList fichas;
+    private LinkedList<Ficha> fichas;
     /**
      * 
      * @return 
@@ -35,5 +35,15 @@ public class Banca {
         this.fichas = fichas;
     }
 
+    /**
+     * 
+     * @return 
+     */
+    public Ficha robarFicha(){
+        if (!this.fichas.isEmpty()){
+            return this.fichas.getLast();
+        }
+        return null;
+    }
     
 }
