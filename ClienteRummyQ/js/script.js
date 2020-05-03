@@ -32,6 +32,11 @@ $( function() {
 			$(this).append(ui.draggable);
 		}
 	});
+	$(".empty.mano").droppable({
+		drop: function(event,ui){
+			
+		}
+	})
 
 } );
 

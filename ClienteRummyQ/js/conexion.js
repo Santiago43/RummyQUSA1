@@ -178,11 +178,11 @@ function iniciarPartida(){
  	for (let i = 0; i < nuevaMano.length; i++) {
  		mano.push(nuevaMano[i]);
  		fichas='<div class="fill" draggable="true"> <img src="img/fichas/'+mano[i].color+'-'+mano[i].numero+'.png" height="70px" width="43px" ></div>';
- 		$("#"+i+"").append(fichas);
+ 		$("#"+i).append(fichas);
  	}	
  	for (let i = 0; i < nuevosJugadores.length; i++) {
  		jugadores.push(nuevosJugadores[i]); 	
-		 texto+='<div class="casillaJugador"><img src="img/'+i+'.png">'+jugadores[i]+'</div>';	
+		 texto+='<div class="casillaJugador"><img src="img/'+(i+1)+'.png">'+jugadores[i].nombre+'</div>';	
 		
 	 }
 	 $("#jugadores").append(texto);
