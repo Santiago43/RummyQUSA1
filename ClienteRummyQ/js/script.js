@@ -32,9 +32,9 @@ $( function() {
 			$(this).append(ui.draggable);
 		}
 	});
-	$(".empty.mano").droppable({
+	$(".empty.espacioMano").droppable({
 		drop: function(event,ui){
-			
+
 		}
 	})
 
