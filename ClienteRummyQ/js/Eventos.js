@@ -7,6 +7,6 @@ $("#StartGame").click(function(){
 	iniciarPartida();
 });
 
-$("#UnirseASalarse").click(function(){
+$("#BtnUnirseASala").click(function(){
 	setCookie("nombre",$("#nombre").val(),1);
 });
