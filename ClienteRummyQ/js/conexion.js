@@ -123,8 +123,8 @@ function crearSala(){
  function añadirParticipante(participantes){
 	$("#noParticipantes").empty();
  	$("#ParticipantesInvitados").empty();
- 	$("#noParticipantes").append(participantes);
- 	$("#ParticipantesInvitados").append(participantes);
+ 	$("#noParticipantes").append("Participantes: "+(participantes+1));
+ 	$("#ParticipantesInvitados").append("Participantes: "+(participantes+1));
 
  }
 
