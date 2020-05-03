@@ -15,6 +15,6 @@ $("#BtnUnirseASala").click(function(){
 
 $("#Unirse").click(function(){
 	var nombre = getCookie("nombre");
-	var codigo = $("#InputCodigo").val();
+	var codigo = $("#InputCodigo2").val();
 	conectarASala(codigo,nombre);
 })
