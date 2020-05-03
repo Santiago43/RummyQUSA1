@@ -41,6 +41,7 @@ websocket.onmessage=function(event){
 		}
 		else if(obj.tipo==="nuevo jugador"){
 			//Se conectó un nuevo jugador
+			console.log("nuevo conectado");
 			añadirParticipante(obj.participantes);
 		}
 		else if(obj.tipo==="nueva mano"){
@@ -176,13 +177,15 @@ function iniciarPartida(){
  	var fichas="";
  	for (let i = 0; i < nuevaMano.length; i++) {
  		mano.push(nuevaMano[i]);
- 		fichas='<div class="fill" draggable="true"> <img src="img/fichas/0-0.png" height="70px" width="43px" ></div>';
+ 		fichas='<div class="fill" draggable="true"> <img src="img/fichas/'+mano[i].color+'-'+mano[i].numero+'.png" height="70px" width="43px" ></div>';
  		$("#"+i+"").append(fichas);
  	}	
  	for (let i = 0; i < nuevosJugadores.length; i++) {
  		jugadores.push(nuevosJugadores[i]); 	
- 		texto+='<div class="casillaJugador"><img src="img/'+i+'.png">'+jugadores[i]+'</div>'	
- 	}
+		 texto+='<div class="casillaJugador"><img src="img/'+i+'.png">'+jugadores[i]+'</div>';	
+		
+	 }
+	 $("#jugadores").append(texto);
 	//Luego irán las instrucciones necesarias para hacer el cambio de la página al tablero
 }
 
