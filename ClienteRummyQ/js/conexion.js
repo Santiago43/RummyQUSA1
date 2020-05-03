@@ -184,7 +184,35 @@ function iniciarPartida(){
 		texto='<div class="casillaJugador"><img src="img/'+(i+1)+'.png">'+nuevosJugadores[i].nombre+'</div>';	
 		$("#jugadores").append(texto);
 	 }
-	 
+	 $( function() {
+		$( ".fill" ).draggable({
+			stop: function(event,ui){
+				console.log("stop");
+			},
+			start:function(event,ui){
+				console.log("start");
+			},
+			revert:function(posicion){
+				console.log(nuev);
+				return nuev;
+			}
+		});
+		$( ".empty.column" ).droppable({
+			drop: function(event,ui){
+				//console.log('estoyen'+event.target.id);
+				//posicion=event.target.id;
+				ui.draggable.addClass("dropped");
+				console.log("drop");
+				$(this).append(ui.draggable);
+			}
+		});
+		$(".empty.espacioMano").droppable({
+			drop: function(event,ui){
+				
+			}
+		})
+	
+	} );
 	//Luego irán las instrucciones necesarias para hacer el cambio de la página al tablero
 }
 

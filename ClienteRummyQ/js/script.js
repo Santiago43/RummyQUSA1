@@ -11,36 +11,6 @@ $(document).ready(
 	}
 	);
 
-$( function() {
-	$( ".fill" ).draggable({
-		stop: function(event,ui){
-			console.log("stop");
-		},
-		start:function(event,ui){
-			console.log("start");
-		},
-		revert:function(posicion){
-			console.log(nuev);
-			return nuev;
-		},
-	});
-	$( ".empty.column" ).droppable({
-		drop: function(event,ui){
-			//console.log('estoyen'+event.target.id);
-			//posicion=event.target.id;
-			ui.draggable.addClass("dropped");
-			console.log("drop");
-			$(this).append(ui.draggable);
-		}
-	});
-	$(".empty.espacioMano").droppable({
-		drop: function(event,ui){
-			
-		}
-	})
-
-} );
-
 
 function crearRejilla(filas,columnas){
 	var texto="";
