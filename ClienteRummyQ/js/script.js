@@ -2,12 +2,12 @@ var posicion="";
 var nuev="";
 $(document).ready(
 	function(){
-		$("#DivInicio").hide();
+		$("#DivInicio").show();
 		crearRejilla(7,19);
 		$("#DivCrearSala").hide();
 		$("#DivUnirseASala").hide();
 		$("#DivInformacionSala").hide();
-		$("#gridTablero").show();
+		$("#gridTablero").hide();
 	}
 	);
 
