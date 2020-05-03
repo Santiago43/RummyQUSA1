@@ -2,12 +2,12 @@ var posicion="";
 var nuev="";
 $(document).ready(
 	function(){
-		$("#DivInicio").hide();
+		$("#DivInicio").show();
 		crearRejilla(7,19);
 		$("#DivCrearSala").hide();
 		$("#DivUnirseASala").hide();
 		$("#DivInformacionSala").hide();
-		$("#gridTablero").show();
+		$("#gridTablero").hide();
 	}
 	);
 
@@ -48,9 +48,6 @@ function crearRejilla(filas,columnas){
 	}
 	texto+='<div id="manoJugador"> '+crearEspaciosMano(16)+'</div>';
 	$("#tablero").append(texto);
-	fichas='<div class="fill" draggable="true"> <img src="img/fichas/2-1.png" height="70px" width="43px" ></div>';
-	var j=1;
-	$("#"+j+"").append(fichas);
 }
 
 function crearEspaciosMano(columnas){
