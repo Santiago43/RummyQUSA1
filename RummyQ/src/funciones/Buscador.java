@@ -21,6 +21,7 @@ public class Buscador {
     public static Usuario buscarUsuario(WebSocket ws,LinkedList<Usuario> lista){
         for (int i = 0; i < lista.size(); i++) {
             if(lista.get(i).getWebSocket().equals(ws)){
+                System.out.println("Nuevo user");
                 return lista.get(i);
             }
         }

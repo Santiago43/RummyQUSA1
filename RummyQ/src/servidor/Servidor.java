@@ -35,6 +35,7 @@ public class Servidor extends WebSocketServer {
         Usuario usuario = new Usuario();
         usuario.setHash(ws.getRemoteSocketAddress().hashCode());
         usuario.setWebSocket(ws);
+        this.usuarios.add(usuario);
         String objeto = "{\"tipo\":\"hash\",\"hash\":\"" + usuario.getHash() + "\"}";
         ws.send(objeto);
     }
@@ -69,6 +70,7 @@ public class Servidor extends WebSocketServer {
                 if (usuario == null) {
                     System.out.println("Error");
                     objeto = "{\"tipo\":\"error\",\"mensaje\":\"ese usuario no existe\"}";
+                    System.out.println("Error: el usuario no existe");
                     ws.send(objeto);
                 } else {
                     usuario.setNombre((String) obj.get("nombre"));
