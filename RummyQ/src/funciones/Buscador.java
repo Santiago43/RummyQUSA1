@@ -6,7 +6,7 @@ import modelo.Usuario;
 import org.java_websocket.WebSocket;
 
 /**
- * Clase que genera fichas
+ * Clase que busca usuarios y salas
  * @author Valeria Bermúdez - Santiago Gutiérrez -Santiago Pérez
  * @since 2020-04-25
  * @version 0.0.1
