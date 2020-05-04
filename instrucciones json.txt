@@ -66,7 +66,22 @@ ficha:
 	xAnterior:-1,
 	yAnterior:-1
 }
+
+Cuando el servidor obtiene la ficha, la actualiza a las demás vistas de jugadores
+
+{
+	tipo: "colocar ficha",
+	ficha: {
+		numero: numero,
+		color: numero,
+		x: numero,
+		y: numero,
+		xAnterior:-1,
+		yAnterior:-1
+	}	
+}
 -Si el jugador está en turno, el servidor envía el dato de la ficha a todos los usuarios en la sala
+
 
 -Si el jugador no está en turno, el servidor le retorna:
 
@@ -97,7 +112,7 @@ Cuando el jugador termina el turno (si realiza jugadas):
 - Jugador envía 
 
 {
-	tipo: "fin de turno"
+	tipo: "terminar turno"
 }
 
 - Servidor responde si la jugada es válida o no
