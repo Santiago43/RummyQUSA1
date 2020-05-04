@@ -1,6 +1,7 @@
 package modelo;
 
 import funciones.Generador;
+import funciones.Verificador;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +26,7 @@ public class Sala extends Thread {
     public Sala(int codigo, String name) {
         super(name);
         this.tablero = new Tablero();
-        this.tablero.setListas(new Ficha[13][4]);
+        this.tablero.setListas(new Ficha[7][19]);
         this.codigo = codigo;
         this.usuarios = new LinkedList();
     }
@@ -124,8 +125,8 @@ public class Sala extends Thread {
                 
                 Usuario usuario = this.usuarios.get(i);
                 usuario.setEnTurno(true);
-                String mensajeGlobal="{\"tipo\": \"mensaje del servidor\",\"mensaje\":"
-                        + "\"es el turno de "+usuario.getNombre()+"\"}";
+                String mensajeGlobal="{\"tipo\": \"turno\",\"jugador\":"
+                        + "\""+usuario.getNombre()+"\"}";
                 generarLog("Es el turno de: "+usuario.getNombre());
                 this.enviarATodosEnSala(mensajeGlobal);
                 String mensajeUsuario= "{\"tipo\":\"cambio turno\",\"valor\":"+usuario.isEnTurno()+"}";
@@ -141,7 +142,10 @@ public class Sala extends Thread {
                         Logger.getLogger(Sala.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                
+                if(!Verificador.jugadaValida(tablero.getListas())){
+                    this.tablero.restaurarTablero();
+                    this.robarFicha(usuario);
+                }
                 usuario.setEnTurno(false);
                 mensajeUsuario= "{\"tipo\":\"cambio turno\",\"valor\":"+usuario.isEnTurno()+"}";
                 usuario.getWebSocket().send(mensajeUsuario); 
@@ -285,7 +289,7 @@ public class Sala extends Thread {
         usuario.getWebSocket().send(error);
     }
 
-    public void robarFicha(Usuario usuario, JSONObject obj) {
+    public void robarFicha(Usuario usuario) {
         Ficha ficha = this.tablero.getBanca().robarFicha();
         String mensaje = "{\"tipo\":";
         if (ficha != null) {

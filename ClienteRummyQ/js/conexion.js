@@ -54,6 +54,9 @@ websocket.onmessage=function(event){
 		else if(obj.tipo==="cambio turno"){
 			cambiarTurno(obj.valor);
 		}
+		else if(obj.tipo==="turno"){
+			jugadorEnTurno(obj.jugador);
+		}
 		else if(obj.tipo==="ganador"){
 			terminarJuego(obj.ganador);
 		}
@@ -294,7 +297,17 @@ function fichaRobada(ficha){
 		}
 	}
 }
-
+/**
+ * Función que modifica el valor del objeto que indica si está en turno o no
+ * @param {boolean} valor el estado del turno (sí o no)
+ */
 function cambiarTurno(valor){
 	turno.valor=valor;
+}
+
+/**
+ * Función que muestra quién está en turno
+ */
+function jugadorEnTurno(jugador){
+	alert("Turno de: "+jugador);
 }

@@ -1,5 +1,7 @@
 package modelo;
 
+import java.util.LinkedList;
+
 /**
  * Clase tablero
  * @author Valeria Bermúdez - Santiago Gutiérrez -Santiago Pérez
@@ -44,12 +46,23 @@ public class Tablero {
     * Filas es el segundo componente
     */
     public void aumentarFilas(){
-        Ficha[][] listasNuevas = new Ficha [this.listas.length][this.listas[0].length+1];
+        Ficha[][] listasNuevas = new Ficha [this.listas.length+1][this.listas[0].length];
         for (int i = 0; i < this.listas.length; i++) {
             for (int j = 0; j < this.listas[0].length; j++) {
                 listasNuevas[i][j] = this.listas[i][j];
             }
         }   
         this.listas = listasNuevas;
+    }
+    
+    public void restaurarTablero() {
+        LinkedList <Ficha> fichasARestaurar = new LinkedList();
+        for (int i = 0; i < this.listas.length; i++) {
+            for (int j = 0; j < this.listas[0].length; j++) {
+                if(this.listas[i][j]!=null){
+                    fichasARestaurar.add(this.listas[i][j]);
+                }
+            }
+        }
     }
 }

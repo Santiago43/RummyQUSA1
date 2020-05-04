@@ -40,7 +40,9 @@ public class Generador {
                     ficha.setX(-1);
                     ficha.setY(-1);
                     ficha.setxAnterior(-1);
-                    ficha.setyAnterior(-1); 
+                    ficha.setyAnterior(-1);
+                    ficha.setxInicial(-1);
+                    ficha.setyInicial(-1);
                     fichas.add(ficha);
                 }
             }
@@ -53,13 +55,17 @@ public class Generador {
         comodin1.setY(0);
         comodin1.setxAnterior(0);
         comodin1.setyAnterior(0);
+        comodin1.setxInicial(-1);
+        comodin1.setyInicial(-1);
         
         comodin2.setColor(1);
         comodin2.setNumero(0);
         comodin2.setX(0);
         comodin2.setY(0);
-        comodin2.setxAnterior(0);
-        comodin2.setyAnterior(0);
+        comodin2.setxAnterior(-1);
+        comodin2.setyAnterior(-1);
+        comodin2.setxInicial(-1);
+        comodin2.setyInicial(-1);
         fichas.add(comodin1);
         fichas.add(comodin2);
         return fichas;
