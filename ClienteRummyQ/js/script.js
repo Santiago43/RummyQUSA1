@@ -2,6 +2,7 @@ var posicion="";
 var nuev="";
 $(document).ready(
 	function(){
+		$("#DivInicio").show();
 		crearRejilla(7,19);
 		$("#DivInicio").show();
 		$("#DivCrearSala").hide();

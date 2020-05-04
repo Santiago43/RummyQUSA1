@@ -186,8 +186,13 @@ function iniciarPartida(){
  	var fichas="";
  	for (let i = 0; i < nuevaMano.length; i++) {
  		mano.push(nuevaMano[i]);
+<<<<<<< HEAD
+ 		fichas='<div class="fill" draggable="true"> <img src="img/fichas/'+mano[i].color+'-'+mano[i].numero +'.png height="70px" width="43px" ></div>';
+ 		$("#"+i+"").append(fichas);
+=======
  		fichas='<div class="fill" draggable="true"> <img src="img/fichas/'+mano[i].color+'-'+mano[i].numero+'.png" height="70px" width="43px" ></div>';
  		$("#"+i).append(fichas);
+>>>>>>> master
  	}	
  	for (let i = 0; i < nuevosJugadores.length; i++) {
  		jugadores.push(nuevosJugadores[i]); 	
