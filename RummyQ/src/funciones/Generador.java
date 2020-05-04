@@ -37,10 +37,10 @@ public class Generador {
                     Ficha ficha = new Ficha();
                     ficha.setNumero(i + 1);
                     ficha.setColor(j);
-                    ficha.setX(0);
-                    ficha.setY(0);
-                    ficha.setxAnterior(0);
-                    ficha.setyAnterior(0); 
+                    ficha.setX(-1);
+                    ficha.setY(-1);
+                    ficha.setxAnterior(-1);
+                    ficha.setyAnterior(-1); 
                     fichas.add(ficha);
                 }
             }
@@ -85,7 +85,7 @@ public class Generador {
         fichas.forEach((ficha) -> {
             nuevaLista.add(ficha);
         });
-        while (nuevaLista.size() > 0) {
+        while (!nuevaLista.isEmpty()) {
             fichasRevueltas.add(nuevaLista.remove((int) ((Math.random()) * nuevaLista.size())));
         }
         return fichasRevueltas;

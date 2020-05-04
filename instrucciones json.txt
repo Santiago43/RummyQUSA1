@@ -2,30 +2,23 @@
 /*Cuando se conecta un nuevo usuario:*/
 
 - Servidor retorna {tipo: "hash", hash: numero}
-- Cliente contesta {tipo: "nuevo",usuario: nombre}
-- Servidor contesta {tipo: "nueva", "mensaje": "Bienvenido nombre"}
 
 Cuando vaya a crear una sala:
-- Cliente envía {tipo: "crear sala"}
-- Servidor retorna {tipo: "codigo sala", codigo: "código"}
+- Cliente envía {tipo: "crear sala",usuario: nombre}
+- Servidor retorna {tipo: "codigo sala", codigo: "código","mensaje": "Bienvenido nombre"}
 
 
 Cuando vaya a conectarse a una sala:
-- Cliente envia {tipo "conectarse a sala", codigo: "código"}
-- Servidor retorna {tipo: "conexión sala", mensaje: "conectado // error: esa sala no existe"}
-- Servidor envía a todos los que estén en la sala {tipo: "nuevo jugador"}
-- Servidor envía al usuario {tipo: "participantes", participantes: numero}
+- Cliente envia {tipo "conectarse a sala", codigo: "código",usuario: nombre}
+- Servidor retorna {tipo: "conexión sala", mensaje: "conectado // error: esa sala no existe", participantes: numero}
+- Servidor envía a todos los que estén en la sala {tipo: "nuevo jugador",participantes: numero}
 
 
 Cuando vaya a desconectarse de una sala antes de jugar:
 
 - Cliente envía {tipo: "desconectarse de sala"}
-- Servidor envía a todos los que estén en la sala {tipo: "jugador salió"}
+- Servidor envía a todos los que estén en la sala {tipo: "jugador salió", participantes: numero}
 
-
-Cuando está en espera de partida:
-
--Servidor envía {tipo: "participantes", participantes: numero}
 
 
 Cuando el jugador va iniciar partida: 
@@ -37,20 +30,25 @@ Cuando el jugador va iniciar partida:
 	tipo: "nueva mano",
 	mano:[
 			{
-				numero:" numero  ", 
-				color:" color  ",
-				x:"  x  ", 
-				y:"  y ",
-				xAnterior:"  xAnterior  ",
-				yAnterior:"  yAnterior 
-			}
+				numero: numero  , 
+				color: color  ,
+				x:  x  , 
+				y:  y ,
+				xAnterior:  xAnterior  ,
+				yAnterior:  yAnterior 
+			},
 			{
 				...
 			},
+			...,
 			{
-
+			...
 			}
 		]
+	jugadores: [
+			{nombre: nombreJugador},
+			{nombre: nombreJugador2}
+	]
 }
 
 
@@ -94,7 +92,7 @@ Cuando el jugador mueve una ficha:
 	}
 }
 
-Cuando el jugador termina el turno:
+Cuando el jugador termina el turno (si realiza jugadas):
 
 - Jugador envía 
 
@@ -114,4 +112,49 @@ Si no
 
 {
 	tipo: "jugadas inválidas"
+}
+
+
+Cuando el jugador roba ficha:
+
+-Jugador envía
+{
+	tipo: "robar ficha"
+}
+
+-Servidor contesta
+Si hay fichas en la banca
+{
+	tipo: "ficha robada",
+	ficha:
+	{
+		numero: numero,
+		color: numero,
+		x: numero,
+		y: numero,
+		xAnterior: numero,
+		yAnterior: numero
+	}
+}
+
+Si no hay fichas en la banca
+
+{
+	tipo: "ficha no robada",
+}
+termina el turno.
+
+
+Cuando se cambia de turno el servidor manda mensajes a todos:
+
+{
+	tipo: "mensaje del servidor",
+	mensaje: "el mensaje"
+}
+
+Cuando indica inicio de turno, se lo envía al jugador:
+
+{
+	tipo: "cambio turno",
+	valor: boolean
 }

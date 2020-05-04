@@ -52,24 +52,36 @@ public class Sala extends Thread {
     public Tablero getTablero() {
         return tablero;
     }
-
+    /**
+     * 
+     * @return 
+     */
     public LinkedList getUsuarios() {
         return usuarios;
     }
-
+    /**
+     * 
+     * @param usuarios 
+     */
     public void setUsuarios(LinkedList usuarios) {
         this.usuarios = usuarios;
     }
-
+    /**
+     * 
+     * @return 
+     */
     public int getCodigo() {
         return codigo;
     }
-
+    /**
+     * Función que contiene el hilo de ejecución del juego
+     */
     @Override
     public void run() {
         super.run();
         LinkedList<Ficha> nuevasFichas = Generador.crearFichas();
         LinkedList<Ficha> fichas = Generador.revolverFichas(nuevasFichas);
+        generarLog("Iniciando la partida");
         for (int i = 0; i < this.usuarios.size(); i++) {
             LinkedList<Ficha> mano = this.usuarios.get(i).getMano();
             String manoNueva = "{ "
@@ -84,17 +96,44 @@ public class Sala extends Thread {
                     manoNueva += ",";
                 }
             }
+            manoNueva += "]"
+                    + ",\"jugadores\":[";
+            for (int j = 0; j < this.usuarios.size(); j++) {
+                manoNueva += "{\"nombre\": \"" + this.usuarios.get(j).getNombre() + "\"}";
+                if (j != this.usuarios.size() - 1) {
+                    manoNueva += ",";
+                }
+            }
             manoNueva += "]}";
             this.usuarios.get(i).getWebSocket().send(manoNueva);
         }
         Banca banca = new Banca();
         banca.setFichas(fichas);
         this.tablero.setBanca(banca);
+        boolean primerTurno = true;
+
         juego:
         while (true) {
+            int i = 0;
+            if (primerTurno) {
+                i = (int) (4 * (Math.random()));
+                primerTurno = false;
+            }
             turno:
-            for (Usuario usuario : this.usuarios) {
+            for (; i < this.usuarios.size(); i++) {
+                
+                Usuario usuario = this.usuarios.get(i);
                 usuario.setEnTurno(true);
+                String mensajeGlobal="{\"tipo\": \"mensaje del servidor\",\"mensaje\":"
+                        + "\"es el turno de "+usuario.getNombre()+"\"}";
+                generarLog("Es el turno de: "+usuario.getNombre());
+                this.enviarATodosEnSala(mensajeGlobal);
+                String mensajeUsuario= "{\"tipo\":\"cambio turno\",\"valor\":"+usuario.isEnTurno()+"}";
+                usuario.getWebSocket().send(mensajeUsuario);
+                
+                /**Solamente el usuario en turno puede modificar el tablero, por tanto, se bloquea hasta
+                *  que termine el turno. 
+                */
                 synchronized (this.tablero) {
                     try {
                         this.tablero.wait();
@@ -102,33 +141,58 @@ public class Sala extends Thread {
                         Logger.getLogger(Sala.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
+                
                 usuario.setEnTurno(false);
+                mensajeUsuario= "{\"tipo\":\"cambio turno\",\"valor\":"+usuario.isEnTurno()+"}";
+                usuario.getWebSocket().send(mensajeUsuario); 
+                generarLog("Terminó el turno de: "+usuario.getNombre());
+                
+                
                 if (usuario.getMano().isEmpty()) {
                     this.anunciarGanador(usuario);
+                    System.out.println("Terminando juego en la sala " + this.codigo);
                     break juego;
                 }
             }
         }
     }
-
+    /**
+     * Función que permite mostrar el ganador de la partida
+     * @param usuarioGanador que es el usuario ganador
+     */
     public void anunciarGanador(Usuario usuarioGanador) {
         for (Usuario usuario : this.usuarios) {
             String objeto = "{\"tipo\":\"ganador\",\"ganador\":\"" + usuarioGanador.getNombre() + "\"}";
             usuario.getWebSocket().send(objeto);
         }
+        generarLog("Terminó la partida. El ganador fue "+usuarioGanador.getNombre());
     }
 
     /**
+     * Método que permite enviar un mensaje a todos los miembros de la sala,
+     * excepto a quien ejecuta la acción de enviar el mensaje
      *
-     * @param ws
-     * @param mensaje
+     * @param ws que es el websocket de quien envía el mensaje
+     * @param mensaje que es el mensaje que se envía a todos
      */
-    public void enviarATodosEnSala(WebSocket ws, String mensaje) {
+    public void enviarATodosEnSalaExceptoA(WebSocket ws, String mensaje) {
         for (int i = 0; i < usuarios.size(); i++) {
             WebSocket c = (WebSocket) usuarios.get(i).getWebSocket();
             if (c != ws) {
+                System.out.println("Enviando a "+usuarios.get(i).getNombre());
                 c.send(mensaje);
             }
+        }
+    }
+
+    /**
+     * Método que permite enviar un mensaje a todos los miembros de la sala
+     *
+     * @param mensaje que es el mensaje que se envía
+     */
+    public void enviarATodosEnSala(String mensaje) {
+        for (int i = 0; i < usuarios.size(); i++) {
+            this.usuarios.get(i).getWebSocket().send(mensaje);
         }
     }
 
@@ -161,7 +225,7 @@ public class Sala extends Thread {
             ficha.setxAnterior(-1);
             ficha.setyAnterior(-1);
             String fichaNueva = "{\"tipo\": \"colocar ficha\",\"ficha\":" + ficha.toJson() + "}";
-            this.enviarATodosEnSala(usuario.getWebSocket(), fichaNueva);
+            this.enviarATodosEnSalaExceptoA(usuario.getWebSocket(), fichaNueva);
             //} catch (IndexOutOfBoundsException ex) {
             /*this.tablero.aumentarFilas();
                 if(x<0){
@@ -173,7 +237,7 @@ public class Sala extends Thread {
                 }
             }*/
         } else {
-            this.enviarError("tú no estás en turno", usuario); 
+            this.enviarError("tú no estás en turno", usuario);
         }
     }
 
@@ -195,32 +259,57 @@ public class Sala extends Thread {
                 ficha.setX(x);
                 ficha.setY(y);
                 String fichaNueva = "{\"tipo\": \"mover ficha\",\"ficha\":" + ficha.toJson() + "}";
-                this.enviarATodosEnSala(usuario.getWebSocket(), fichaNueva);
-            }
-            else{
+                this.enviarATodosEnSalaExceptoA(usuario.getWebSocket(), fichaNueva);
+            } else {
                 this.enviarError("hay una ficha en ese lugar", usuario);
             }
         } catch (IndexOutOfBoundsException ex) {
             if (x < 0) {
                 this.tablero.aumentarFilas();
                 obj.put("x", 0);
-                obj.put("y", this.tablero.getListas()[0].length-1);
-                moverFicha(usuario,obj);
-                int i=0;
-                while(this.tablero.getListas()[i][y]!=null){
-                    obj.put("x",i+1);
-                    obj.put("", usuarios)
+                obj.put("y", this.tablero.getListas()[0].length - 1);
+                moverFicha(usuario, obj);
+                int i = 0;
+                while (this.tablero.getListas()[i][y] != null) {
+                    obj.put("x", i + 1);
+                    //obj.put("", usuarios)
                 }
-                
+
             } else if (x > 13) {
 
             }
         }
 
     }
-    
-    public void enviarError(String mensaje, Usuario usuario){
-        String error = "{\"tipo\": \"error\",\"mensaje\": \""+mensaje+"\"}";
+
+    public void enviarError(String mensaje, Usuario usuario) {
+        String error = "{\"tipo\": \"error\",\"mensaje\": \"" + mensaje + "\"}";
         usuario.getWebSocket().send(error);
+    }
+
+    public void robarFicha(Usuario usuario, JSONObject obj) {
+        Ficha ficha = this.tablero.getBanca().robarFicha();
+        String mensaje = "{\"tipo\":";
+        if (ficha != null) {
+            mensaje += "\"ficha robada\",\"ficha\":"
+                    + ficha.toJson() + "}";
+            usuario.getMano().add(ficha);
+        } else {
+            mensaje += "\"ficha no robada\"}";
+        }
+        usuario.getWebSocket().send(mensaje);
+        terminarTurno(usuario);
+    }
+
+    public void terminarTurno(Usuario usuario) {
+        if (usuario.isEnTurno()) {
+            synchronized (this.tablero) {
+                this.tablero.notify();
+            }
+        }
+    }
+    
+    public void generarLog(String mensaje){
+        System.out.println(this.getName()+": "+mensaje);
     }
 }
