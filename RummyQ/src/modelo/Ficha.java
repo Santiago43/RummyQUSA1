@@ -45,6 +45,15 @@ public class Ficha {
     
     /**
      * 
+     */
+    private int xInicial;
+    /**
+     * 
+     */
+    private int yInicial;
+    
+    /**
+     * 
      * @return 
      */
 
@@ -96,7 +105,24 @@ public class Ficha {
         this.yAnterior = yAnterior;
     }
 
+    
     public String toJson() {
-        return "{" + "\"numero\":\"" + numero + "\", \"color\":\"" + color + "\", \"x\":\"" + x + "\", \"y\":\"" + y + "\", \"xAnterior\":\"" + xAnterior + "\", \"yAnterior\":\"" + yAnterior + "\"}";
+        return "{" + "\"numero\":\"" + numero + "\", \"color\":\"" + color + "\", \"x\":\"" + x + "\", \"y\":\"" + y + "\", \"xAnterior\":\"" + xAnterior + "\", \"yAnterior\":\"" + yAnterior + "\", \"xInicial\":\""+xInicial+"\",\"yInicial\":\""+yInicial+"\"}";
     }    
+
+    public int getxInicial() {
+        return xInicial;
+    }
+
+    public void setxInicial(int xInicial) {
+        this.xInicial = xInicial;
+    }
+
+    public int getyInicial() {
+        return yInicial;
+    }
+
+    public void setyInicial(int yInicial) {
+        this.yInicial = yInicial;
+    }
 }

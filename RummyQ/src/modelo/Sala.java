@@ -1,6 +1,7 @@
 package modelo;
 
 import funciones.Generador;
+import funciones.Verificador;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +26,7 @@ public class Sala extends Thread {
     public Sala(int codigo, String name) {
         super(name);
         this.tablero = new Tablero();
-        this.tablero.setListas(new Ficha[13][4]);
+        this.tablero.setListas(new Ficha[7][19]);
         this.codigo = codigo;
         this.usuarios = new LinkedList();
     }
@@ -116,7 +117,7 @@ public class Sala extends Thread {
         while (true) {
             int i = 0;
             if (primerTurno) {
-                i = (int) (4 * (Math.random()));
+                i = (int) (this.usuarios.size() * (Math.random()));
                 primerTurno = false;
             }
             turno:
@@ -124,8 +125,8 @@ public class Sala extends Thread {
                 
                 Usuario usuario = this.usuarios.get(i);
                 usuario.setEnTurno(true);
-                String mensajeGlobal="{\"tipo\": \"mensaje del servidor\",\"mensaje\":"
-                        + "\"es el turno de "+usuario.getNombre()+"\"}";
+                String mensajeGlobal="{\"tipo\": \"turno\",\"jugador\":"
+                        + "\""+usuario.getNombre()+"\"}";
                 generarLog("Es el turno de: "+usuario.getNombre());
                 this.enviarATodosEnSala(mensajeGlobal);
                 String mensajeUsuario= "{\"tipo\":\"cambio turno\",\"valor\":"+usuario.isEnTurno()+"}";
@@ -141,7 +142,10 @@ public class Sala extends Thread {
                         Logger.getLogger(Sala.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                
+                if(!Verificador.jugadaValida(tablero.getListas())){
+                    this.tablero.restaurarTablero();
+                    this.robarFicha(usuario);
+                }
                 usuario.setEnTurno(false);
                 mensajeUsuario= "{\"tipo\":\"cambio turno\",\"valor\":"+usuario.isEnTurno()+"}";
                 usuario.getWebSocket().send(mensajeUsuario); 
@@ -222,8 +226,6 @@ public class Sala extends Thread {
             this.tablero.getListas()[x][y] = ficha;
             ficha.setX(x);
             ficha.setY(y);
-            ficha.setxAnterior(-1);
-            ficha.setyAnterior(-1);
             String fichaNueva = "{\"tipo\": \"colocar ficha\",\"ficha\":" + ficha.toJson() + "}";
             this.enviarATodosEnSalaExceptoA(usuario.getWebSocket(), fichaNueva);
             //} catch (IndexOutOfBoundsException ex) {
@@ -249,7 +251,7 @@ public class Sala extends Thread {
         //int numero = fichaMovida.getInt("numero");
         int xAnterior = fichaMovida.getInt("xAnterior");
         int yAnterior = fichaMovida.getInt("yAnterior");
-        try {
+        //try {
             Ficha ficha = this.tablero.getListas()[xAnterior][yAnterior];
             this.tablero.getListas()[xAnterior][yAnterior] = null;
             ficha.setxAnterior(xAnterior);
@@ -263,8 +265,8 @@ public class Sala extends Thread {
             } else {
                 this.enviarError("hay una ficha en ese lugar", usuario);
             }
-        } catch (IndexOutOfBoundsException ex) {
-            if (x < 0) {
+        //} catch (IndexOutOfBoundsException ex) {
+           /* if (x < 0) {
                 this.tablero.aumentarFilas();
                 obj.put("x", 0);
                 obj.put("y", this.tablero.getListas()[0].length - 1);
@@ -278,7 +280,7 @@ public class Sala extends Thread {
             } else if (x > 13) {
 
             }
-        }
+        }*/
 
     }
 
@@ -287,7 +289,7 @@ public class Sala extends Thread {
         usuario.getWebSocket().send(error);
     }
 
-    public void robarFicha(Usuario usuario, JSONObject obj) {
+    public void robarFicha(Usuario usuario) {
         Ficha ficha = this.tablero.getBanca().robarFicha();
         String mensaje = "{\"tipo\":";
         if (ficha != null) {

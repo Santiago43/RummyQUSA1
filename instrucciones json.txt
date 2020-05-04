@@ -35,7 +35,9 @@ Cuando el jugador va iniciar partida:
 				x:  x  , 
 				y:  y ,
 				xAnterior:  xAnterior  ,
-				yAnterior:  yAnterior 
+				yAnterior:  yAnterior ,
+				xInicial: xInicial,
+				yInicial: yInicial
 			},
 			{
 				...
@@ -64,9 +66,28 @@ ficha:
 	x: numero,
 	y: numero,
 	xAnterior:-1,
-	yAnterior:-1
+	yAnterior:-1,
+	xInicial: -1,
+	yInicial: -1,
+}
+
+Cuando el servidor obtiene la ficha, la actualiza a las demás vistas de jugadores
+
+{
+	tipo: "colocar ficha",
+	ficha: {
+		numero: numero,
+		color: numero,
+		x: numero,
+		y: numero,
+		xAnterior:-1,
+		yAnterior:-1,
+		xInicial: numero,
+		yInicial: numero
+	}	
 }
 -Si el jugador está en turno, el servidor envía el dato de la ficha a todos los usuarios en la sala
+
 
 -Si el jugador no está en turno, el servidor le retorna:
 
@@ -88,7 +109,9 @@ Cuando el jugador mueve una ficha:
 		x: numero,
 		y: numero,
 		xAnterior: numero,
-		yAnterior: numero
+		yAnterior: numero,
+		xInicial: numero,
+		yInicial: numero
 	}
 }
 
@@ -97,7 +120,7 @@ Cuando el jugador termina el turno (si realiza jugadas):
 - Jugador envía 
 
 {
-	tipo: "fin de turno"
+	tipo: "terminar turno"
 }
 
 - Servidor responde si la jugada es válida o no
@@ -133,7 +156,9 @@ Si hay fichas en la banca
 		x: numero,
 		y: numero,
 		xAnterior: numero,
-		yAnterior: numero
+		yAnterior: numero,
+		xInicial: numero,
+		yInicial: numero
 	}
 }
 
@@ -157,4 +182,10 @@ Cuando indica inicio de turno, se lo envía al jugador:
 {
 	tipo: "cambio turno",
 	valor: boolean
+}
+
+También indica a los demás jugadores quién está en turno
+{
+	tipo: "turno",
+	jugador: "jugador"
 }

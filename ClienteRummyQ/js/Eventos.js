@@ -18,3 +18,11 @@ $("#Unirse").click(function(){
 	var codigo = $("#InputCodigo2").val();
 	conectarASala(codigo,nombre);
 })
+
+$("#manoJugador").on("click","#btnTerminarTurno",function(){
+	terminarTurno();
+});
+
+$("#manoJugador").on("click","#btnRobarFicha",function(){
+	robarFicha();
+});

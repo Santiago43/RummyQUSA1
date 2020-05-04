@@ -91,9 +91,9 @@ public class Servidor extends WebSocketServer {
                 sala = Buscador.buscarSala(codigo, salas);
                 usuario.setSala(sala);
                 sala.getUsuarios().add(usuario);
-                objeto = "{\"tipo\":\"nuevo jugador\",\"participantes\":\""+(sala.getUsuarios().size()+1)+"\"}";
+                objeto = "{\"tipo\":\"nuevo jugador\",\"participantes\":\""+(sala.getUsuarios().size())+"\"}";
                 sala.enviarATodosEnSalaExceptoA(usuario.getWebSocket(), objeto);
-                objeto = "{\"tipo\":\"conexion sala\",\"participantes\":\"" + (sala.getUsuarios().size()+1) + "\",\"mensaje\":\"conectado\"}";
+                objeto = "{\"tipo\":\"conexion sala\",\"participantes\":\"" + (sala.getUsuarios().size()) + "\",\"mensaje\":\"conectado\"}";
                 ws.send(objeto);
                 break;
             case "desconectarse de sala":
@@ -125,7 +125,7 @@ public class Servidor extends WebSocketServer {
             case "jugada - robar ficha":
                 usuario = Buscador.buscarUsuario(ws, usuarios);
                 sala = usuario.getSala();
-                sala.robarFicha(usuario,obj);
+                sala.robarFicha(usuario);
                 break;
             case "terminar turno":
                 usuario = Buscador.buscarUsuario(ws, usuarios);

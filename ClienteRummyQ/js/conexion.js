@@ -3,6 +3,7 @@ var wsUri = "ws://localhost:30001";
 var websocket = new WebSocket(wsUri);
 var mano= new Array();
 var jugadores = new Array();
+var turno ={valor:false};
 
 /**
 * Cuando se abre la conexión
@@ -46,6 +47,15 @@ websocket.onmessage=function(event){
 		}
 		else if(obj.tipo==="nueva mano"){
 			cambiarAlTablero(obj.mano,obj.jugadores)
+		}
+		else if(obj.tipo==="robar ficha"){
+			fichaRobada(obj.ficha);
+		}
+		else if(obj.tipo==="cambio turno"){
+			cambiarTurno(obj.valor);
+		}
+		else if(obj.tipo==="turno"){
+			jugadorEnTurno(obj.jugador);
 		}
 		else if(obj.tipo==="ganador"){
 			terminarJuego(obj.ganador);
@@ -255,4 +265,54 @@ function colocarFicha(){
 	//Luego se devuelve a la vista anterior 
 	$("#DivInicio").show();
 	$("#gridTablero").empty();
+}
+
+/**
+ * Función que envía al servidor el fin de un turno
+ */
+function terminarTurno(){
+	var object ={
+		tipo: "terminar turno"
+	};
+	enviarMensaje(object);
+}
+
+/**
+ * Función que envía al servidor el robar una ficha
+ */
+function robarFicha(){
+	var object = {
+		tipo: "robar ficha"
+	};
+	enviarMensaje(object);
+}
+
+/**
+ * Función que guarda la ficha robada de la banca
+ * @param {Ficha} ficha que es la ficha robada
+ */
+function fichaRobada(ficha){
+	mano.push(ficha);
+	var continuar = true;
+	var i=0;
+	while(continuar){
+		if($("#"+i).children().length == 0){
+			var texto = '<div class="fill" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';
+			continuar=false;
+		}
+	}
+}
+/**
+ * Función que modifica el valor del objeto que indica si está en turno o no
+ * @param {boolean} valor el estado del turno (sí o no)
+ */
+function cambiarTurno(valor){
+	turno.valor=valor;
+}
+
+/**
+ * Función que muestra quién está en turno
+ */
+function jugadorEnTurno(jugador){
+	alert("Turno de: "+jugador);
 }
