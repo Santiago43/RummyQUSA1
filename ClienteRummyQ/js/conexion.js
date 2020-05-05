@@ -83,10 +83,10 @@ websocket.onmessage=function(event){
 			cambiarTurno(obj.valor);
         }
         else if(obj.tipo==="colocar ficha"){
-
+			fichaColocada(obj.ficha);
         }
         else if(obj.tipo==="mover ficha"){
-
+			fichaMovida(obj.ficha);
         }
 		else if(obj.tipo==="turno"){
 			jugadorEnTurno(obj.jugador);
