@@ -31,7 +31,7 @@ var origen;
 /**
  * id
  */
-var id;
+var coords;
 
 /**
 * Cuando se abre la conexión
@@ -239,7 +239,7 @@ function iniciarPartida(){
 				var variable = $(this).parent().parent().parent();
 				posicion = $(this).parent();
 				console.log(posicion);
-				id = $(variable[0]).attr("id");
+				coords = $(variable[0]).attr("id");
 				console.log($(variable[0]).attr("id"));
 				origen=$(variable[0]).attr("id");
                 console.log($(this).parent());
@@ -255,7 +255,7 @@ function iniciarPartida(){
 				ui.draggable.addClass("dropped");
 				console.log("drop");
 				$(this).append(ui.draggable);
-				id = ui.draggable.attr('class');
+				var id = ui.draggable.attr('class');
 				var datos = id.split(" ");
 				var ficha = datos[1].split("-");
 				console.log(ficha);
@@ -263,7 +263,7 @@ function iniciarPartida(){
 					colocarFicha(event.target.id,ficha);
 				}
 				else if(origen ==="tablero"){
-					moverFicha(event.target.id,ficha,id);
+					moverFicha(event.target.id,ficha,coords);
 				}
                 posicion = ui.draggable;
 				
@@ -322,7 +322,7 @@ function moverFicha(idDiv,ficha,prev){
 		tipo: "jugada - mover ficha",
 		ficha:{
 			numero: numero,
-			color: numero,
+			color: color,
 			x: x,
 			y: y,
 			xAnterior: xAnterior,
