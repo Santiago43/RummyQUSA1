@@ -239,7 +239,7 @@ function iniciarPartida(){
 				var variable = $(this).parent().parent().parent();
 				posicion = $(this).parent();
 				console.log(posicion);
-				id = posicion[0].attr("id");
+				id = $(variable[0]).attr("id");
 				console.log($(variable[0]).attr("id"));
 				origen=$(variable[0]).attr("id");
                 console.log($(this).parent());
