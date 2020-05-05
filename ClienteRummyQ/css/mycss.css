@@ -118,7 +118,7 @@
   margin-top: 10%;
 }
 
-#DivCrearSala input[type="submit"], #DivUnirseASala input[type="submit"], #DivInicio input[type="submit"] {
+#DivCrearSala input[type="submit"], #DivUnirseASala input[type="submit"], #DivInicio input[type="submit"], #botonesmano input[type="submit"] {
   margin-top: 20%;
   border: none;
   outline: none;
@@ -129,11 +129,16 @@
   border-radius: 20px;
 }
 
+#botonesmano input[type="submit"]{
+  margin-top: 16% !important;
+  width: 100%;
+}
+
 #DivInicio input[type="submit"] {
   margin-top: 6% !important;
 }
 
-#DivCrearSala input[type="submit"]:hover, #DivUnirseASala input[type="submit"]:hover, #DivInicio input[type="submit"]:hover {
+#DivCrearSala input[type="submit"]:hover, #DivUnirseASala input[type="submit"]:hover, #DivInicio input[type="submit"]:hover, #botonesmano input[type="submit"]:hover {
   cursor: pointer;
   background: #4e342e;
   color: #ffffff;
@@ -159,12 +164,18 @@
 
 #gridTablero{
   text-align: center;
+  margin: 0px !important;
 }
 
 #tablero{
   position: relative;
   justify-content: center;
   margin-top: 10px;
+  padding: 0px !important;
+  margin: 0px !important;
+}
+
+#jugadores{
   padding: 0px !important;
 }
 
@@ -191,6 +202,18 @@
   opacity: 95%;
 }
 
-.four.wide.column{
+#tableroymano{
+  padding: 0px !important;
+}
+
+#jugador{
+  margin: 0px !important;
+}
+
+#mano{
+  padding: 0px !important;
+}
+
+#botonesmano{
   padding: 0px !important;
 }

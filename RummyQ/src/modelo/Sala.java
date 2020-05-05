@@ -53,27 +53,31 @@ public class Sala extends Thread {
     public Tablero getTablero() {
         return tablero;
     }
+
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public LinkedList getUsuarios() {
         return usuarios;
     }
+
     /**
-     * 
-     * @param usuarios 
+     *
+     * @param usuarios
      */
     public void setUsuarios(LinkedList usuarios) {
         this.usuarios = usuarios;
     }
+
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public int getCodigo() {
         return codigo;
     }
+
     /**
      * Función que contiene el hilo de ejecución del juego
      */
@@ -122,19 +126,20 @@ public class Sala extends Thread {
             }
             turno:
             for (; i < this.usuarios.size(); i++) {
-                
+
                 Usuario usuario = this.usuarios.get(i);
                 usuario.setEnTurno(true);
-                String mensajeGlobal="{\"tipo\": \"turno\",\"jugador\":"
-                        + "\""+usuario.getNombre()+"\"}";
-                generarLog("Es el turno de: "+usuario.getNombre());
+                String mensajeGlobal = "{\"tipo\": \"turno\",\"jugador\":"
+                        + "\"" + usuario.getNombre() + "\"}";
+                generarLog("Es el turno de: " + usuario.getNombre());
                 this.enviarATodosEnSala(mensajeGlobal);
-                String mensajeUsuario= "{\"tipo\":\"cambio turno\",\"valor\":"+usuario.isEnTurno()+"}";
+                String mensajeUsuario = "{\"tipo\":\"cambio turno\",\"valor\":" + usuario.isEnTurno() + "}";
                 usuario.getWebSocket().send(mensajeUsuario);
-                
-                /**Solamente el usuario en turno puede modificar el tablero, por tanto, se bloquea hasta
-                *  que termine el turno. 
-                */
+
+                /**
+                 * Solamente el usuario en turno puede modificar el tablero, por
+                 * tanto, se bloquea hasta que termine el turno.
+                 */
                 synchronized (this.tablero) {
                     try {
                         this.tablero.wait();
@@ -142,16 +147,11 @@ public class Sala extends Thread {
                         Logger.getLogger(Sala.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                if(!Verificador.jugadaValida(tablero.getListas())){
-                    this.tablero.restaurarTablero();
-                    this.robarFicha(usuario);
-                }
                 usuario.setEnTurno(false);
-                mensajeUsuario= "{\"tipo\":\"cambio turno\",\"valor\":"+usuario.isEnTurno()+"}";
-                usuario.getWebSocket().send(mensajeUsuario); 
-                generarLog("Terminó el turno de: "+usuario.getNombre());
-                
-                
+                mensajeUsuario = "{\"tipo\":\"cambio turno\",\"valor\":" + usuario.isEnTurno() + "}";
+                usuario.getWebSocket().send(mensajeUsuario);
+                generarLog("Terminó el turno de: " + usuario.getNombre());
+
                 if (usuario.getMano().isEmpty()) {
                     this.anunciarGanador(usuario);
                     System.out.println("Terminando juego en la sala " + this.codigo);
@@ -160,8 +160,10 @@ public class Sala extends Thread {
             }
         }
     }
+
     /**
      * Función que permite mostrar el ganador de la partida
+     *
      * @param usuarioGanador que es el usuario ganador
      */
     public void anunciarGanador(Usuario usuarioGanador) {
@@ -169,7 +171,7 @@ public class Sala extends Thread {
             String objeto = "{\"tipo\":\"ganador\",\"ganador\":\"" + usuarioGanador.getNombre() + "\"}";
             usuario.getWebSocket().send(objeto);
         }
-        generarLog("Terminó la partida. El ganador fue "+usuarioGanador.getNombre());
+        generarLog("Terminó la partida. El ganador fue " + usuarioGanador.getNombre());
     }
 
     /**
@@ -183,7 +185,7 @@ public class Sala extends Thread {
         for (int i = 0; i < usuarios.size(); i++) {
             WebSocket c = (WebSocket) usuarios.get(i).getWebSocket();
             if (c != ws) {
-                System.out.println("Enviando a "+usuarios.get(i).getNombre());
+                System.out.println("Enviando a " + usuarios.get(i).getNombre());
                 c.send(mensaje);
             }
         }
@@ -252,21 +254,21 @@ public class Sala extends Thread {
         int xAnterior = fichaMovida.getInt("xAnterior");
         int yAnterior = fichaMovida.getInt("yAnterior");
         //try {
-            Ficha ficha = this.tablero.getListas()[xAnterior][yAnterior];
-            this.tablero.getListas()[xAnterior][yAnterior] = null;
-            ficha.setxAnterior(xAnterior);
-            ficha.setyAnterior(yAnterior);
-            if (this.tablero.getListas()[x][y] != null) {
-                this.tablero.getListas()[x][y] = ficha;
-                ficha.setX(x);
-                ficha.setY(y);
-                String fichaNueva = "{\"tipo\": \"mover ficha\",\"ficha\":" + ficha.toJson() + "}";
-                this.enviarATodosEnSalaExceptoA(usuario.getWebSocket(), fichaNueva);
-            } else {
-                this.enviarError("hay una ficha en ese lugar", usuario);
-            }
+        Ficha ficha = this.tablero.getListas()[xAnterior][yAnterior];
+        this.tablero.getListas()[xAnterior][yAnterior] = null;
+        ficha.setxAnterior(xAnterior);
+        ficha.setyAnterior(yAnterior);
+        if (this.tablero.getListas()[x][y] != null) {
+            this.tablero.getListas()[x][y] = ficha;
+            ficha.setX(x);
+            ficha.setY(y);
+            String fichaNueva = "{\"tipo\": \"mover ficha\",\"ficha\":" + ficha.toJson() + "}";
+            this.enviarATodosEnSalaExceptoA(usuario.getWebSocket(), fichaNueva);
+        } else {
+            this.enviarError("hay una ficha en ese lugar", usuario);
+        }
         //} catch (IndexOutOfBoundsException ex) {
-           /* if (x < 0) {
+        /* if (x < 0) {
                 this.tablero.aumentarFilas();
                 obj.put("x", 0);
                 obj.put("y", this.tablero.getListas()[0].length - 1);
@@ -300,18 +302,52 @@ public class Sala extends Thread {
             mensaje += "\"ficha no robada\"}";
         }
         usuario.getWebSocket().send(mensaje);
-        terminarTurno(usuario);
+        //terminarTurno(usuario);
     }
-
+    /**
+     * Función que permite terminar turno
+     * @param usuario es el usuario que termina el turno
+     */
     public void terminarTurno(Usuario usuario) {
         if (usuario.isEnTurno()) {
-            synchronized (this.tablero) {
-                this.tablero.notify();
+            String mensajeUsuario = "";
+            if (!Verificador.jugadaValida(tablero.getListas())) {
+                mensajeUsuario = "{\"tipo\": \"jugada inválida\"}";
+                usuario.getWebSocket().send(mensajeUsuario);
+                //restaurarTablero();
+                this.robarFicha(usuario);
+            } else {
+                mensajeUsuario = "{\"tipo\": \"jugada válida\"}";
+                usuario.getWebSocket().send(mensajeUsuario);
+                synchronized (this.tablero) {
+                    this.tablero.notify();
+                }
             }
         }
     }
-    
-    public void generarLog(String mensaje){
-        System.out.println(this.getName()+": "+mensaje);
+
+    public void generarLog(String mensaje) {
+        System.out.println(this.getName() + ": " + mensaje);
     }
+
+    /*public void restaurarTablero(Usuario usuario) {
+        LinkedList<Ficha> fichasARestaurar = new LinkedList();
+        for (int i = 0; i < this.tablero.getListas().length; i++) {
+            for (int j = 0; j < this.tablero.getListas()[0].length; j++) {
+                if (this.tablero.getListas()[i][j] != null) {
+                    fichasARestaurar.add(this.tablero.getListas()[i][j]);
+                }
+            }
+        }
+        Ficha nuevoTablero[][] = new Ficha[this.tablero.getListas().length][this.tablero.getListas()[0].length];
+        while (!fichasARestaurar.isEmpty()) {
+            int x = fichasARestaurar.getFirst().getxInicial();
+            int y = fichasARestaurar.getFirst().getyInicial();
+            if (x != -1) {
+                nuevoTablero[x][y] = fichasARestaurar.removeFirst();
+            } else {
+                usuario.getMano().add(fichasARestaurar.removeFirst());
+            }
+        }
+    }*/
 }

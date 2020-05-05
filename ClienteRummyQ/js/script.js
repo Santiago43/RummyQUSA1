@@ -4,17 +4,18 @@ $(document).ready(
 	function(){
 		$("#DivInicio").show();
 		crearRejilla(7,19);
-		$("#DivInicio").show();
+		$("#DivInicio").hide();
 		$("#DivCrearSala").hide();
 		$("#DivUnirseASala").hide();
 		$("#DivInformacionSala").hide();
-		$("#gridTablero").hide();
+		$("#gridTablero").show();
 	}
 	);
 
 
 function crearRejilla(filas,columnas){
 	var texto="";
+	var textoMano="";
 	for (let i = 0; i < filas; i++) {
 		texto+="<div class='ficha row'>";
 		for (let j = 0; j < columnas; j++) {
@@ -22,8 +23,9 @@ function crearRejilla(filas,columnas){
 		}
 		texto+='</div>';
 	}
-	texto+='<div id="manoJugador"> '+crearEspaciosMano(16)+'</div>';
+	textoMano+='<div id="manoJugador"> '+crearEspaciosMano(16)+'</div>';
 	$("#tablero").append(texto);
+	$("#mano").append(textoMano);
 }
 
 function crearEspaciosMano(columnas){
