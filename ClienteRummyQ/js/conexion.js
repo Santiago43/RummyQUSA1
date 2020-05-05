@@ -428,8 +428,7 @@ function jugadorEnTurno(jugador){
  * @param {*} ficha 
  */
 function fichaColocada(ficha){
-    var texto = '<div class="fill '+ficha.color+'-'+ficha.numero+'" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';;
-    tablero.push(ficha.x,ficha.y,ficha.color+"-"+ficha.valor);
+    var texto = '<div oncontextmenu="soni'+ficha.color+''+ficha.numero+'.play()" class="fill '+ficha.color+'-'+ficha.numero+'" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';
     $("#"+ficha.x+"-"+ficha.y).append(texto);
 }
 
@@ -437,5 +436,7 @@ function fichaColocada(ficha){
  * @param {*} ficha
  */
 function fichaMovida(ficha){
-
+	$("#"+ficha.xAnterior+"-"+ficha.yAnterior).empty();
+	var texto = '<div oncontextmenu="soni'+ficha.color+''+ficha.numero+'.play()" class="fill '+ficha.color+'-'+ficha.numero+'" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';
+    $("#"+ficha.x+"-"+ficha.y).append(texto);
 }
