@@ -257,13 +257,13 @@ function iniciarPartida(){
 				$(this).append(ui.draggable);
 				var id = ui.draggable.attr('class');
 				var datos = id.split(" ");
-				var ficha = datos[1].split("-");
-				console.log(ficha);
+				var valorFicha = datos[1].split("-");
+				console.log(valorFicha);
 				if(origen==="manoJugador"){
-					colocarFicha(event.target.id,ficha);
+					colocarFicha(event.target.id,valorFicha);
 				}
 				else if(origen ==="tablero"){
-					moverFicha(event.target.id,ficha,coords);
+					moverFicha(event.target.id,valorFicha,coords);
 				}
                 posicion = ui.draggable;
 				
@@ -314,7 +314,6 @@ function moverFicha(idDiv,ficha,prev){
     var valor = ficha[1].split("-");
     var color = valor[0];
     var numero = valor[1];
-	var indice =0;
 	var coordenadasPrevias = prev.split("-");
 	var xAnterior = coordenadasPrevias[0];
 	var yAnterior = coordenadasPrevias[1];
@@ -335,16 +334,15 @@ function moverFicha(idDiv,ficha,prev){
 /**
  * Función que permite colocar una ficha
  * @param {*} idDiv que es el id del div donde está la ficha 
- * @param {*} ficha que es la ficha
+ * @param {*} valorFicha que es la ficha
  */
-function colocarFicha(idDiv, ficha){
+function colocarFicha(idDiv, valorFicha){
     var coordenadas = idDiv.split("-");
     var x = coordenadas[0];
     var y = coordenadas[1];
-    var valor = ficha[1].split("-");
+    var valor = valorFicha[1].split("-");
     var color = valor[0];
     var numero = valor[1];
-    var indice =0;
     var objeto ={
         tipo: "colocar ficha",
         ficha: {
@@ -355,7 +353,8 @@ function colocarFicha(idDiv, ficha){
 			xAnterior:-1,
 			yAnterior:-1
 		}
-    }
+	}
+	console.log(objeto);
     enviarMensaje(objeto);
 }
 
