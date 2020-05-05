@@ -4,11 +4,11 @@ $(document).ready(
 	function(){
 		$("#DivInicio").show();
 		crearRejilla(7,19);
-		$("#DivInicio").hide();
+		$("#DivInicio").show();
 		$("#DivCrearSala").hide();
 		$("#DivUnirseASala").hide();
 		$("#DivInformacionSala").hide();
-		$("#gridTablero").show();
+		$("#gridTablero").hide();
 	}
 	);
 
