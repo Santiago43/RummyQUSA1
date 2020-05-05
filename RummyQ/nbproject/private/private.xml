@@ -3,6 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+            <file>file:/C:/Users/Lenovo/Documents/Universidad%20SA/Semestre%20V/Diseño%20de%20Experiencia%20de%20Usuario/Corte%202/Proyecto%20Corte/RummyQUSA1/RummyQ/src/modelo/Sala.java</file>
+            <file>file:/C:/Users/Lenovo/Documents/Universidad%20SA/Semestre%20V/Diseño%20de%20Experiencia%20de%20Usuario/Corte%202/Proyecto%20Corte/RummyQUSA1/RummyQ/src/funciones/Buscador.java</file>
+>>>>>>> 4ec899a8c3c37fe6215193200b69df65dadae36c
             <file>file:/C:/Users/Lenovo/Documents/Universidad%20SA/Semestre%20V/Diseño%20de%20Experiencia%20de%20Usuario/Corte%202/Proyecto%20Corte/RummyQUSA1/RummyQ/src/modelo/Usuario.java</file>
             <file>file:/C:/Users/Lenovo/Documents/Universidad%20SA/Semestre%20V/Diseño%20de%20Experiencia%20de%20Usuario/Corte%202/Proyecto%20Corte/RummyQUSA1/RummyQ/src/modelo/Sala.java</file>
             <file>file:/C:/Users/Lenovo/Documents/Universidad%20SA/Semestre%20V/Diseño%20de%20Experiencia%20de%20Usuario/Corte%202/Proyecto%20Corte/RummyQUSA1/RummyQ/src/servidor/Servidor.java</file>
@@ -11,6 +17,15 @@
             <file>file:/C:/Users/Lenovo/Documents/Universidad%20SA/Semestre%20V/Diseño%20de%20Experiencia%20de%20Usuario/Corte%202/Proyecto%20Corte/RummyQUSA1/RummyQ/src/funciones/Verificador.java</file>
             <file>file:/C:/Users/Lenovo/Documents/Universidad%20SA/Semestre%20V/Diseño%20de%20Experiencia%20de%20Usuario/Corte%202/Proyecto%20Corte/RummyQUSA1/RummyQ/src/modelo/Tablero.java</file>
             <file>file:/C:/Users/Lenovo/Documents/Universidad%20SA/Semestre%20V/Diseño%20de%20Experiencia%20de%20Usuario/Corte%202/Proyecto%20Corte/RummyQUSA1/RummyQ/src/funciones/Generador.java</file>
+=======
+            <file>file:/C:/Users/juan%20sebastian%20bueno/Desktop/Universidad/5%20semestre/multimediales/proyecto_2corte/RummyQUSA1/RummyQ/src/modelo/Sala.java</file>
+            <file>file:/C:/Users/juan%20sebastian%20bueno/Desktop/Universidad/5%20semestre/multimediales/proyecto_2corte/RummyQUSA1/RummyQ/src/modelo/Usuario.java</file>
+            <file>file:/C:/Users/juan%20sebastian%20bueno/Desktop/Universidad/5%20semestre/multimediales/proyecto_2corte/RummyQUSA1/RummyQ/src/modelo/Tablero.java</file>
+            <file>file:/C:/Users/juan%20sebastian%20bueno/Desktop/Universidad/5%20semestre/multimediales/proyecto_2corte/RummyQUSA1/RummyQ/src/funciones/Buscador.java</file>
+            <file>file:/C:/Users/juan%20sebastian%20bueno/Desktop/Universidad/5%20semestre/multimediales/proyecto_2corte/RummyQUSA1/RummyQ/src/modelo/Banca.java</file>
+            <file>file:/C:/Users/juan%20sebastian%20bueno/Desktop/Universidad/5%20semestre/multimediales/proyecto_2corte/RummyQUSA1/RummyQ/src/modelo/Ficha.java</file>
+            <file>file:/C:/Users/juan%20sebastian%20bueno/Desktop/Universidad/5%20semestre/multimediales/proyecto_2corte/RummyQUSA1/RummyQ/src/funciones/Generador.java</file>
+>>>>>>> sebas_el_master
         </group>
     </open-files>
 </project-private>
