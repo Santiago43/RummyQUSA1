@@ -340,11 +340,10 @@ function colocarFicha(idDiv, valorFicha){
     var coordenadas = idDiv.split("-");
     var x = coordenadas[0];
     var y = coordenadas[1];
-    var valor = valorFicha[1].split("-");
-    var color = valor[0];
-    var numero = valor[1];
+    var color = valorFicha[0];
+    var numero = valorFicha[1];
     var objeto ={
-        tipo: "colocar ficha",
+        tipo: "jugada - colocar ficha",
         ficha: {
 			x:x,
 			y:y,
