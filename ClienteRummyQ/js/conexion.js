@@ -240,6 +240,7 @@ function iniciarPartida(){
 				posicion = $(this).parent();
 				console.log(posicion);
 				coords = $(variable[0]).attr("id");
+				console.log(coords);
 				console.log($(variable[0]).attr("id"));
 				origen=$(variable[0]).attr("id");
                 console.log($(this).parent());
@@ -311,9 +312,8 @@ function moverFicha(idDiv,ficha,prev){
     var coordenadas = idDiv.split("-");
     var x = coordenadas[0];
     var y = coordenadas[1];
-    var valor = ficha[1].split("-");
-    var color = valor[0];
-    var numero = valor[1];
+    var color = ficha[0];
+    var numero = ficha[1];
 	var coordenadasPrevias = prev.split("-");
 	var xAnterior = coordenadasPrevias[0];
 	var yAnterior = coordenadasPrevias[1];
