@@ -304,7 +304,10 @@ public class Sala extends Thread {
         usuario.getWebSocket().send(mensaje);
         //terminarTurno(usuario);
     }
-
+    /**
+     * Función que permite terminar turno
+     * @param usuario es el usuario que termina el turno
+     */
     public void terminarTurno(Usuario usuario) {
         if (usuario.isEnTurno()) {
             String mensajeUsuario = "";

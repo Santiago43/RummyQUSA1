@@ -4,6 +4,10 @@ var websocket = new WebSocket(wsUri);
 var mano= new Array();
 var jugadores = new Array();
 var turno ={valor:false};
+var posicion;
+var id;
+
+var tablero =[];
 
 /**
 * Cuando se abre la conexión
@@ -53,7 +57,13 @@ websocket.onmessage=function(event){
 		}
 		else if(obj.tipo==="cambio turno"){
 			cambiarTurno(obj.valor);
-		}
+        }
+        else if(obj.tipo==="colocar ficha"){
+
+        }
+        else if(obj.tipo==="mover ficha"){
+
+        }
 		else if(obj.tipo==="turno"){
 			jugadorEnTurno(obj.jugador);
 		}
@@ -186,7 +196,7 @@ function iniciarPartida(){
  	var fichas="";
  	for (let i = 0; i < nuevaMano.length; i++) {
  		mano.push(nuevaMano[i]);
- 		fichas='<div class="fill" draggable="true"> <img src="img/fichas/'+mano[i].color+'-'+mano[i].numero+'.png" height="70px" width="43px" ></div>';
+ 		fichas='<div class="fill '+mano[i].color+'-'+mano[i].numero+'" draggable="true"> <img src="img/fichas/'+mano[i].color+'-'+mano[i].numero+'.png" height="70px" width="43px" ></div>';
  		$("#"+i).append(fichas);
  	}	
  	for (let i = 0; i < nuevosJugadores.length; i++) {
@@ -197,10 +207,14 @@ function iniciarPartida(){
 	 $( function() {
 		$( ".fill" ).draggable({
 			stop: function(event,ui){
-				console.log("stop");
+                console.log("stop");
 			},
 			start:function(event,ui){
-				console.log("start");
+                console.log("start");
+                console.log($(this).parent().parent());
+                var variable = $(this).parent().parent().parent();
+                console.log($(variable[0]).attr("id"));
+                console.log($(this).parent());
 			},
 			revert:function(posicion){
 				console.log(nuev);
@@ -209,11 +223,25 @@ function iniciarPartida(){
 		});
 		$( ".empty.column" ).droppable({
 			drop: function(event,ui){
-				//console.log('estoyen'+event.target.id);
-				//posicion=event.target.id;
+                
 				ui.draggable.addClass("dropped");
 				console.log("drop");
-				$(this).append(ui.draggable);
+                $(this).append(ui.draggable);
+                posicion = ui.draggable;
+                id = ui.draggable.attr('class');
+				/*var datos = id.split(" ");
+                var ficha = datos.split("-");
+                
+				if(true){
+                    colocarFicha(event.target.id,ficha);
+                }
+				else{
+                    var posicionAnterior; //La posible posición ;c
+                    moverFicha(event.target.id,ficha,posicionAnterior);
+                }*/
+                    
+                
+				console.log(posicion);				
 			}
 		});
 		$(".empty.espacioMano").droppable({
@@ -237,15 +265,46 @@ function iniciarPartida(){
 /**
 * Función que permite mover una ficha
 */
-function moverFicha(){
-	
+function moverFicha(idDiv,ficha){
+    var coordenadas = idDiv.split("-");
+    var x = coordenadas[0];
+    var y = coordenadas[1];
+    var valor = ficha[1].split("-");
+    var color = valor[0];
+    var numero = valor[1];
+    var indice =0;
+    
 }
 
 /**
-* Función que permite colocar una ficha
-*/
-function colocarFicha(){
-	
+ * Función que permite colocar una ficha
+ * @param {*} idDiv que es el id del div donde está la ficha 
+ * @param {*} ficha que es la ficha
+ */
+function colocarFicha(idDiv, ficha){
+    var coordenadas = idDiv.split("-");
+    var x = coordenadas[0];
+    var y = coordenadas[1];
+    var valor = ficha[1].split("-");
+    var color = valor[0];
+    var numero = valor[1];
+    var indice =0;
+	for (let i = 0; i < mano.length; i++) {
+        if(mano[i].color===color && mano[i].numero===numero){
+            indice = i;
+            break;
+        }
+    }
+    mano[indice].x=x;
+    mano[indice].y=y;
+    var fichaAEnviar = mano.pop(indice);
+    var objeto ={
+        tipo: "colocar ficha",
+        ficha: fichaAEnviar
+    }
+    tablero.push(x,y,color+"-"+valor);
+    enviarMensaje(objeto);
+
 }
 
 
@@ -292,7 +351,7 @@ function fichaRobada(ficha){
 	var i=0;
 	while(continuar){
 		if($("#"+i).children().length == 0){
-			var texto = '<div class="fill" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';
+			var texto = '<div class="fill '+ficha.color+'-'+ficha.numero+'" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';
 			continuar=false;
 		}
 	}
@@ -310,4 +369,21 @@ function cambiarTurno(valor){
  */
 function jugadorEnTurno(jugador){
 	alert("Turno de: "+jugador);
+}
+
+/**
+ * 
+ * @param {*} ficha 
+ */
+function fichaColocada(ficha){
+    var texto = '<div class="fill '+ficha.color+'-'+ficha.numero+'" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';;
+    tablero.push(ficha.x,ficha.y,ficha.color+"-"+ficha.valor);
+    $("#"+ficha.x+"-"+ficha.y).append(texto);
+}
+
+/**
+ * @param {*} ficha
+ */
+function moverFicha(ficha){
+
 }
