@@ -200,6 +200,7 @@ function iniciarPartida(){
  		$("#"+i+"").append(fichas);
  		fichas='<div class="fill" draggable="true"> <img src="img/fichas/'+mano[i].color+'-'+mano[i].numero+'.png" height="70px" width="43px" ></div>';
  		fichas='<div class="fill '+mano[i].color+'-'+mano[i].numero+'" draggable="true"> <img src="img/fichas/'+mano[i].color+'-'+mano[i].numero+'.png" height="70px" width="43px" ></div>';
+ 		fichas='<div oncontextmenu="soni'+mano[i].color+''+mano[i].numero+'.play()" class="fill" draggable="true"> <img src="img/fichas/'+mano[i].color+'-'+mano[i].numero+'.png" height="70px" width="43px" ></div>';
  		$("#"+i).append(fichas);
  	}	
  	for (let i = 0; i < nuevosJugadores.length; i++) {
