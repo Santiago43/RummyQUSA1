@@ -401,8 +401,11 @@ function fichaRobada(ficha){
 	var i=0;
 	while(continuar){
 		if($("#"+i).children().length == 0){
-			var texto = '<div class="fill '+ficha.color+'-'+ficha.numero+'" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';
+			var texto = '<div oncontextmenu="soni'+ficha.color+''+ficha.numero+'.play()" class="fill '+ficha.color+'-'+ficha.numero+'" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';
+			$("#"+i).append(texto);
 			continuar=false;
+		}else{
+			i++;
 		}
 	}
 }

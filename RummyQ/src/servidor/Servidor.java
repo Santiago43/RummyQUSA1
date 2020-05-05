@@ -122,7 +122,7 @@ public class Servidor extends WebSocketServer {
                 sala = usuario.getSala();
                 sala.moverFicha(usuario, obj);
                 break;
-            case "jugada - robar ficha":
+            case "robar ficha":
                 usuario = Buscador.buscarUsuario(ws, usuarios);
                 sala = usuario.getSala();
                 sala.robarFicha(usuario);
