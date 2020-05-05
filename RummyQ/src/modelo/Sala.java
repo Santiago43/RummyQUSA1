@@ -32,17 +32,17 @@ public class Sala extends Thread {
     }
 
     /**
-     *
+     * El tablero de juego de esta sala
      */
     private final Tablero tablero;
 
     /**
-     *
+     * Lista de usuarios
      */
     private LinkedList<Usuario> usuarios;
 
     /**
-     *
+     * El código de la sala
      */
     private final int codigo;
 

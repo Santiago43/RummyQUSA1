@@ -1,12 +1,45 @@
+/** 
+ * Parte del servidor
+*/
+/**
+ * Promesa
+ * @param {*} ms 
+ */
 var wait = ms => new Promise((r, j) => setTimeout(r, ms));
+/**
+ * Url del servidor usando ws
+ */
 var wsUri = "ws://localhost:30001";
+/**
+ * Websocket
+ */
 var websocket = new WebSocket(wsUri);
+
+/**
+ * Cliente
+ */
+
+ /**
+  * Mano del jugador
+  */
 var mano= new Array();
+/**
+ * Lista de jugadores en sala
+ */
 var jugadores = new Array();
+/**
+ * Validador de turno
+ */
 var turno ={valor:false};
-var posicion;
+/**
+ * Posición que indica el origen de la ficha
+ */
+var origen;
 var id;
 
+/**
+ * Tablero del usuario
+ */
 var tablero =[];
 
 /**
@@ -59,10 +92,10 @@ websocket.onmessage=function(event){
 			cambiarTurno(obj.valor);
         }
         else if(obj.tipo==="colocar ficha"){
-
+			fichaColocada(obj.ficha);
         }
         else if(obj.tipo==="mover ficha"){
-
+			fichaMovida(obj.ficha);
         }
 		else if(obj.tipo==="turno"){
 			jugadorEnTurno(obj.jugador);
@@ -212,7 +245,8 @@ function iniciarPartida(){
 			start:function(event,ui){
                 console.log("start");
                 console.log($(this).parent().parent());
-                var variable = $(this).parent().parent().parent();
+				var variable = $(this).parent().parent().parent();
+				origen =$(variable[0]).attr("id");
                 console.log($(variable[0]).attr("id"));
                 console.log($(this).parent());
 			},
@@ -228,7 +262,10 @@ function iniciarPartida(){
 				console.log("drop");
                 $(this).append(ui.draggable);
                 posicion = ui.draggable;
-                id = ui.draggable.attr('class');
+				id = ui.draggable.attr('class');
+				if(origen ==="manoJugador"){
+					colocarFicha(event.target.id,id);
+				}
 				/*var datos = id.split(" ");
                 var ficha = datos.split("-");
                 
@@ -376,14 +413,17 @@ function jugadorEnTurno(jugador){
  * @param {*} ficha 
  */
 function fichaColocada(ficha){
-    var texto = '<div class="fill '+ficha.color+'-'+ficha.numero+'" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';;
+    var texto = '<div class="fill '+ficha.color+'-'+ficha.numero+'" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';
     tablero.push(ficha.x,ficha.y,ficha.color+"-"+ficha.valor);
     $("#"+ficha.x+"-"+ficha.y).append(texto);
 }
 
 /**
+ * 
  * @param {*} ficha
  */
-function moverFicha(ficha){
-
+function fichaMovida(ficha){
+	$("#"+ficha.xAnterior+"-"+ficha.yAnterior).empty();
+	var texto ='<div class="fill '+ficha.color+'-'+ficha.numero+'" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';
+	$("#"+ficha.x+"-"+ficha.y).append(texto);
 }
