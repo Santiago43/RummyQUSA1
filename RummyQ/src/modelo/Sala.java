@@ -26,7 +26,7 @@ public class Sala extends Thread {
     public Sala(int codigo, String name) {
         super(name);
         this.tablero = new Tablero();
-        this.tablero.setListas(new Ficha[7][19]);
+        this.tablero.setListas(new Ficha[19][7]);
         this.codigo = codigo;
         this.usuarios = new LinkedList();
     }
