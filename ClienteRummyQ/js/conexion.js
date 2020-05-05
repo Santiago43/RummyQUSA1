@@ -1,13 +1,37 @@
+/**
+ * Promesa
+ * @param {*} ms 
+ */
 var wait = ms => new Promise((r, j) => setTimeout(r, ms));
+/**
+ * Dirección con protocolo ws
+ */
 var wsUri = "ws://localhost:30001";
+/**
+ * Websocket
+ */
 var websocket = new WebSocket(wsUri);
+/**
+ * Mano del jugador
+ */
 var mano= new Array();
+/**
+ * Lista de jugadores
+ */
 var jugadores = new Array();
+/**
+ * El turno
+ */
 var turno ={valor:false};
 var posicion;
+/**
+ * El origen de una jugada
+ */
+var origen;
+/**
+ * id
+ */
 var id;
-
-var tablero =[];
 
 /**
 * Cuando se abre la conexión
@@ -196,7 +220,7 @@ function iniciarPartida(){
  	var fichas="";
  	for (let i = 0; i < nuevaMano.length; i++) {
  		mano.push(nuevaMano[i]);
- 		fichas='<div oncontextmenu="soni'+mano[i].color+''+mano[i].numero+'.play()" class="fill" draggable="true"> <img src="img/fichas/'+mano[i].color+'-'+mano[i].numero+'.png" height="70px" width="43px" ></div>';
+ 		fichas='<div oncontextmenu="soni'+mano[i].color+''+mano[i].numero+'.play()" class="fill '+mano[i].color+'-'+mano[i].numero+'" draggable="true"> <img src="img/fichas/'+mano[i].color+'-'+mano[i].numero+'.png" height="70px" width="43px" ></div>';
  		$("#"+i).append(fichas);
  	}	
  	for (let i = 0; i < nuevosJugadores.length; i++) {
@@ -211,9 +235,13 @@ function iniciarPartida(){
 			},
 			start:function(event,ui){
                 console.log("start");
-                console.log($(this).parent().parent());
-                var variable = $(this).parent().parent().parent();
-                console.log($(variable[0]).attr("id"));
+                //console.log($(this).parent().parent());
+				var variable = $(this).parent().parent().parent();
+				posicion = $(this).parent();
+				console.log(posicion);
+				id = posicion[0].attr("id");
+				console.log($(variable[0]).attr("id"));
+				origen=$(variable[0]).attr("id");
                 console.log($(this).parent());
 			},
 			revert:function(posicion){
@@ -226,10 +254,21 @@ function iniciarPartida(){
                 
 				ui.draggable.addClass("dropped");
 				console.log("drop");
-                $(this).append(ui.draggable);
+				$(this).append(ui.draggable);
+				id = ui.draggable.attr('class');
+				var datos = id.split(" ");
+				var ficha = datos[1].split("-");
+				console.log(ficha);
+				if(origen==="manoJugador"){
+					colocarFicha(event.target.id,ficha);
+				}
+				else if(origen ==="tablero"){
+					moverFicha(event.target.id,ficha,id);
+				}
                 posicion = ui.draggable;
-                id = ui.draggable.attr('class');
-				/*var datos = id.split(" ");
+				
+				console.log(id);
+				/*
                 var ficha = datos.split("-");
                 
 				if(true){
@@ -263,17 +302,34 @@ function iniciarPartida(){
 
 
 /**
-* Función que permite mover una ficha
-*/
-function moverFicha(idDiv,ficha){
+ * Función que permite mover una ficha
+ * @param {*} idDiv es el div de la posición actual
+ * @param {*} ficha ficha
+ * @param {*} prev posición previa
+ */
+function moverFicha(idDiv,ficha,prev){
     var coordenadas = idDiv.split("-");
     var x = coordenadas[0];
     var y = coordenadas[1];
     var valor = ficha[1].split("-");
     var color = valor[0];
     var numero = valor[1];
-    var indice =0;
-    
+	var indice =0;
+	var coordenadasPrevias = prev.split("-");
+	var xAnterior = coordenadasPrevias[0];
+	var yAnterior = coordenadasPrevias[1];
+	var objeto ={
+		tipo: "jugada - mover ficha",
+		ficha:{
+			numero: numero,
+			color: numero,
+			x: x,
+			y: y,
+			xAnterior: xAnterior,
+			yAnterior: yAnterior
+		}
+	}
+	enviarMensaje(objeto);
 }
 
 /**
@@ -289,22 +345,18 @@ function colocarFicha(idDiv, ficha){
     var color = valor[0];
     var numero = valor[1];
     var indice =0;
-	for (let i = 0; i < mano.length; i++) {
-        if(mano[i].color===color && mano[i].numero===numero){
-            indice = i;
-            break;
-        }
-    }
-    mano[indice].x=x;
-    mano[indice].y=y;
-    var fichaAEnviar = mano.pop(indice);
     var objeto ={
         tipo: "colocar ficha",
-        ficha: fichaAEnviar
+        ficha: {
+			x:x,
+			y:y,
+			color:color,
+			numero:numero,
+			xAnterior:-1,
+			yAnterior:-1
+		}
     }
-    tablero.push(x,y,color+"-"+valor);
     enviarMensaje(objeto);
-
 }
 
 
@@ -384,6 +436,6 @@ function fichaColocada(ficha){
 /**
  * @param {*} ficha
  */
-function moverFicha(ficha){
+function fichaMovida(ficha){
 
 }

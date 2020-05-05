@@ -47,7 +47,7 @@ public class Sala extends Thread {
     private final int codigo;
 
     /**
-     *
+     * 
      * @return
      */
     public Tablero getTablero() {
