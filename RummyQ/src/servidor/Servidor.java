@@ -126,6 +126,7 @@ public class Servidor extends WebSocketServer {
                 usuario = Buscador.buscarUsuario(ws, usuarios);
                 sala = usuario.getSala();
                 sala.robarFicha(usuario);
+                sala.terminarTurno(usuario);
                 break;
             case "terminar turno":
                 usuario = Buscador.buscarUsuario(ws, usuarios);

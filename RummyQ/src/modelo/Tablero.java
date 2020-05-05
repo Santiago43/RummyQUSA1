@@ -55,14 +55,4 @@ public class Tablero {
         this.listas = listasNuevas;
     }
     
-    public void restaurarTablero() {
-        LinkedList <Ficha> fichasARestaurar = new LinkedList();
-        for (int i = 0; i < this.listas.length; i++) {
-            for (int j = 0; j < this.listas[0].length; j++) {
-                if(this.listas[i][j]!=null){
-                    fichasARestaurar.add(this.listas[i][j]);
-                }
-            }
-        }
-    }
 }
