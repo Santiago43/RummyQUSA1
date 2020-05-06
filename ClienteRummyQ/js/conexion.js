@@ -245,26 +245,28 @@ function cambiarAlTablero(nuevaMano,nuevosJugadores){
 				origen=$(variable[0]).attr("id");
 			},
 			revert:function(posicion){
-				console.log(nuev);
-				return nuev;
-			}
+				return !turno.valor;
+			},
+			revertDuration:550
 		});
 		$( ".empty.column" ).droppable({
 			drop: function(event,ui){
-				
-				ui.draggable.addClass("dropped");
-				console.log("drop");
-				$(this).append(ui.draggable);
-				var id = ui.draggable.attr('class');
-				var datos = id.split(" ");
-				var valorFicha = datos[1].split("-");
-				console.log(valorFicha);
-				if(origen==="manoJugador"){
-					colocarFicha(event.target.id,valorFicha);
-				}
-				else if(origen ==="tablero"){
-					moverFicha(event.target.id,valorFicha,coords);
-				}				
+				if(turno.valor){
+					console.log("drop");
+					var id = ui.draggable.attr('class');
+					var datos = id.split(" ");
+					var valorFicha = datos[1].split("-");
+					console.log(valorFicha);
+					$(ui.draggable).remove();
+					if(origen==="manoJugador"){
+						colocarFicha(event.target.id,valorFicha);
+					}
+					else if(origen ==="tablero"){
+						moverFicha(event.target.id,valorFicha,coords);
+					}
+				}else{
+					alert("Usted no está en turno para hacer esa jugada");
+				}							
 			}
 		});
 		$(".empty.espacioMano").droppable({
@@ -311,6 +313,8 @@ function moverFicha(idDiv,ficha,prev){
 		}
 	}
 	enviarMensaje(objeto);
+	var texto = '<div oncontextmenu="soni'+ficha.color+''+ficha.numero+'.play()" class="fill '+ficha.color+'-'+ficha.numero+'" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';
+	$("#"+ficha.x+"-"+ficha.y).append(texto);
 }
 
 /**
@@ -337,6 +341,8 @@ function colocarFicha(idDiv, valorFicha){
 	}
 	console.log(objeto);
 	enviarMensaje(objeto);
+	var texto = '<div oncontextmenu="soni'+ficha.color+''+ficha.numero+'.play()" class="fill '+ficha.color+'-'+ficha.numero+'" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';
+	$("#"+ficha.x+"-"+ficha.y).append(texto);
 }
 
 
@@ -400,26 +406,27 @@ function fichaRobada(ficha){
 						origen=$(variable[0]).attr("id");
 					},
 					revert:function(posicion){
-						console.log(nuev);
-						return nuev;
+						return !turno.valor;
 					}
 				});
 				$( ".empty.column" ).droppable({
 					drop: function(event,ui){
-						
-						ui.draggable.addClass("dropped");
-						console.log("drop");
-						$(this).append(ui.draggable);
-						var id = ui.draggable.attr('class');
-						var datos = id.split(" ");
-						var valorFicha = datos[1].split("-");
-						console.log(valorFicha);
-						if(origen==="manoJugador"){
-							colocarFicha(event.target.id,valorFicha);
-						}
-						else if(origen ==="tablero"){
-							moverFicha(event.target.id,valorFicha,coords);
-						}				
+						if(turno.valor){
+							console.log("drop");
+							var id = ui.draggable.attr('class');
+							var datos = id.split(" ");
+							var valorFicha = datos[1].split("-");
+							console.log(valorFicha);
+							$(ui.draggable).remove();
+							if(origen==="manoJugador"){
+								colocarFicha(event.target.id,valorFicha);
+							}
+							else if(origen ==="tablero"){
+								moverFicha(event.target.id,valorFicha,coords);
+							}
+						}else{
+							alert("Usted no está en turno para hacer esa jugada");
+						}			
 					}
 				});
 				$(".empty.espacioMano").droppable({
