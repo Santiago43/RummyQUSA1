@@ -94,6 +94,9 @@ websocket.onmessage=function(event){
 		else if(obj.tipo==="ganador"){
 			terminarJuego(obj.ganador);
 		}
+		else if(obj.tipo==="error"){
+			alert(obj.mensaje);
+		}
 	}
 }
 
