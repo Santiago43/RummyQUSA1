@@ -94,6 +94,9 @@ websocket.onmessage=function(event){
 		else if(obj.tipo==="ganador"){
 			terminarJuego(obj.ganador);
 		}
+		else if(obj.tipo==="error"){
+			alert(obj.mensaje);
+		}
 	}
 }
 
@@ -205,6 +208,54 @@ function iniciarPartida(){
 	enviarMensaje(object);
 }
 
+
+function eventosDraggable(){
+	$( function() {
+		$( ".fill" ).draggable({
+			stop: function(event,ui){
+				console.log("stop");
+			},
+			start:function(event,ui){
+				console.log("start");
+				//console.log($(this).parent().parent());
+				var variable = $(this).parent().parent().parent();
+				posicion = $(this).parent();
+				coords = $(posicion).attr("id");
+				origen=$(variable[0]).attr("id");
+			},
+			revert:function(posicion){
+				return !turno.valor;
+			},
+			revertDuration:550
+		});
+		$( ".empty.column" ).droppable({
+			drop: function(event,ui){
+				if(turno.valor){
+					console.log("drop");
+					var id = ui.draggable.attr('class');
+					var datos = id.split(" ");
+					var valorFicha = datos[1].split("-");
+					console.log(valorFicha);
+					$(ui.draggable).remove();
+					if(origen==="manoJugador"){
+						colocarFicha(event.target.id,valorFicha);
+					}
+					else if(origen ==="tablero"){
+						moverFicha(event.target.id,valorFicha,coords);
+					}
+				}else{
+					alert("Usted no está en turno para hacer esa jugada");
+				}							
+			}
+		});
+		$(".empty.espacioMano").droppable({
+			drop: function(event,ui){
+				
+			}
+		})
+		
+	} );
+}
 /**
 * Función que permite cambiar al tablero
 * @param {*} nuevaMano que es el arreglo con la mano del jugador 
@@ -228,49 +279,7 @@ function cambiarAlTablero(nuevaMano,nuevosJugadores){
 		texto='<div class="casillaJugador"><img src="img/'+(i+1)+'.png">'+nuevosJugadores[i].nombre+'</div>';	
 		$("#jugadores").append(texto);
 	}
-	$( function() {
-		$( ".fill" ).draggable({
-			stop: function(event,ui){
-				console.log("stop");
-			},
-			start:function(event,ui){
-				console.log("start");
-				//console.log($(this).parent().parent());
-				var variable = $(this).parent().parent().parent();
-				posicion = $(this).parent();
-				coords = $(posicion).attr("id");
-				origen=$(variable[0]).attr("id");
-			},
-			revert:function(posicion){
-				console.log(nuev);
-				return nuev;
-			}
-		});
-		$( ".empty.column" ).droppable({
-			drop: function(event,ui){
-				
-				ui.draggable.addClass("dropped");
-				console.log("drop");
-				$(this).append(ui.draggable);
-				var id = ui.draggable.attr('class');
-				var datos = id.split(" ");
-				var valorFicha = datos[1].split("-");
-				console.log(valorFicha);
-				if(origen==="manoJugador"){
-					colocarFicha(event.target.id,valorFicha);
-				}
-				else if(origen ==="tablero"){
-					moverFicha(event.target.id,valorFicha,coords);
-				}				
-			}
-		});
-		$(".empty.espacioMano").droppable({
-			drop: function(event,ui){
-				
-			}
-		})
-		
-	} );
+	eventosDraggable();
 }
 
 
@@ -308,6 +317,9 @@ function moverFicha(idDiv,ficha,prev){
 		}
 	}
 	enviarMensaje(objeto);
+	var texto = '<div oncontextmenu="soni'+objeto.ficha.color+''+objeto.ficha.numero+'.play()" class="fill '+objeto.ficha.color+'-'+objeto.ficha.numero+'" draggable="true"> <img src="img/fichas/'+objeto.ficha.color+'-'+objeto.ficha.numero+'.png" height="70px" width="43px" ></div>';
+	$("#"+objeto.ficha.x+"-"+objeto.ficha.y).append(texto);
+	eventosDraggable();
 }
 
 /**
@@ -334,6 +346,9 @@ function colocarFicha(idDiv, valorFicha){
 	}
 	console.log(objeto);
 	enviarMensaje(objeto);
+	var texto = '<div oncontextmenu="soni'+objeto.ficha.color+''+objeto.ficha.numero+'.play()" class="fill '+objeto.ficha.color+'-'+objeto.ficha.numero+'" draggable="true"> <img src="img/fichas/'+objeto.ficha.color+'-'+objeto.ficha.numero+'.png" height="70px" width="43px" ></div>';
+	$("#"+objeto.ficha.x+"-"+objeto.ficha.y).append(texto);
+	eventosDraggable();
 }
 
 
@@ -383,49 +398,7 @@ function fichaRobada(ficha){
 			var texto = '<div oncontextmenu="soni'+ficha.color+''+ficha.numero+'.play()" class="fill '+ficha.color+'-'+ficha.numero+'" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';
 			$("#"+i).append(texto);
 			continuar=false;
-			$( function() {
-				$( ".fill" ).draggable({
-					stop: function(event,ui){
-						console.log("stop");
-					},
-					start:function(event,ui){
-						console.log("start");
-						//console.log($(this).parent().parent());
-						var variable = $(this).parent().parent().parent();
-						posicion = $(this).parent();
-						coords = $(posicion).attr("id");
-						origen=$(variable[0]).attr("id");
-					},
-					revert:function(posicion){
-						console.log(nuev);
-						return nuev;
-					}
-				});
-				$( ".empty.column" ).droppable({
-					drop: function(event,ui){
-						
-						ui.draggable.addClass("dropped");
-						console.log("drop");
-						$(this).append(ui.draggable);
-						var id = ui.draggable.attr('class');
-						var datos = id.split(" ");
-						var valorFicha = datos[1].split("-");
-						console.log(valorFicha);
-						if(origen==="manoJugador"){
-							colocarFicha(event.target.id,valorFicha);
-						}
-						else if(origen ==="tablero"){
-							moverFicha(event.target.id,valorFicha,coords);
-						}				
-					}
-				});
-				$(".empty.espacioMano").droppable({
-					drop: function(event,ui){
-						
-					}
-				})
-				
-			} );
+			eventosDraggable();
 			
 		}else{
 			i++;
@@ -454,6 +427,7 @@ function jugadorEnTurno(jugador){
 function fichaColocada(ficha){
 	var texto = '<div oncontextmenu="soni'+ficha.color+''+ficha.numero+'.play()" class="fill '+ficha.color+'-'+ficha.numero+'" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';
 	$("#"+ficha.x+"-"+ficha.y).append(texto);
+	eventosDraggable();
 }
 
 /**
@@ -463,4 +437,5 @@ function fichaMovida(ficha){
 	$("#"+ficha.xAnterior+"-"+ficha.yAnterior).empty();
 	var texto = '<div oncontextmenu="soni'+ficha.color+''+ficha.numero+'.play()" class="fill '+ficha.color+'-'+ficha.numero+'" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';
 	$("#"+ficha.x+"-"+ficha.y).append(texto);
+	eventosDraggable();
 }

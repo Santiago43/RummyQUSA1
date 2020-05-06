@@ -45,7 +45,14 @@ public class Servidor extends WebSocketServer {
         System.out.println("Client " + p + " disconnected: " + razon);
         for (int i = 0; i < usuarios.size(); i++) {
             if (usuarios.get(i).getWebSocket().equals(i)) {
-                usuarios.remove(i);
+                Usuario usuario = usuarios.remove(i);
+                Sala sala = usuario.getSala();
+                if(sala!=null){
+                    sala.getUsuarios().remove(usuario);
+                    if(sala.getUsuarios().isEmpty()){
+                        this.salas.remove(sala);
+                    }
+                }
                 break;
             }
         }
