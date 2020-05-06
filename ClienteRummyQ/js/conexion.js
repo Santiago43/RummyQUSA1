@@ -313,8 +313,8 @@ function moverFicha(idDiv,ficha,prev){
 		}
 	}
 	enviarMensaje(objeto);
-	var texto = '<div oncontextmenu="soni'+ficha.color+''+ficha.numero+'.play()" class="fill '+ficha.color+'-'+ficha.numero+'" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';
-	$("#"+ficha.x+"-"+ficha.y).append(texto);
+	var texto = '<div oncontextmenu="soni'+objeto.ficha.color+''+objeto.ficha.numero+'.play()" class="fill '+objeto.ficha.color+'-'+objeto.ficha.numero+'" draggable="true"> <img src="img/fichas/'+objeto.ficha.color+'-'+objeto.ficha.numero+'.png" height="70px" width="43px" ></div>';
+	$("#"+objeto.ficha.x+"-"+objeto.ficha.y).append(texto);
 }
 
 /**
@@ -341,8 +341,8 @@ function colocarFicha(idDiv, valorFicha){
 	}
 	console.log(objeto);
 	enviarMensaje(objeto);
-	var texto = '<div oncontextmenu="soni'+ficha.color+''+ficha.numero+'.play()" class="fill '+ficha.color+'-'+ficha.numero+'" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';
-	$("#"+ficha.x+"-"+ficha.y).append(texto);
+	var texto = '<div oncontextmenu="soni'+objeto.ficha.color+''+objeto.ficha.numero+'.play()" class="fill '+objeto.ficha.color+'-'+objeto.ficha.numero+'" draggable="true"> <img src="img/fichas/'+objeto.ficha.color+'-'+objeto.ficha.numero+'.png" height="70px" width="43px" ></div>';
+	$("#"+objeto.ficha.x+"-"+objeto.ficha.y).append(texto);
 }
 
 
