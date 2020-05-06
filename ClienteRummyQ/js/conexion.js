@@ -208,29 +208,8 @@ function iniciarPartida(){
 	enviarMensaje(object);
 }
 
-/**
-* Función que permite cambiar al tablero
-* @param {*} nuevaMano que es el arreglo con la mano del jugador 
-*/
-function cambiarAlTablero(nuevaMano,nuevosJugadores){
-	$("#DivInicio").hide();
-	$("#DivCrearSala").hide();
-	$("#DivUnirseASala").hide();
-	$("#DivInformacionSala").hide();
-	$("#gridTablero").show();		
-	
-	var texto="";
-	var fichas="";
-	for (let i = 0; i < nuevaMano.length; i++) {
-		mano.push(nuevaMano[i]);
-		fichas='<div oncontextmenu="soni'+mano[i].color+''+mano[i].numero+'.play()" class="fill '+mano[i].color+'-'+mano[i].numero+'" draggable="true"> <img src="img/fichas/'+mano[i].color+'-'+mano[i].numero+'.png" height="70px" width="43px" ></div>';
-		$("#"+i).append(fichas);
-	}	
-	for (let i = 0; i < nuevosJugadores.length; i++) {
-		jugadores.push(nuevosJugadores[i]); 	
-		texto='<div class="casillaJugador"><img src="img/'+(i+1)+'.png">'+nuevosJugadores[i].nombre+'</div>';	
-		$("#jugadores").append(texto);
-	}
+
+function eventosDraggable(){
 	$( function() {
 		$( ".fill" ).draggable({
 			stop: function(event,ui){
@@ -277,6 +256,31 @@ function cambiarAlTablero(nuevaMano,nuevosJugadores){
 		
 	} );
 }
+/**
+* Función que permite cambiar al tablero
+* @param {*} nuevaMano que es el arreglo con la mano del jugador 
+*/
+function cambiarAlTablero(nuevaMano,nuevosJugadores){
+	$("#DivInicio").hide();
+	$("#DivCrearSala").hide();
+	$("#DivUnirseASala").hide();
+	$("#DivInformacionSala").hide();
+	$("#gridTablero").show();		
+	
+	var texto="";
+	var fichas="";
+	for (let i = 0; i < nuevaMano.length; i++) {
+		mano.push(nuevaMano[i]);
+		fichas='<div oncontextmenu="soni'+mano[i].color+''+mano[i].numero+'.play()" class="fill '+mano[i].color+'-'+mano[i].numero+'" draggable="true"> <img src="img/fichas/'+mano[i].color+'-'+mano[i].numero+'.png" height="70px" width="43px" ></div>';
+		$("#"+i).append(fichas);
+	}	
+	for (let i = 0; i < nuevosJugadores.length; i++) {
+		jugadores.push(nuevosJugadores[i]); 	
+		texto='<div class="casillaJugador"><img src="img/'+(i+1)+'.png">'+nuevosJugadores[i].nombre+'</div>';	
+		$("#jugadores").append(texto);
+	}
+	eventosDraggable();
+}
 
 
 /**
@@ -315,6 +319,7 @@ function moverFicha(idDiv,ficha,prev){
 	enviarMensaje(objeto);
 	var texto = '<div oncontextmenu="soni'+objeto.ficha.color+''+objeto.ficha.numero+'.play()" class="fill '+objeto.ficha.color+'-'+objeto.ficha.numero+'" draggable="true"> <img src="img/fichas/'+objeto.ficha.color+'-'+objeto.ficha.numero+'.png" height="70px" width="43px" ></div>';
 	$("#"+objeto.ficha.x+"-"+objeto.ficha.y).append(texto);
+	eventosDraggable();
 }
 
 /**
@@ -343,6 +348,7 @@ function colocarFicha(idDiv, valorFicha){
 	enviarMensaje(objeto);
 	var texto = '<div oncontextmenu="soni'+objeto.ficha.color+''+objeto.ficha.numero+'.play()" class="fill '+objeto.ficha.color+'-'+objeto.ficha.numero+'" draggable="true"> <img src="img/fichas/'+objeto.ficha.color+'-'+objeto.ficha.numero+'.png" height="70px" width="43px" ></div>';
 	$("#"+objeto.ficha.x+"-"+objeto.ficha.y).append(texto);
+	eventosDraggable();
 }
 
 
@@ -392,50 +398,7 @@ function fichaRobada(ficha){
 			var texto = '<div oncontextmenu="soni'+ficha.color+''+ficha.numero+'.play()" class="fill '+ficha.color+'-'+ficha.numero+'" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';
 			$("#"+i).append(texto);
 			continuar=false;
-			$( function() {
-				$( ".fill" ).draggable({
-					stop: function(event,ui){
-						console.log("stop");
-					},
-					start:function(event,ui){
-						console.log("start");
-						//console.log($(this).parent().parent());
-						var variable = $(this).parent().parent().parent();
-						posicion = $(this).parent();
-						coords = $(posicion).attr("id");
-						origen=$(variable[0]).attr("id");
-					},
-					revert:function(posicion){
-						return !turno.valor;
-					}
-				});
-				$( ".empty.column" ).droppable({
-					drop: function(event,ui){
-						if(turno.valor){
-							console.log("drop");
-							var id = ui.draggable.attr('class');
-							var datos = id.split(" ");
-							var valorFicha = datos[1].split("-");
-							console.log(valorFicha);
-							$(ui.draggable).remove();
-							if(origen==="manoJugador"){
-								colocarFicha(event.target.id,valorFicha);
-							}
-							else if(origen ==="tablero"){
-								moverFicha(event.target.id,valorFicha,coords);
-							}
-						}else{
-							alert("Usted no está en turno para hacer esa jugada");
-						}			
-					}
-				});
-				$(".empty.espacioMano").droppable({
-					drop: function(event,ui){
-						
-					}
-				})
-				
-			} );
+			eventosDraggable();
 			
 		}else{
 			i++;
