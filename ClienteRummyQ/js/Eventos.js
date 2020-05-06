@@ -19,10 +19,10 @@ $("#Unirse").click(function(){
 	conectarASala(codigo,nombre);
 })
 
-$("#manoJugador").on("click","#btnTerminarTurno",function(){
+$("#btnTerminarTurno").click(function(){
 	terminarTurno();
 });
 
-$("#manoJugador").on("click","#btnRobarFicha",function(){
+$("#btnRobarFicha").click(function(){
 	robarFicha();
 });

@@ -41,7 +41,7 @@ public class Banca {
      */
     public Ficha robarFicha(){
         if (!this.fichas.isEmpty()){
-            return this.fichas.getLast();
+            return this.fichas.removeLast();
         }
         return null;
     }
