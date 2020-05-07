@@ -312,14 +312,15 @@ public class Sala extends Thread {
                 mensajeUsuario = "{\"tipo\": \"jugada inválida\"}";
                 usuario.getWebSocket().send(mensajeUsuario);
                 //restaurarTablero();
-                this.robarFicha(usuario);
+                //this.robarFicha(usuario);
             } else {
                 mensajeUsuario = "{\"tipo\": \"jugada válida\"}";
                 usuario.getWebSocket().send(mensajeUsuario);
-                synchronized (this.tablero) {
-                    this.tablero.notify();
-                }
             }
+            synchronized (this.tablero) {
+                this.tablero.notify();
+            }
+            generarLog(mensajeUsuario);
         }
     }
 
@@ -347,4 +348,25 @@ public class Sala extends Thread {
             }
         }
     }*/
+
+    public void devolverFicha(Usuario usuario, JSONObject obj) {
+        JSONObject fichaDevuelta = obj.getJSONObject("ficha");
+        int div = obj.getInt("div");
+        int xAnterior = fichaDevuelta.getInt("xAnterior");
+        int yAnterior = fichaDevuelta.getInt("yAnterior");
+        Ficha ficha = this.tablero.getListas()[xAnterior][yAnterior];
+        if(ficha.getxInicial()==-1){
+            usuario.getMano().add(ficha);
+            String mensaje = "{\"tipo\": \"borrar ficha\",\"x\": \"" +xAnterior+ "\",\"y\":\""+yAnterior+"\"}";
+            this.enviarATodosEnSalaExceptoA(usuario.getWebSocket(), mensaje);
+            mensaje ="{\"tipo\": \"ficha devuelta\",\"ficha\": " +ficha.toJson()+ ",\"idDiv\":\""+div+"\"}";
+            generarLog(mensaje);
+            usuario.getWebSocket().send(mensaje); 
+            this.tablero.getListas()[xAnterior][yAnterior]=null;
+        }
+        else{
+            String mensaje = "{\"tipo\": \"colocar ficha\",\"ficha\":" + ficha.toJson() + "}";
+            usuario.getWebSocket().send(mensaje);
+        }
+    }
 }
