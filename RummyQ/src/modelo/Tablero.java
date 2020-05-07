@@ -1,7 +1,5 @@
 package modelo;
 
-import java.util.LinkedList;
-
 /**
  * Clase tablero
  * @author Valeria Bermúdez - Santiago Gutiérrez -Santiago Pérez

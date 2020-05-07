@@ -189,3 +189,9 @@ También indica a los demás jugadores quién está en turno
 	tipo: "turno",
 	jugador: "jugador"
 }
+
+{
+	tipo: "borrar ficha",
+	x: x,
+	y: y	
+}

@@ -102,7 +102,12 @@ websocket.onmessage=function(event){
 		else if(obj.tipo==="borrar ficha"){
 			borrarFicha(obj.x,obj.y);
 		}else if (obj.tipo==="ficha devuelta"){
-			fichaDevuelta(obj.ficha,obj.idDiv);
+			if(typeof idDiv==='undefined'){
+				fichaDevuelta(obj.ficha,coords);
+			}
+			else{
+				fichaDevuelta(obj.ficha,obj.idDiv);
+			}
 		}
 		else if(obj.tipo==="ficha no robada"){
 			alert("No hay más fichas");
