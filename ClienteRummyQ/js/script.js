@@ -1,4 +1,3 @@
-var posicion="";
 var nuev="";
 $(document).ready(
 	function(){
@@ -11,7 +10,11 @@ $(document).ready(
 	}
 	);
 
-
+/**
+ * Función que crea la rejilla (tablero)
+ * @param {number} filas 
+ * @param {number} columnas 
+ */
 function crearRejilla(filas,columnas){
 	var texto="";
 	var textoMano="";
@@ -27,6 +30,10 @@ function crearRejilla(filas,columnas){
 	$("#mano").append(textoMano);
 }
 
+/**
+ * Función que crea los espacios de una mano
+ * @param {number} columnas 
+ */
 function crearEspaciosMano(columnas){
 	var texto="";
 	var numero=0;
@@ -42,13 +49,3 @@ function crearEspaciosMano(columnas){
 	return texto;
 
 }
-
-
-
-//function consultar(posicion){
-//	if(posicion!=null){
-//		return false;
-//	}else{
-//		return true;
-	//}
-//}

@@ -105,6 +105,9 @@ websocket.onmessage=function(event){
 		else if(obj.tipo==="ficha no robada"){
 			alert("No hay más fichas");
 		}
+		else if(obj.tipo==="jugada inválida"){
+			alert("jugada inválida");
+		}
 	}
 }
 

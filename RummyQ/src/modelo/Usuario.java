@@ -53,6 +53,11 @@ public class Usuario {
      * 
      */
     private boolean enTurno;
+    
+    /**
+     * 
+     */
+    private int suma;
     /**
      * 
      * @return 
@@ -111,6 +116,14 @@ public class Usuario {
 
     public void setEnTurno(boolean enTurno) {
         this.enTurno = enTurno;
+    }
+
+    public int getSuma() {
+        return suma;
+    }
+
+    public void setSuma(int suma) {
+        this.suma = suma;
     }
     
 }
