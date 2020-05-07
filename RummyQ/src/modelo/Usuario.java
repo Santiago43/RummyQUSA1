@@ -60,6 +60,10 @@ public class Usuario {
     private int suma;
     /**
      * 
+     */
+    private String imagen;
+    /**
+     * 
      * @return 
      */
     public String getNombre() {
@@ -124,6 +128,14 @@ public class Usuario {
 
     public void setSuma(int suma) {
         this.suma = suma;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
     
 }
