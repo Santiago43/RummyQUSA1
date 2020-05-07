@@ -22,3 +22,12 @@ $("#Unirse").click(function(){
 $("#btnTerminarTurno").click(function(){
 	terminarTurno();
 });
+
+$("#sonido").click(function(){
+	if(sonido){
+		sonido=false;
+	}
+	else{
+		sonido=true;
+	}
+})

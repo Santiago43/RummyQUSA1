@@ -33,6 +33,8 @@ var origen;
 */
 var coords;
 
+
+var sonido=true;
 /**
 * Cuando se abre la conexión
 */
@@ -291,7 +293,11 @@ function eventosDraggable(){
 function acomodarFicha(idDiv,valorFicha){
 	var color = valorFicha[0];
 	var numero = valorFicha[1];
-	var texto = '<div oncontextmenu="soni'+color+''+numero+'.play()" onmouseup="soltar.play()" class="fill '+color+'-'+numero+'" draggable="true"> <img src="img/fichas/'+color+'-'+numero+'.png" height="70px" width="43px" ></div>';
+	var textoExtra="";
+	if(sonido){
+		textoExtra = 'onmouseup="soltar.play()"';
+	}
+	var texto = '<div oncontextmenu="soni'+color+''+numero+'.play()" '+textoExtra+'class="fill '+color+'-'+numero+'" draggable="true"> <img src="img/fichas/'+color+'-'+numero+'.png" height="70px" width="43px" ></div>';
 	$("#"+idDiv).append(texto);
 	eventosDraggable();
 }
@@ -340,7 +346,11 @@ function cambiarAlTablero(nuevaMano,nuevosJugadores){
 	var fichas="";
 	for (let i = 0; i < nuevaMano.length; i++) {
 		mano.push(nuevaMano[i]);
-		fichas='<div oncontextmenu="soni'+mano[i].color+''+mano[i].numero+'.play()" onmouseup="soltar.play()" class="fill '+mano[i].color+'-'+mano[i].numero+'" draggable="true"> <img src="img/fichas/'+mano[i].color+'-'+mano[i].numero+'.png" height="70px" width="43px" ></div>';
+		var textoExtra="";
+		if(sonido){
+			textoExtra = 'onmouseup="soltar.play()"';
+		}
+		fichas='<div oncontextmenu="soni'+mano[i].color+''+mano[i].numero+'.play()" '+textoExtra+' class="fill '+mano[i].color+'-'+mano[i].numero+'" draggable="true"> <img src="img/fichas/'+mano[i].color+'-'+mano[i].numero+'.png" height="70px" width="43px" ></div>';
 		$("#"+i).append(fichas);
 	}	
 	for (let i = 0; i < nuevosJugadores.length; i++) {
@@ -386,7 +396,11 @@ function moverFicha(idDiv,ficha,prev){
 		}
 	}
 	enviarMensaje(objeto);
-	var texto = '<div oncontextmenu="soni'+objeto.ficha.color+''+objeto.ficha.numero+'.play()" onmouseup="soltar.play()" class="fill '+objeto.ficha.color+'-'+objeto.ficha.numero+'" draggable="true"> <img src="img/fichas/'+objeto.ficha.color+'-'+objeto.ficha.numero+'.png" height="70px" width="43px" ></div>';
+	var textoExtra="";
+	if(sonido){
+		textoExtra = 'onmouseup="soltar.play()"';
+	}
+	var texto = '<div oncontextmenu="soni'+objeto.ficha.color+''+objeto.ficha.numero+'.play()" '+textoExtra+' class="fill '+objeto.ficha.color+'-'+objeto.ficha.numero+'" draggable="true"> <img src="img/fichas/'+objeto.ficha.color+'-'+objeto.ficha.numero+'.png" height="70px" width="43px" ></div>';
 	$("#"+objeto.ficha.x+"-"+objeto.ficha.y).append(texto);
 	eventosDraggable();
 }
@@ -415,7 +429,11 @@ function colocarFicha(idDiv, valorFicha){
 	}
 	console.log(objeto);
 	enviarMensaje(objeto);
-	var texto = '<div oncontextmenu="soni'+objeto.ficha.color+''+objeto.ficha.numero+'.play()" onmouseup="soltar.play()" class="fill '+objeto.ficha.color+'-'+objeto.ficha.numero+'" draggable="true"> <img src="img/fichas/'+objeto.ficha.color+'-'+objeto.ficha.numero+'.png" height="70px" width="43px" ></div>';
+	var textoExtra="";
+	if(sonido){
+		textoExtra = 'onmouseup="soltar.play()"';
+	}
+	var texto = '<div oncontextmenu="soni'+objeto.ficha.color+''+objeto.ficha.numero+'.play()" '+textoExtra+' class="fill '+objeto.ficha.color+'-'+objeto.ficha.numero+'" draggable="true"> <img src="img/fichas/'+objeto.ficha.color+'-'+objeto.ficha.numero+'.png" height="70px" width="43px" ></div>';
 	$("#"+objeto.ficha.x+"-"+objeto.ficha.y).append(texto);
 	eventosDraggable();
 }
@@ -454,7 +472,11 @@ function fichaRobada(ficha){
 	var i=0;
 	while(continuar){
 		if($("#"+i).children().length == 0){
-			var texto = '<div oncontextmenu="soni'+ficha.color+''+ficha.numero+'.play()" onmouseup="soltar.play()" class="fill '+ficha.color+'-'+ficha.numero+'" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';
+			var textoExtra="";
+		if(sonido){
+			textoExtra = 'onmouseup="soltar.play()"';
+		}
+			var texto = '<div oncontextmenu="soni'+ficha.color+''+ficha.numero+'.play()" '+textoExtra+' class="fill '+ficha.color+'-'+ficha.numero+'" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';
 			$("#"+i).append(texto);
 			continuar=false;
 			eventosDraggable();
@@ -484,7 +506,11 @@ function jugadorEnTurno(jugador){
 * @param {*} ficha 
 */
 function fichaColocada(ficha){
-	var texto = '<div oncontextmenu="soni'+ficha.color+''+ficha.numero+'.play()" onmouseup="soltar.play()" class="fill '+ficha.color+'-'+ficha.numero+'" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';
+	var textoExtra="";
+	if(sonido){
+		textoExtra = 'onmouseup="soltar.play()"';
+	}
+	var texto = '<div oncontextmenu="soni'+ficha.color+''+ficha.numero+'.play()" '+textoExtra+' class="fill '+ficha.color+'-'+ficha.numero+'" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';
 	$("#"+ficha.x+"-"+ficha.y).append(texto);
 	eventosDraggable();
 }
@@ -494,7 +520,11 @@ function fichaColocada(ficha){
 */
 function fichaMovida(ficha){
 	$("#"+ficha.xAnterior+"-"+ficha.yAnterior).empty();
-	var texto = '<div oncontextmenu="soni'+ficha.color+''+ficha.numero+'.play()" onmouseup="soltar.play()" class="fill '+ficha.color+'-'+ficha.numero+'" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';
+	var textoExtra="";
+	if(sonido){
+		textoExtra = 'onmouseup="soltar.play()"';
+	}
+	var texto = '<div oncontextmenu="soni'+ficha.color+''+ficha.numero+'.play()" '+textoExtra+' class="fill '+ficha.color+'-'+ficha.numero+'" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';
 	$("#"+ficha.x+"-"+ficha.y).append(texto);
 	eventosDraggable();
 }
@@ -514,7 +544,11 @@ function borrarFicha(x,y){
  * @param {*} idDiv 
  */
 function fichaDevuelta(ficha,idDiv){
-	var texto = '<div oncontextmenu="soni'+ficha.color+''+ficha.numero+'.play()" onmouseup="soltar.play()" class="fill '+ficha.color+'-'+ficha.numero+'" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';
+	var textoExtra="";
+	if(sonido){
+		textoExtra = 'onmouseup="soltar.play()"';
+	}
+	var texto = '<div oncontextmenu="soni'+ficha.color+''+ficha.numero+'.play()" '+textoExtra+' class="fill '+ficha.color+'-'+ficha.numero+'" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';
 	$("#"+idDiv).append(texto);
 	eventosDraggable();
 }
