@@ -225,6 +225,10 @@ public class Sala extends Thread {
                     }
                 }
             }
+            if(this.tablero.getListas()[x][y]==null){
+                
+            }
+            
             this.tablero.getListas()[x][y] = ficha;
             ficha.setX(x);
             ficha.setY(y);
