@@ -102,7 +102,7 @@ websocket.onmessage=function(event){
 		else if(obj.tipo==="borrar ficha"){
 			borrarFicha(obj.x,obj.y);
 		}else if (obj.tipo==="ficha devuelta"){
-			if(typeof idDiv==='undefined'){
+			if(typeof obj.idDiv==='undefined'){
 				fichaDevuelta(obj.ficha,coords);
 			}
 			else{
