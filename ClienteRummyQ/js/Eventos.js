@@ -22,7 +22,3 @@ $("#Unirse").click(function(){
 $("#btnTerminarTurno").click(function(){
 	terminarTurno();
 });
-
-$("#btnRobarFicha").click(function(){
-	robarFicha();
-});

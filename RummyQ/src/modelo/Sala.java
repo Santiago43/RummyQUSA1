@@ -307,7 +307,6 @@ public class Sala extends Thread {
     public void terminarTurno(Usuario usuario) {
         if (usuario.isEnTurno()) {
             String mensajeUsuario = "";
-            this.robarFicha(usuario);
             if (!Verificador.jugadaValida(tablero.getListas())) {
                 mensajeUsuario = "{\"tipo\": \"jugada inválida\"}";
                 usuario.getWebSocket().send(mensajeUsuario);

@@ -445,16 +445,6 @@ function terminarTurno(){
 }
 
 /**
-* Función que envía al servidor el robar una ficha
-*/
-function robarFicha(){
-	var object = {
-		tipo: "robar ficha"
-	};
-	enviarMensaje(object);
-}
-
-/**
 * Función que guarda la ficha robada de la banca
 * @param {Ficha} ficha que es la ficha robada
 */
@@ -526,4 +516,5 @@ function borrarFicha(x,y){
 function fichaDevuelta(ficha,idDiv){
 	var texto = '<div oncontextmenu="soni'+ficha.color+''+ficha.numero+'.play()" onmouseup="soltar.play()" class="fill '+ficha.color+'-'+ficha.numero+'" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';
 	$("#"+idDiv).append(texto);
+	eventosDraggable();
 }
