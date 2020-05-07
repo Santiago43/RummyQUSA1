@@ -105,7 +105,7 @@ public class Sala extends Thread {
                     + ",\"jugadores\":[";
             for (int j = 0; j < this.usuarios.size(); j++) {
                 manoNueva += "{\"nombre\": \"" + this.usuarios.get(j).getNombre() + "\","
-                        + "\"hash\":"+this.usuarios.get(j).getHash()+"}";
+                        + "\"hash\":" + this.usuarios.get(j).getHash() + "}";
                 if (j != this.usuarios.size() - 1) {
                     manoNueva += ",";
                 }
@@ -227,15 +227,16 @@ public class Sala extends Thread {
                 }
             }
             if (this.tablero.getListas()[x][y] == null) {
-
+                this.tablero.getListas()[x][y] = ficha;
+                ficha.setX(x);
+                ficha.setY(y);
+                usuario.setSuma(usuario.getSuma() + ficha.getNumero());
+                String fichaNueva = "{\"tipo\": \"colocar ficha\",\"ficha\":" + ficha.toJson() + "}";
+                this.enviarATodosEnSalaExceptoA(usuario.getWebSocket(), fichaNueva);
+            }else{
+                String mensaje = "{\"tipo\": \"ficha devuelta\",\"ficha\": " + ficha.toJson() + "}";
+                usuario.getWebSocket().send(mensaje);
             }
-
-            this.tablero.getListas()[x][y] = ficha;
-            ficha.setX(x);
-            ficha.setY(y);
-            usuario.setSuma(usuario.getSuma() + ficha.getNumero());
-            String fichaNueva = "{\"tipo\": \"colocar ficha\",\"ficha\":" + ficha.toJson() + "}";
-            this.enviarATodosEnSalaExceptoA(usuario.getWebSocket(), fichaNueva);
 
         } else {
             this.enviarError("tú no estás en turno", usuario);
@@ -263,6 +264,8 @@ public class Sala extends Thread {
                 this.tablero.getListas()[xAnterior][yAnterior] = null;
             } else {
                 this.enviarError("hay una ficha en ese lugar", usuario);
+                String mensaje = "{\"tipo\": \"ficha devuelta\",\"ficha\": " + ficha.toJson() + "}";
+                usuario.getWebSocket().send(mensaje);
             }
         } else {
             if (ficha.getxInicial() == -1) {
@@ -275,6 +278,8 @@ public class Sala extends Thread {
                     this.tablero.getListas()[xAnterior][yAnterior] = null;
                 } else {
                     this.enviarError("hay una ficha en ese lugar", usuario);
+                    String mensaje = "{\"tipo\": \"ficha devuelta\",\"ficha\": " + ficha.toJson() + "}";
+                    usuario.getWebSocket().send(mensaje);
                 }
             } else {
                 this.enviarError("Tu no puedes usar esa ficha", usuario);
