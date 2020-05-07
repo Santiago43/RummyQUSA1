@@ -6,7 +6,7 @@ var wait = ms => new Promise((r, j) => setTimeout(r, ms));
 /**
 * Dirección con protocolo ws
 */
-var wsUri = "ws://localhost:30001";
+var wsUri = "ws://25.143.152.254:30001";
 /**
 * Websocket
 */
@@ -266,12 +266,13 @@ function eventosDraggable(){
 				var valorFicha = datos[1].split("-");
 				console.log(valorFicha);
 				console.log(origen);
-				$(ui.draggable).remove();
 				if(origen==="manoJugador"){
+					$(ui.draggable).remove();
 					acomodarFicha(event.target.id,valorFicha);
 				}
 				else if(origen ==="tablero"){
 					if(turno.valor){
+						$(ui.draggable).remove();
 						devolverFicha(event.target.id,valorFicha,coords);
 					}else{
 						alert("Usted no está en turno");
