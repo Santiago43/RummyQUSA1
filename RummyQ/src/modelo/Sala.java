@@ -234,8 +234,7 @@ public class Sala extends Thread {
                 String fichaNueva = "{\"tipo\": \"colocar ficha\",\"ficha\":" + ficha.toJson() + "}";
                 this.enviarATodosEnSalaExceptoA(usuario.getWebSocket(), fichaNueva);
             }else{
-                String mensaje = "{\"tipo\": \"ficha devuelta\",\"ficha\": " + ficha.toJson() + "}";
-                usuario.getWebSocket().send(mensaje);
+                this.enviarError("Hay una ficha en ese lugar", usuario);
             }
 
         } else {
@@ -264,8 +263,6 @@ public class Sala extends Thread {
                 this.tablero.getListas()[xAnterior][yAnterior] = null;
             } else {
                 this.enviarError("hay una ficha en ese lugar", usuario);
-                String mensaje = "{\"tipo\": \"ficha devuelta\",\"ficha\": " + ficha.toJson() + "}";
-                usuario.getWebSocket().send(mensaje);
             }
         } else {
             if (ficha.getxInicial() == -1) {
@@ -278,8 +275,6 @@ public class Sala extends Thread {
                     this.tablero.getListas()[xAnterior][yAnterior] = null;
                 } else {
                     this.enviarError("hay una ficha en ese lugar", usuario);
-                    String mensaje = "{\"tipo\": \"ficha devuelta\",\"ficha\": " + ficha.toJson() + "}";
-                    usuario.getWebSocket().send(mensaje);
                 }
             } else {
                 this.enviarError("Tu no puedes usar esa ficha", usuario);
@@ -347,26 +342,6 @@ public class Sala extends Thread {
         System.out.println(this.getName() + ": " + mensaje);
     }
 
-    /*public void restaurarTablero(Usuario usuario) {
-        LinkedList<Ficha> fichasARestaurar = new LinkedList();
-        for (int i = 0; i < this.tablero.getListas().length; i++) {
-            for (int j = 0; j < this.tablero.getListas()[0].length; j++) {
-                if (this.tablero.getListas()[i][j] != null) {
-                    fichasARestaurar.add(this.tablero.getListas()[i][j]);
-                }
-            }
-        }
-        Ficha nuevoTablero[][] = new Ficha[this.tablero.getListas().length][this.tablero.getListas()[0].length];
-        while (!fichasARestaurar.isEmpty()) {
-            int x = fichasARestaurar.getFirst().getxInicial();
-            int y = fichasARestaurar.getFirst().getyInicial();
-            if (x != -1) {
-                nuevoTablero[x][y] = fichasARestaurar.removeFirst();
-            } else {
-                usuario.getMano().add(fichasARestaurar.removeFirst());
-            }
-        }
-    }*/
     public void devolverFicha(Usuario usuario, JSONObject obj) {
         JSONObject fichaDevuelta = obj.getJSONObject("ficha");
         int div = obj.getInt("div");
