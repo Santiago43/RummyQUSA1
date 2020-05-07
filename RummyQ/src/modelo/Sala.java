@@ -129,6 +129,7 @@ public class Sala extends Thread {
 
                 Usuario usuario = this.usuarios.get(i);
                 usuario.setEnTurno(true);
+                usuario.setSuma(0);
                 String mensajeGlobal = "{\"tipo\": \"turno\",\"jugador\":"
                         + "\"" + usuario.getNombre() + "\"}";
                 generarLog("Es el turno de: " + usuario.getNombre());
@@ -306,26 +307,31 @@ public class Sala extends Thread {
     public void terminarTurno(Usuario usuario) {
         if (usuario.isEnTurno()) {
             String mensajeUsuario = "";
+            this.robarFicha(usuario);
             if (!Verificador.jugadaValida(tablero.getListas())) {
                 mensajeUsuario = "{\"tipo\": \"jugada inválida\"}";
                 usuario.getWebSocket().send(mensajeUsuario);
                 return;
             } else {
-                if (!usuario.isDesbloqueado()) {
-                    if (usuario.getSuma() >= 30) {
-                        usuario.setDesbloqueado(true);
-                    }else{
-                        this.enviarError("No tiene los puntos para iniciar", usuario);
-                        return;
+                if (usuario.getSuma() == 0) {
+                    this.robarFicha(usuario);
+                } else {
+                    if (!usuario.isDesbloqueado()) {
+                        if (usuario.getSuma() >= 30) {
+                            usuario.setDesbloqueado(true);
+                        } else {
+                            this.enviarError("No tiene los puntos para iniciar", usuario);
+                            return;
+                        }
                     }
+                    mensajeUsuario = "{\"tipo\": \"jugada válida\"}";
+                    usuario.getWebSocket().send(mensajeUsuario);
                 }
-                mensajeUsuario = "{\"tipo\": \"jugada válida\"}";
-                usuario.getWebSocket().send(mensajeUsuario);
-                synchronized (this.tablero) {
-                    this.tablero.notify();
-                }
-            }
 
+            }
+            synchronized (this.tablero) {
+                this.tablero.notify();
+            }
             generarLog(mensajeUsuario);
         }
     }
