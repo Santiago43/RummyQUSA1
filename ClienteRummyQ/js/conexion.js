@@ -97,6 +97,14 @@ websocket.onmessage=function(event){
 		else if(obj.tipo==="error"){
 			alert(obj.mensaje);
 		}
+		else if(obj.tipo==="borrar ficha"){
+			borrarFicha(obj.x,obj.y);
+		}else if (obj.tipo==="ficha devuelta"){
+			fichaDevuelta(obj.ficha,obj.idDiv);
+		}
+		else if(obj.tipo==="ficha no robada"){
+			alert("No hay más fichas");
+		}
 	}
 }
 
@@ -250,12 +258,69 @@ function eventosDraggable(){
 		});
 		$(".empty.espacioMano").droppable({
 			drop: function(event,ui){
-				
+				var id = ui.draggable.attr('class');
+				var datos = id.split(" ");
+				var valorFicha = datos[1].split("-");
+				console.log(valorFicha);
+				console.log(origen);
+				$(ui.draggable).remove();
+				if(origen==="manoJugador"){
+					acomodarFicha(event.target.id,valorFicha);
+				}
+				else if(origen ==="tablero"){
+					if(turno.valor){
+						devolverFicha(event.target.id,valorFicha,coords);
+					}else{
+						alert("Usted no está en turno");
+					}
+				}
 			}
 		})
 		
 	} );
 }
+/**
+ * 
+ * @param {*} idDiv 
+ * @param {*} valorFicha 
+ */
+function acomodarFicha(idDiv,valorFicha){
+	var color = valorFicha[0];
+	var numero = valorFicha[1];
+	var texto = '<div oncontextmenu="soni'+color+''+numero+'.play()" class="fill '+color+'-'+numero+'" draggable="true"> <img src="img/fichas/'+color+'-'+numero+'.png" height="70px" width="43px" ></div>';
+	$("#"+idDiv).append(texto);
+	eventosDraggable();
+}
+
+/**
+ * 
+ * @param {*} idDiv 
+ * @param {*} valorFicha 
+ * @param {*} coordenadas 
+ */
+function devolverFicha(idDiv,valorFicha,coordenadas){
+	var color = valorFicha[0];
+	var numero = valorFicha[1];
+	var coordenadasPrevias = coordenadas.split("-");
+	var xAnterior = coordenadasPrevias[0];
+	var yAnterior = coordenadasPrevias[1];
+	var objeto ={
+		tipo: "devolver ficha",
+		ficha:{
+			numero: numero,
+			color: color,
+			xAnterior: xAnterior,
+			yAnterior: yAnterior
+		},
+		div:idDiv
+	}
+	enviarMensaje(objeto);
+
+}
+
+
+
+
 /**
 * Función que permite cambiar al tablero
 * @param {*} nuevaMano que es el arreglo con la mano del jugador 
@@ -438,4 +503,23 @@ function fichaMovida(ficha){
 	var texto = '<div oncontextmenu="soni'+ficha.color+''+ficha.numero+'.play()" class="fill '+ficha.color+'-'+ficha.numero+'" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';
 	$("#"+ficha.x+"-"+ficha.y).append(texto);
 	eventosDraggable();
+}
+
+/**
+ * 
+ * @param {*} x 
+ * @param {*} y 
+ */
+function borrarFicha(x,y){
+	$("#"+x+'-'+y).empty();
+}
+
+/**
+ * 
+ * @param {*} ficha 
+ * @param {*} idDiv 
+ */
+function fichaDevuelta(ficha,idDiv){
+	var texto = '<div oncontextmenu="soni'+ficha.color+''+ficha.numero+'.play()" class="fill '+ficha.color+'-'+ficha.numero+'" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';
+	$("#"+idDiv).append(texto);
 }
