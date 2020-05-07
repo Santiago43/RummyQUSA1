@@ -1,3 +1,7 @@
+var soltar = new Audio();
+soltar.src = "sounds/suelta1.mp3";
+var soltar = new Audio();
+soltar.src = "sounds/suelta1.mp3";
 var soni00 = new Audio();
 soni00.src = "sounds/0-0.mp3";
 var soni01 = new Audio();

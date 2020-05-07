@@ -23,6 +23,11 @@ $("#btnTerminarTurno").click(function(){
 	terminarTurno();
 });
 
-$("#btnRobarFicha").click(function(){
-	robarFicha();
-});
+$("#sonido").click(function(){
+	if(sonido){
+		sonido=false;
+	}
+	else{
+		sonido=true;
+	}
+})

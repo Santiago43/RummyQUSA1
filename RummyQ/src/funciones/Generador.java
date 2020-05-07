@@ -1,7 +1,6 @@
 package funciones;
 
 import java.util.LinkedList;
-import java.util.Random;
 import modelo.Ficha;
 
 /**
@@ -16,8 +15,8 @@ public class Generador {
 //    private static LinkedList<Ficha> fichas;
 
     /**
-     *
-     * @return
+     * Método que crea fichas
+     * @return las fichas creadas
      */
     public static LinkedList crearFichas() {
         LinkedList<Ficha> fichas = new LinkedList();
@@ -72,18 +71,25 @@ public class Generador {
     }
 
     /**
-     *
-     * @return
+     * Función que genera un número aleatorio para la sala
+     * @return un entero con el numero generado
      */
     public static int generarNumeroSala() {
-        return new Random((int) (Math.random() * (9000) + 1000)).nextInt();
+        return (int) (9000 * (Math.random()) + 1000);
     }
-
+    /**
+     * Método que crea fichas
+     * @return las fichas
+     */
     public static LinkedList<Ficha> solicitarFichas() {
 
         return crearFichas();
     }
-
+    /**
+     * Método que revuelve fichas
+     * @param fichas que son las fichas
+     * @return las fichas revueltas
+     */
     public static LinkedList<Ficha> revolverFichas(LinkedList <Ficha> fichas) {
         LinkedList<Ficha> nuevaLista = new LinkedList();
         LinkedList<Ficha> fichasRevueltas = new LinkedList();

@@ -104,7 +104,8 @@ public class Sala extends Thread {
             manoNueva += "]"
                     + ",\"jugadores\":[";
             for (int j = 0; j < this.usuarios.size(); j++) {
-                manoNueva += "{\"nombre\": \"" + this.usuarios.get(j).getNombre() + "\"}";
+                manoNueva += "{\"nombre\": \"" + this.usuarios.get(j).getNombre() + "\""
+                        + "\"hash\":\""+this.usuarios.get(j).getHash()+"\"}";
                 if (j != this.usuarios.size() - 1) {
                     manoNueva += ",";
                 }
@@ -129,6 +130,7 @@ public class Sala extends Thread {
 
                 Usuario usuario = this.usuarios.get(i);
                 usuario.setEnTurno(true);
+                usuario.setSuma(0);
                 String mensajeGlobal = "{\"tipo\": \"turno\",\"jugador\":"
                         + "\"" + usuario.getNombre() + "\"}";
                 generarLog("Es el turno de: " + usuario.getNombre());
@@ -151,7 +153,7 @@ public class Sala extends Thread {
                 mensajeUsuario = "{\"tipo\":\"cambio turno\",\"valor\":" + usuario.isEnTurno() + "}";
                 usuario.getWebSocket().send(mensajeUsuario);
                 generarLog("Terminó el turno de: " + usuario.getNombre());
-
+                ajustarTablero();
                 if (usuario.getMano().isEmpty()) {
                     this.anunciarGanador(usuario);
                     System.out.println("Terminando juego en la sala " + this.codigo);
@@ -224,15 +226,17 @@ public class Sala extends Thread {
                     }
                 }
             }
-            try {
-                this.tablero.getListas()[x][y] = ficha;
-                ficha.setX(x);
-                ficha.setY(y);
-                String fichaNueva = "{\"tipo\": \"colocar ficha\",\"ficha\":" + ficha.toJson() + "}";
-                this.enviarATodosEnSalaExceptoA(usuario.getWebSocket(), fichaNueva);
-            } catch (IndexOutOfBoundsException ex) {
-                ex.printStackTrace();
+            if (this.tablero.getListas()[x][y] == null) {
+
             }
+
+            this.tablero.getListas()[x][y] = ficha;
+            ficha.setX(x);
+            ficha.setY(y);
+            usuario.setSuma(usuario.getSuma() + ficha.getNumero());
+            String fichaNueva = "{\"tipo\": \"colocar ficha\",\"ficha\":" + ficha.toJson() + "}";
+            this.enviarATodosEnSalaExceptoA(usuario.getWebSocket(), fichaNueva);
+
         } else {
             this.enviarError("tú no estás en turno", usuario);
         }
@@ -246,10 +250,10 @@ public class Sala extends Thread {
         //int numero = fichaMovida.getInt("numero");
         int xAnterior = fichaMovida.getInt("xAnterior");
         int yAnterior = fichaMovida.getInt("yAnterior");
-        try {
-            Ficha ficha = this.tablero.getListas()[xAnterior][yAnterior];
-            ficha.setxAnterior(xAnterior);
-            ficha.setyAnterior(yAnterior);
+        Ficha ficha = this.tablero.getListas()[xAnterior][yAnterior];
+        ficha.setxAnterior(xAnterior);
+        ficha.setyAnterior(yAnterior);
+        if (usuario.isDesbloqueado()) {
             if (this.tablero.getListas()[x][y] == null) {
                 this.tablero.getListas()[x][y] = ficha;
                 ficha.setX(x);
@@ -260,25 +264,23 @@ public class Sala extends Thread {
             } else {
                 this.enviarError("hay una ficha en ese lugar", usuario);
             }
-        } catch (IndexOutOfBoundsException ex) {
-            ex.printStackTrace();
-            /* if (x < 0) {
-                this.tablero.aumentarFilas();
-                obj.put("x", 0);
-                obj.put("y", this.tablero.getListas()[0].length - 1);
-                moverFicha(usuario, obj);
-                int i = 0;
-                while (this.tablero.getListas()[i][y] != null) {
-                    obj.put("x", i + 1);
-                    //obj.put("", usuarios)
+        } else {
+            if (ficha.getxInicial() == -1) {
+                if (this.tablero.getListas()[x][y] == null) {
+                    this.tablero.getListas()[x][y] = ficha;
+                    ficha.setX(x);
+                    ficha.setY(y);
+                    String fichaNueva = "{\"tipo\": \"mover ficha\",\"ficha\":" + ficha.toJson() + "}";
+                    this.enviarATodosEnSalaExceptoA(usuario.getWebSocket(), fichaNueva);
+                    this.tablero.getListas()[xAnterior][yAnterior] = null;
+                } else {
+                    this.enviarError("hay una ficha en ese lugar", usuario);
                 }
-
-            } else if (x > 13) {
-
+            } else {
+                this.enviarError("Tu no puedes usar esa ficha", usuario);
             }
-        }*/
-
         }
+
     }
 
     public void enviarError(String mensaje, Usuario usuario) {
@@ -311,15 +313,28 @@ public class Sala extends Thread {
             if (!Verificador.jugadaValida(tablero.getListas())) {
                 mensajeUsuario = "{\"tipo\": \"jugada inválida\"}";
                 usuario.getWebSocket().send(mensajeUsuario);
-                //restaurarTablero();
-                this.robarFicha(usuario);
+                return;
             } else {
-                mensajeUsuario = "{\"tipo\": \"jugada válida\"}";
-                usuario.getWebSocket().send(mensajeUsuario);
-                synchronized (this.tablero) {
-                    this.tablero.notify();
+                if (usuario.getSuma() == 0) {
+                    this.robarFicha(usuario);
+                } else {
+                    if (!usuario.isDesbloqueado()) {
+                        if (usuario.getSuma() >= 30) {
+                            usuario.setDesbloqueado(true);
+                        } else {
+                            this.enviarError("No tiene los puntos para iniciar", usuario);
+                            return;
+                        }
+                    }
+                    mensajeUsuario = "{\"tipo\": \"jugada válida\"}";
+                    usuario.getWebSocket().send(mensajeUsuario);
                 }
+
             }
+            synchronized (this.tablero) {
+                this.tablero.notify();
+            }
+            generarLog(mensajeUsuario);
         }
     }
 
@@ -347,4 +362,36 @@ public class Sala extends Thread {
             }
         }
     }*/
+    public void devolverFicha(Usuario usuario, JSONObject obj) {
+        JSONObject fichaDevuelta = obj.getJSONObject("ficha");
+        int div = obj.getInt("div");
+        int xAnterior = fichaDevuelta.getInt("xAnterior");
+        int yAnterior = fichaDevuelta.getInt("yAnterior");
+        Ficha ficha = this.tablero.getListas()[xAnterior][yAnterior];
+        if (ficha.getxInicial() == -1) {
+            usuario.getMano().add(ficha);
+            String mensaje = "{\"tipo\": \"borrar ficha\",\"x\": \"" + xAnterior + "\",\"y\":\"" + yAnterior + "\"}";
+            this.enviarATodosEnSalaExceptoA(usuario.getWebSocket(), mensaje);
+            mensaje = "{\"tipo\": \"ficha devuelta\",\"ficha\": " + ficha.toJson() + ",\"idDiv\":\"" + div + "\"}";
+            generarLog(mensaje);
+            usuario.setSuma(usuario.getSuma() - ficha.getNumero());
+            usuario.getWebSocket().send(mensaje);
+            this.tablero.getListas()[xAnterior][yAnterior] = null;
+        } else {
+            String mensaje = "{\"tipo\": \"colocar ficha\",\"ficha\":" + ficha.toJson() + "}";
+            usuario.getWebSocket().send(mensaje);
+        }
+    }
+
+    private void ajustarTablero() {
+        for (int i = 0; i < this.tablero.getListas().length; i++) {
+            for (int j = 0; j < this.tablero.getListas()[0].length; j++) {
+                if (this.tablero.getListas()[i][j] != null) {
+                    Ficha ficha = this.tablero.getListas()[i][j];
+                    ficha.setxInicial(ficha.getX());
+                    ficha.setyInicial(ficha.getY());
+                }
+            }
+        }
+    }
 }

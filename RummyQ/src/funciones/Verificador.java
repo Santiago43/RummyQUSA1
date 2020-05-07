@@ -17,8 +17,8 @@ public class Verificador {
      * @return verdadero si es válida y falso si no
      */
     public static boolean jugadaValida(Ficha[][] tablero) {
-        for (int j = 0; j < tablero.length; j++) {
-            for (int i = 0; i < tablero[0].length; i++) {
+        for (int i = 0; i < tablero[0].length; i++) {
+            for (int j = 0; j < tablero.length; j++) {
                 if (tablero[j][i] != null) {
                     LinkedList <Ficha> lista = new LinkedList();
                     while(tablero.length>(j+1)){
