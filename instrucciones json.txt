@@ -190,8 +190,24 @@ También indica a los demás jugadores quién está en turno
 	jugador: "jugador"
 }
 
+Para borrar una ficha del tablero
 {
 	tipo: "borrar ficha",
 	x: x,
 	y: y	
+}
+
+Para corregir una ficha (cuando está una sobre otra)
+
+{
+	tipo: "corregir ficha",
+	subtipo: "colocar ficha",
+	ficha: {
+		dskadskadsk
+	},
+	x: x,
+	y:y,
+	fichaPrevia:{
+	
+	}
 }

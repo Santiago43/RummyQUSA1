@@ -102,18 +102,16 @@ websocket.onmessage=function(event){
 		else if(obj.tipo==="borrar ficha"){
 			borrarFicha(obj.x,obj.y);
 		}else if (obj.tipo==="ficha devuelta"){
-			if(typeof obj.idDiv==='undefined'){
-				fichaDevuelta(obj.ficha,coords);
-			}
-			else{
-				fichaDevuelta(obj.ficha,obj.idDiv);
-			}
+			fichaDevuelta(obj.ficha,obj.idDiv);
 		}
 		else if(obj.tipo==="ficha no robada"){
 			alert("No hay más fichas");
 		}
 		else if(obj.tipo==="jugada inválida"){
 			alert("jugada inválida");
+		}
+		else if(obj.tipo==="corregir ficha"){
+			corregirFicha(obj.subtipo,obj.ficha,obj.fichaPrevia);
 		}
 	}
 }
@@ -556,4 +554,42 @@ function fichaDevuelta(ficha,idDiv){
 	var texto = '<div oncontextmenu="soni'+ficha.color+''+ficha.numero+'.play()" '+textoExtra+' class="fill '+ficha.color+'-'+ficha.numero+'" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';
 	$("#"+idDiv).append(texto);
 	eventosDraggable();
+}
+
+function corregirFicha(subtipo,ficha,fichaPrevia){
+	if(subtipo==="colocar ficha"){
+		$("#"+fichaPrevia.x+"-"+fichaPrevia.y).empty();
+		var textoExtra="";
+		if(sonido){
+			textoExtra = 'onmouseup="soltar.play()"';
+		}
+		var texto = '<div oncontextmenu="soni'+fichaPrevia.color+''+fichaPrevia.numero+'.play()" '+textoExtra+' class="fill '+fichaPrevia.color+'-'+fichaPrevia.numero+'" draggable="true"> <img src="img/fichas/'+fichaPrevia.color+'-'+fichaPrevia.numero+'.png" height="70px" width="43px" ></div>';
+		$("#"+fichaPrevia.x+"-"+fichaPrevia.y).append(texto);
+		while(continuar){
+			var i =0;
+			if($("#"+i).children().length == 0){
+				var textoExtra="";
+			if(sonido){
+				textoExtra = 'onmouseup="soltar.play()"';
+			}
+				var texto = '<div oncontextmenu="soni'+ficha.color+''+ficha.numero+'.play()" '+textoExtra+' class="fill '+ficha.color+'-'+ficha.numero+'" draggable="true"> <img src="img/fichas/'+ficha.color+'-'+ficha.numero+'.png" height="70px" width="43px" ></div>';
+				$("#"+i).append(texto);
+				continuar=false;
+				eventosDraggable();
+				
+			}else{
+				i++;
+			}
+		}
+	}
+	else if (subtipo==="mover ficha"){
+		$("#"+fichaPrevia.x+"-"+fichaPrevia.y).empty();
+		var textoExtra="";
+		if(sonido){
+			textoExtra = 'onmouseup="soltar.play()"';
+		}
+		var texto = '<div oncontextmenu="soni'+fichaPrevia.color+''+fichaPrevia.numero+'.play()" '+textoExtra+' class="fill '+fichaPrevia.color+'-'+fichaPrevia.numero+'" draggable="true"> <img src="img/fichas/'+fichaPrevia.color+'-'+fichaPrevia.numero+'.png" height="70px" width="43px" ></div>';
+		$("#"+fichaPrevia.x+"-"+fichaPrevia.y).append(texto);
+		$("#"+ficha.x+"-"+ficha.y).append(texto);
+	}
 }

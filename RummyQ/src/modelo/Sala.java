@@ -233,8 +233,11 @@ public class Sala extends Thread {
                 usuario.setSuma(usuario.getSuma() + ficha.getNumero());
                 String fichaNueva = "{\"tipo\": \"colocar ficha\",\"ficha\":" + ficha.toJson() + "}";
                 this.enviarATodosEnSalaExceptoA(usuario.getWebSocket(), fichaNueva);
-            }else{
+            } else {
                 this.enviarError("Hay una ficha en ese lugar", usuario);
+                usuario.getMano().add(ficha);
+                String mensaje = "{\"tipo\": \"corregir ficha\",\"subtipo\":\"colocar ficha\",\"ficha\": " + ficha.toJson() + ", \"fichaPrevia\":" + this.tablero.getListas()[x][y].toJson() + "}";
+                usuario.getWebSocket().send(mensaje);
             }
 
         } else {
@@ -263,6 +266,11 @@ public class Sala extends Thread {
                 this.tablero.getListas()[xAnterior][yAnterior] = null;
             } else {
                 this.enviarError("hay una ficha en ese lugar", usuario);
+                ficha.setX(xAnterior);
+                ficha.setY(yAnterior);
+                this.tablero.getListas()[xAnterior][yAnterior] = ficha;
+                String mensaje = "{\"tipo\": \"corregir ficha\",\"subtipo\":\"mover ficha\",\"ficha\": " + ficha.toJson() + ", \"fichaPrevia\":" + this.tablero.getListas()[x][y].toJson() + "}";
+                usuario.getWebSocket().send(mensaje);
             }
         } else {
             if (ficha.getxInicial() == -1) {
@@ -275,6 +283,11 @@ public class Sala extends Thread {
                     this.tablero.getListas()[xAnterior][yAnterior] = null;
                 } else {
                     this.enviarError("hay una ficha en ese lugar", usuario);
+                    ficha.setX(xAnterior);
+                    ficha.setY(yAnterior);
+                    this.tablero.getListas()[xAnterior][yAnterior] = ficha;
+                    String mensaje = "{\"tipo\": \"corregir ficha\",\"subtipo\":\"mover ficha\",\"ficha\": " + ficha.toJson() + ", \"fichaPrevia\":" + this.tablero.getListas()[x][y].toJson() + "}";
+                    usuario.getWebSocket().send(mensaje);
                 }
             } else {
                 this.enviarError("Tu no puedes usar esa ficha", usuario);
