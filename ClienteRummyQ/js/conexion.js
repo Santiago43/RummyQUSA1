@@ -164,7 +164,15 @@ function enviarMensaje(object){
 * Crear sala
 */
 function crearSala(){
-	var object ={tipo: "crear sala", usuario: getCookie("nombre")};
+	var imagen = "img/avatar/basico/1.png";
+	for (let i = 1; i <= 5; i++) {
+		if($("#r"+i).attr("checked")){
+			imagen="img/avatar/futbol/"+i+".png";
+		}
+		
+	}
+	conectarASala(codigo,nombre,imagen);
+	var object ={tipo: "crear sala", usuario: getCookie("nombre"),imagen:imagen};
 	enviarMensaje(object);
 	/**
 	* Luego se debe colocar el cambio al tablero de este usuario, lo cual 
@@ -174,8 +182,8 @@ function crearSala(){
 /**
 * Función que permite conectarse a una sala
 */
-function conectarASala(codigo,usuario){
-	var object= {tipo: "conectarse a sala", codigo: codigo,usuario: usuario};
+function conectarASala(codigo,usuario,imagen){
+	var object= {tipo: "conectarse a sala", codigo: codigo,usuario: usuario,imagen:imagen};
 	enviarMensaje(object);
 }
 
@@ -357,7 +365,7 @@ function cambiarAlTablero(nuevaMano,nuevosJugadores){
 	}	
 	for (let i = 0; i < nuevosJugadores.length; i++) {
 		jugadores.push(nuevosJugadores[i]); 	
-		texto='<div id= "'+nuevosJugadores[i].hash+'" class="casillaJugador"><img src="img/'+(i+1)+'.png">'+nuevosJugadores[i].nombre+'</div>';	
+		texto='<div id= "'+nuevosJugadores[i].hash+'" class="casillaJugador"><img src="'+nuevosJugadores[i].imagen+'">'+nuevosJugadores[i].nombre+'</div>';	
 		$("#jugadores").append(texto);
 	}
 	eventosDraggable();

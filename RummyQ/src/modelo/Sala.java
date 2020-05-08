@@ -104,8 +104,7 @@ public class Sala extends Thread {
             manoNueva += "]"
                     + ",\"jugadores\":[";
             for (int j = 0; j < this.usuarios.size(); j++) {
-                manoNueva += "{\"nombre\": \"" + this.usuarios.get(j).getNombre() + "\","
-                        + "\"hash\":" + this.usuarios.get(j).getHash() + "}";
+                manoNueva += this.usuarios.get(j).toJson();
                 if (j != this.usuarios.size() - 1) {
                     manoNueva += ",";
                 }

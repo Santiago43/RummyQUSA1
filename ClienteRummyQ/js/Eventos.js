@@ -16,7 +16,14 @@ $("#BtnUnirseASala").click(function(){
 $("#Unirse").click(function(){
 	var nombre = getCookie("nombre");
 	var codigo = $("#InputCodigo2").val();
-	conectarASala(codigo,nombre);
+	var imagen = "img/avatar/basico/1.png";
+	for (let i = 1; i <= 5; i++) {
+		if($("#r"+i).attr("checked")){
+			imagen="img/avatar/futbol/"+i+".png";
+		}
+		
+	}
+	conectarASala(codigo,nombre,imagen);
 })
 
 $("#btnTerminarTurno").click(function(){

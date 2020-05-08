@@ -9,7 +9,7 @@ Cuando vaya a crear una sala:
 
 
 Cuando vaya a conectarse a una sala:
-- Cliente envia {tipo "conectarse a sala", codigo: "código",usuario: nombre}
+- Cliente envia {tipo "conectarse a sala", codigo: "código",usuario: nombre, imagen: url}
 - Servidor retorna {tipo: "conexión sala", mensaje: "conectado // error: esa sala no existe", participantes: numero}
 - Servidor envía a todos los que estén en la sala {tipo: "nuevo jugador",participantes: numero}
 

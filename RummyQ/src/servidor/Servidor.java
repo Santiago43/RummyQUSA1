@@ -95,6 +95,7 @@ public class Servidor extends WebSocketServer {
                 int codigo = obj.getInt("codigo");
                 usuario = Buscador.buscarUsuario(ws, usuarios);
                 usuario.setNombre(obj.getString("usuario"));
+                usuario.setImagen(obj.getString("imagen")); 
                 sala = Buscador.buscarSala(codigo, salas);
                 if(sala==null){
                     objeto = "{\"tipo\":\"error\",\"mensaje\":\"Esa sala no existe\"}";
