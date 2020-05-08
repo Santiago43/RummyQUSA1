@@ -171,7 +171,6 @@ function crearSala(){
 		}
 		
 	}
-	conectarASala(codigo,nombre,imagen);
 	var object ={tipo: "crear sala", usuario: getCookie("nombre"),imagen:imagen};
 	enviarMensaje(object);
 	/**
