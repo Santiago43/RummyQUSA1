@@ -36,7 +36,6 @@ $("#aCrearToInicio").click(function(){
 	desconectarDeSala();
 	$("#DivCrearSala").hide();
 	$("#DivInicio").show();
-	
 });
 
 $("#aUnirseToInicio").click(function(){
