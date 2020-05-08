@@ -52,22 +52,22 @@ $("#aUnirseToInicio").click(function(){
 });
 
 $("#r1").click(function(){
-	$(".avatar").attr("checked","false");
-	$("#r1").attr("checked","true");
+	$(".avatar").attr("checked",false);
+	$("#r1").attr("checked",true);
 });
 $("#r2").click(function(){
-	$(".avatar").attr("checked","false");
-	$("#r2").attr("checked","true");
+	$(".avatar").attr("checked",false);
+	$("#r2").attr("checked",true);
 });
 $("#r3").click(function(){
-	$(".avatar").attr("checked","false");
-	$("#r3").attr("checked","true");
+	$(".avatar").attr("checked",false);
+	$("#r3").attr("checked",true);
 });
 $("#r4").click(function(){
-	$(".avatar").attr("checked","false");
-	$("#r4").attr("checked","true");
+	$(".avatar").attr("checked",false);
+	$("#r4").attr("checked",true);
 });
 $("#r5").click(function(){
-	$(".avatar").attr("checked","false");
-	$("#r5").attr("checked","true");
+	$(".avatar").attr("checked",false);
+	$("#r5").attr("checked",true);
 });
