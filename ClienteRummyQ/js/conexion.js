@@ -459,6 +459,7 @@ function terminarJuego(ganador){
 	//Luego se devuelve a la vista anterior 
 	$("#DivInicio").show();
 	$("#gridTablero").empty();
+	location.reload();
 }
 
 /**
