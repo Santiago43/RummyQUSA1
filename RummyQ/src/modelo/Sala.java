@@ -131,7 +131,7 @@ public class Sala extends Thread {
                 usuario.setEnTurno(true);
                 usuario.setSuma(0);
                 String mensajeGlobal = "{\"tipo\": \"turno\",\"jugador\":"
-                        + "\"" + usuario.getNombre() + "\",\"hash\":\""+usuario.getHash()+"\"}";
+                        + this.usuarios.get(i).toJson()+"}";
                 generarLog("Es el turno de: " + usuario.getNombre());
                 this.enviarATodosEnSala(mensajeGlobal);
                 String mensajeUsuario = "{\"tipo\":\"cambio turno\",\"valor\":" + usuario.isEnTurno() + "}";
@@ -323,7 +323,7 @@ public class Sala extends Thread {
         if (usuario.isEnTurno()) {
             String mensajeUsuario = "";
             if (!Verificador.jugadaValida(tablero.getListas())) {
-                mensajeUsuario = "{\"tipo\": \"jugada inválida\",\"mes\"}";
+                mensajeUsuario = "{\"tipo\": \"jugada inválida\"}";
                 usuario.getWebSocket().send(mensajeUsuario);
                 return;
             } else {
