@@ -591,5 +591,6 @@ function corregirFicha(subtipo,ficha,fichaPrevia){
 		var texto = '<div oncontextmenu="soni'+fichaPrevia.color+''+fichaPrevia.numero+'.play()" '+textoExtra+' class="fill '+fichaPrevia.color+'-'+fichaPrevia.numero+'" draggable="true"> <img src="img/fichas/'+fichaPrevia.color+'-'+fichaPrevia.numero+'.png" height="70px" width="43px" ></div>';
 		$("#"+fichaPrevia.x+"-"+fichaPrevia.y).append(texto);
 		$("#"+ficha.x+"-"+ficha.y).append(texto);
+		eventosDraggable();
 	}
 }
