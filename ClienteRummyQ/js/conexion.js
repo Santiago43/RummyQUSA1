@@ -507,10 +507,10 @@ function cambiarTurno(valor){
 /**
 * Función que muestra quién está en turno
 */
-function jugadorEnTurno(jugador,hash){
-	alert("Turno de: "+jugador);
+function jugadorEnTurno(jugador){
+	alert("Turno de: "+jugador.nombre);
 	$(".casillaJugador").removeClass("jugadorEnTurno");
-	$("#"+hash).addClass("jugadorEnTurno");
+	$("#"+jugador.hash).addClass("jugadorEnTurno");
 }
 
 /**
