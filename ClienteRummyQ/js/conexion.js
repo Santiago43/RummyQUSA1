@@ -164,7 +164,7 @@ function enviarMensaje(object){
 * Crear sala
 */
 function crearSala(){
-	var imagen = "img/avatar/basico/1.png";
+	var imagen = "img/avatar/futbol/1.png";
 	for (let i = 1; i <= 5; i++) {
 		if($("#r"+i).attr("checked")){
 			imagen="img/avatar/futbol/"+i+".png";
