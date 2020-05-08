@@ -24,7 +24,7 @@ $("#btnTerminarTurno").click(function(){
 });
 
 $("#sonido").click(function(){
-	if(sonido){
+	if(sonido===true){
 		sonido=false;
 	}
 	else{
