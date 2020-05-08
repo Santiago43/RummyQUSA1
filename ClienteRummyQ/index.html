@@ -8,7 +8,7 @@
 	<link rel="stylesheet" type="text/css" href="css/mycss.css">
 	<link rel="stylesheet" type="text/css" href="css/semantic.min.css">
 	<link rel="stylesheet" href="css/rejillacss.css">
-
+	<link href="https://fonts.googleapis.com/css?family=Boogaloo&display=swap" rel="stylesheet">
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -21,8 +21,47 @@
 			<div id="DivContenidoInicio">
 				<label> Ingresa tu nombre </label>
 				<input type="text" placeholder=" Enter your name" id="nombre">
-				<input type="submit" value="Crear sala" id="BtnCrearSala">
-				<input type="submit" value="Unirse a sala" id="BtnUnirseASala">
+				<!-- Div imágenes avatares -->
+				<div class="slidershow middle">
+					<div class="slides">
+						<input type="radio" name="r" id="r1" checked>
+						<input type="radio" name="r" id="r2">
+						<input type="radio" name="r" id="r3">
+						<input type="radio" name="r" id="r4">
+						<input type="radio" name="r" id="r5">
+						<div class="slide s1">
+							<img src="img/avatar/futbol/1.png">
+						</div>
+						<div class="slide">
+							<img src="img/avatar/futbol/2.png">
+						</div>
+						<div class="slide">
+							<img src="img/avatar/futbol/3.png">
+						</div>
+						<div class="slide">
+							<img src="img/avatar/futbol/4.png">
+						</div>
+						<div class="slide">
+							<img src="img/avatar/futbol/5.png">
+						</div>
+					</div>
+					<div class="navigation">
+						<label for="r1" class="bar"></label>
+						<label for="r2" class="bar"></label>
+						<label for="r3" class="bar"></label>
+						<label for="r4" class="bar"></label>
+						<label for="r5" class="bar"></label>
+					</div>
+				</div>
+				<div class="ui grid">
+					<div class="eight wide column">
+						<input type="submit" value="Crear sala" id="BtnCrearSala">
+					</div>
+					<div class="eight wide column">
+						<input type="submit" value="Unirse a sala" id="BtnUnirseASala">
+					</div>				
+				</div>
+				
 			</div>
 		</div>  
 		<!-- Crear sala -->
