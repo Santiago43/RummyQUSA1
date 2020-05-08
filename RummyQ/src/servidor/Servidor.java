@@ -83,6 +83,7 @@ public class Servidor extends WebSocketServer {
                     ws.send(objeto);
                 } else {
                     usuario.setNombre(obj.getString("usuario"));
+                    usuario.setImagen(obj.getString("imagen"));
                     System.out.println(usuario.getNombre());
                     objeto = "{\"tipo\":\"codigo sala\",\"codigo\":\"" + sala.getCodigo() + "\",\"mensaje\":\"conectado\"}";
                     System.out.println("Sala creada: "+numeroSala);
