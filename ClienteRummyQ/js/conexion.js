@@ -70,9 +70,8 @@ websocket.onmessage=function(event){
 				alert(obj.mensaje);
 			}
 		}
-		else if(obj.tipo==="nuevo jugador"){
+		else if(obj.tipo==="nuevo jugador" || obj.tipo==="jugador salió"){
 			//Se conectó un nuevo jugador
-			console.log("nuevo conectado");
 			añadirParticipante(obj.participantes);
 		}
 		else if(obj.tipo==="nueva mano"){
@@ -91,7 +90,7 @@ websocket.onmessage=function(event){
 			fichaMovida(obj.ficha);
 		}
 		else if(obj.tipo==="turno"){
-			jugadorEnTurno(obj.jugador);
+			jugadorEnTurno(obj.jugador,obj.hash);
 		}
 		else if(obj.tipo==="ganador"){
 			terminarJuego(obj.ganador);
@@ -358,7 +357,7 @@ function cambiarAlTablero(nuevaMano,nuevosJugadores){
 	}	
 	for (let i = 0; i < nuevosJugadores.length; i++) {
 		jugadores.push(nuevosJugadores[i]); 	
-		texto='<div class="casillaJugador"><img src="img/'+(i+1)+'.png">'+nuevosJugadores[i].nombre+'</div>';	
+		texto='<div id= "'+nuevosJugadores[i].hash+'" class="casillaJugador"><img src="img/'+(i+1)+'.png">'+nuevosJugadores[i].nombre+'</div>';	
 		$("#jugadores").append(texto);
 	}
 	eventosDraggable();
@@ -500,8 +499,10 @@ function cambiarTurno(valor){
 /**
 * Función que muestra quién está en turno
 */
-function jugadorEnTurno(jugador){
+function jugadorEnTurno(jugador,hash){
 	alert("Turno de: "+jugador);
+	$(".casillaJugador").removeClass("jugadorEnTurno");
+	$("#"+hash).addClass("jugadorEnTurno");
 }
 
 /**
@@ -595,4 +596,8 @@ function corregirFicha(subtipo,ficha,fichaPrevia){
 		$("#"+ficha.x+"-"+ficha.y).append(texto);
 		eventosDraggable();
 	}
+}
+
+function desconectarDeSala(){
+
 }

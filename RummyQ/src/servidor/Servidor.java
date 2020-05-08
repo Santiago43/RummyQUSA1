@@ -96,12 +96,23 @@ public class Servidor extends WebSocketServer {
                 usuario = Buscador.buscarUsuario(ws, usuarios);
                 usuario.setNombre(obj.getString("usuario"));
                 sala = Buscador.buscarSala(codigo, salas);
-                usuario.setSala(sala);
-                sala.getUsuarios().add(usuario);
-                objeto = "{\"tipo\":\"nuevo jugador\",\"participantes\":\""+(sala.getUsuarios().size())+"\"}";
-                sala.enviarATodosEnSalaExceptoA(usuario.getWebSocket(), objeto);
-                objeto = "{\"tipo\":\"conexion sala\",\"participantes\":\"" + (sala.getUsuarios().size()) + "\",\"mensaje\":\"conectado\"}";
-                ws.send(objeto);
+                if(sala==null){
+                    objeto = "{\"tipo\":\"error\",\"mensaje\":\"Esa sala no existe\"}";
+                    usuario.getWebSocket().send(objeto); 
+                    return;
+                }
+                if(sala.getUsuarios().size()<4){
+                    usuario.setSala(sala);
+                    sala.getUsuarios().add(usuario);
+                    objeto = "{\"tipo\":\"nuevo jugador\",\"participantes\":\""+(sala.getUsuarios().size())+"\"}";
+                    sala.enviarATodosEnSalaExceptoA(usuario.getWebSocket(), objeto);
+                    objeto = "{\"tipo\":\"conexion sala\",\"participantes\":\"" + (sala.getUsuarios().size()) + "\",\"mensaje\":\"conectado\"}";
+                    ws.send(objeto);
+                }else{
+                    objeto = "{\"tipo\":\"error\",\"mensaje\":\"Esa sala ya está llena\"}";
+                    usuario.getWebSocket().send(objeto); 
+                }
+                
                 break;
             case "desconectarse de sala":
                 usuario = Buscador.buscarUsuario(ws, usuarios);

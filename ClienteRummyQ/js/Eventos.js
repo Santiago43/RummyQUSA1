@@ -30,4 +30,18 @@ $("#sonido").click(function(){
 	else{
 		sonido=true;
 	}
-})
+});
+
+$("#aCrearToInicio").click(function(){
+	desconectarDeSala();
+	$("#DivCrearSala").hide();
+	$("#DivInicio").show();
+	
+});
+
+$("#aUnirseToInicio").click(function(){
+	desconectarDeSala();
+	$("#DivUnirseASala").hide();
+	$("#DivInicio").show();
+});
+

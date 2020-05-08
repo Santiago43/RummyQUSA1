@@ -132,7 +132,7 @@ public class Sala extends Thread {
                 usuario.setEnTurno(true);
                 usuario.setSuma(0);
                 String mensajeGlobal = "{\"tipo\": \"turno\",\"jugador\":"
-                        + "\"" + usuario.getNombre() + "\"}";
+                        + "\"" + usuario.getNombre() + "\",\"hash\":\""+usuario.getHash()+"\"}";
                 generarLog("Es el turno de: " + usuario.getNombre());
                 this.enviarATodosEnSala(mensajeGlobal);
                 String mensajeUsuario = "{\"tipo\":\"cambio turno\",\"valor\":" + usuario.isEnTurno() + "}";

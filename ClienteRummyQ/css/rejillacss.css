@@ -24,3 +24,11 @@
   background-color:#4e342e;
   opacity: 95%;
 }
+
+.jugadorEnTurno{
+  width: 100%;
+  height: 25%;
+  color: white;
+  opacity: 65%;
+  background-color: chocolate !important;
+}

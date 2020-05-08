@@ -137,5 +137,8 @@ public class Usuario {
     public void setImagen(String imagen) {
         this.imagen = imagen;
     }
-    
+
+    public String toJson() {
+        return "{" + "\"nombre\":\"" + nombre + "\", \"hash\":\"" + hash + "\", \"imagen\":\"" + imagen + "\"}";
+    }
 }
