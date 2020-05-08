@@ -323,7 +323,7 @@ public class Sala extends Thread {
         if (usuario.isEnTurno()) {
             String mensajeUsuario = "";
             if (!Verificador.jugadaValida(tablero.getListas())) {
-                mensajeUsuario = "{\"tipo\": \"jugada inválida\"}";
+                mensajeUsuario = "{\"tipo\": \"jugada inválida\",\"mes\"}";
                 usuario.getWebSocket().send(mensajeUsuario);
                 return;
             } else {
@@ -341,7 +341,6 @@ public class Sala extends Thread {
                     mensajeUsuario = "{\"tipo\": \"jugada válida\"}";
                     usuario.getWebSocket().send(mensajeUsuario);
                 }
-
             }
             synchronized (this.tablero) {
                 this.tablero.notify();
